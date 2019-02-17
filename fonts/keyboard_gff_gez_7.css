@@ -1,0 +1,16 @@
+
+  @font-face {
+    font-family: GeezWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(ETHIOPI0.eot);
+  } 
+
+  @font-face {
+    font-family: GeezWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(wookianos.ttf) format("truetype");
+  }
+
+ .KeymanWeb_VK_Char_Keyboard_gff_gez_7, .kmw-key-text {font-family: GeezWeb !important} 

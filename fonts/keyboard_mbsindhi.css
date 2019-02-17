@@ -1,0 +1,17 @@
+
+  @font-face {
+    font-family: SindhiWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(MBKHURS0.eot);
+  }
+
+  @font-face {
+    font-family: SindhiWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(MBKhursheed10.6.ttf)  format("truetype");
+  }
+
+ .KeymanWeb_VK_Char_Keyboard_mbsindhi, .kmw-key-text {font-family: SindhiWeb !important}
+

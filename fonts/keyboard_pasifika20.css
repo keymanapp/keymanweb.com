@@ -1,0 +1,10 @@
+
+  @font-face {
+    font-family: LatinWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(DejaVuSans.ttf)  format("truetype");
+  }
+
+ .KeymanWeb_VK_Char_Keyboard_pasifika20, .kmw-key-text {font-family: LatinWeb !important}
+

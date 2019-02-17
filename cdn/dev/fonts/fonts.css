@@ -1,0 +1,9 @@
+/* Link all embedded fonts for smart browsers to use (Firefox, Safari) */
+.lang2 { font-family: PashtoWeb, DzongkhaWeb, NKoWeb, EgyptianWeb, SindhiWeb, Abyssinica SIL, GeezWeb, LaoWeb, TibetanWeb, MyanmarWeb, SinhalaWeb, TamilWeb, KhmerWeb, LatinWeb, OriyaWeb, Tahoma !important }
+.lang2large { font-size: 36pt !important }
+
+/* We are starting to move text to the following approach in order to load fonts more appropriately */
+.lang2:lang(urd) {
+  font-family: "NotoNastaliqDraft" !important;
+  font-weight: normal;
+}

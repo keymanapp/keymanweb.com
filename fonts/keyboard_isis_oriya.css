@@ -1,0 +1,18 @@
+
+  @font-face {
+    font-family: OriyaWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(UTKAL0.eot);
+  }
+
+  @font-face {
+    font-family: OriyaWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(utkalm.ttf)  format("truetype");
+  }
+
+ .KeymanWeb_VK_Char_Keyboard_isis_oriya, .kmw-key-text {font-family: OriyaWeb !important}
+
+

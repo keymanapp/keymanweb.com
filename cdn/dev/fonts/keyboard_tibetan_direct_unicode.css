@@ -1,0 +1,17 @@
+
+  @font-face {
+    font-family: TibetanWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(CTRCUCH0.eot);
+  }
+
+  @font-face {
+    font-family: TibetanWeb;
+    font-style:  normal;
+    font-weight: normal;
+    src: url(CTRC-Uchen.ttf)  format("truetype");
+  }
+
+ .KeymanWeb_VK_Char_Keyboard_tibetan_direct_unicode, .kmw-key-text {font-family: TibetanWeb !important}
+

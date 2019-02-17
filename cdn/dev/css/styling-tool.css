@@ -1,0 +1,430 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body{
+    font-family: verdana;
+    background: #f8f8f8;
+}
+
+.wrapper{
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.header{
+	background: #fff;
+}
+
+.header img{
+	width: 100%;
+	height: 8px;
+}
+
+#logo{
+	width: 250px !important;
+	height: 88px !important;
+	margin-left: 15px;
+}
+
+#title{
+	font-size: 20pt;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+#title-link{
+	font-size: 14pt;
+	margin-left: 20px;
+	position: relative;
+	top: -3px;
+}
+
+#title-link a{
+	color: #69B7D2;
+}
+
+#KeymanWebControl{
+    width: 960px;
+    margin:0px;
+    padding: 0px;
+}
+
+#message{
+    margin:0px;
+    padding: 0px;
+    width: 960px;
+    height: 0px;
+    position: relative;
+    z-index: -1;
+    border: none;
+    outline: none;
+}
+
+/****************************************
+ * Keyboard css
+ ***************************************/
+
+#kmw_controls{
+	display: none !important;
+}
+
+.desktop .kmw-osk-frame{
+    border-style: solid;
+    height: 382px;
+    width: auto;
+    position: fixed !important;
+}
+
+.desktop .kmw-osk-frame{
+	display: block !important;
+}
+
+/****************************************
+ * Keyboard styling tools css
+ ***************************************/
+
+.screener{
+	position: absolute;
+	width: 960px;
+	height: 380px;
+	top: 191px;
+	z-index: 99999 !important;
+}
+
+.spacer{
+	height: 380px;
+}
+
+.button{
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #FC7200;
+    border-radius: 6px;
+    margin: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.button h2{
+    font-size: 14pt;
+    color: #fff;
+    text-decoration: none;
+}
+
+#edit-mode,#test-mode{
+	float: left;
+	margin: 20px 0px;
+	height: 44px;
+	line-height: 44px;
+}
+
+#edit-mode{
+	margin-left: 280px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+#test-mode{
+	margin-right: 280px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-left: 0px;
+}
+
+.selected{
+	background: #F99246;
+}
+
+.sc{
+	float: left;
+	cursor: pointer;
+}
+
+.sc.row1, .sc.row2, .sc.row3, .sc.row4, .sc.row5{
+	height: 68px;
+}
+
+.sc.row1.normal1{
+	width: 870px;
+}
+.sc.row1.special1{
+	width:90px;	
+}
+.sc.row2.special1{
+	width: 88px;
+}
+.sc.row2.normal1{
+	width: 872px;
+}
+
+.sc.row3.special1{
+	width: 112px;
+}
+
+.sc.row3.normal1{
+	width: 734px;
+}
+
+.sc.row3.special2{
+	width: 114px;
+}
+
+.sc.row4.special1{
+	width: 134px;
+}
+
+.sc.row4.special2{
+	width: 160px;
+}
+
+.sc.row4.normal1{
+	width: 666px;
+}
+
+.sc.row5.special1,.sc.row5.special2,.sc.row5.special3{
+	width: 110px;
+}
+
+.sc.row5.special4{
+	width: 140px;
+}
+
+.sc.row5.normal1{
+	width: 490px;
+}
+
+.sc.header, .sc.footer{
+	height: 22px;
+	width: 960px;
+}
+
+/****************************************
+ * Editor css
+ ***************************************/
+
+.editor{
+	width: 600px;
+	min-height: 340px;
+	padding: 20px;
+	margin-left: -320px;
+	background: #fff;
+	position: absolute;
+	top: 330px;
+	left: 50%;
+	z-index: 999999;
+	box-shadow: 2px 2px 6px #6e6e6e;
+	display: none;
+}
+
+.close{
+	width: 10px;
+	height: 10px;
+	line-height: 10px;
+	position: relative;
+	top: -10px;
+	left: 10px;
+	float:right;
+	text-align: right;
+	cursor: pointer;
+}
+
+.editor h1{
+	width: 600px;
+	text-align: center;
+	font-size: 16pt;
+}
+
+.styling-section label{
+	text-align: center !important;
+	width: 3000px !important;
+	margin: 5px 0px !important;
+}
+
+.editor input{
+	width: 250px;
+	height: 28px;
+	margin: 5px 25px 25px 25px;
+}
+
+.control-third{
+	float: left;
+	width: 300px;
+	margin-top: 30px;
+}
+
+.styling-section{
+	display: none;
+}
+
+.colorpicker{
+	position: relative;
+	z-index: 9999999 !important;
+}
+
+.gradient1{
+	margin: 10px 110px;
+	width: 78px;
+	height: 78px;
+	border-radius: 6px;
+	border: solid 1px gray;
+}
+
+.gradient2{
+	width: 250px;
+	margin: 0px 25px;
+}
+
+
+/****************************************
+ * Control css
+ ***************************************/
+
+.control{
+	width: 106px;
+	height: 26px;
+	line-height: 26px;
+	background: #f2f2f2;
+	margin: 5px 97px;
+	text-align: center;
+	border-radius: 6px;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	margin-bottom: 25px;
+}
+
+.minus-control{
+	float: left;
+	width: 33px;
+	cursor: pointer;
+	border:1px solid gray;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.control-value{
+	float: left;
+	outline: 0;
+	width: 36px !important;
+	height: 28px !important;
+	padding: 0px !important;
+	border: none;
+	text-align: center;
+	margin: 0px !important;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+
+.plus-control{
+	float: left;
+	width: 33px;
+	cursor: pointer;
+	border:1px solid gray;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+/****************************************
+ * CSS output css
+ ***************************************/
+
+.css-output{
+    float: left;
+    width: 920px;
+    min-height: 460px;
+    padding: 20px;
+    background: #e2e2e2;
+    border-radius: 4px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.css-output h2{
+	text-align: center;
+	font-size: 20pt;
+}
+
+#code{
+    line-height: 2;
+    width: 920px;
+    min-height: 460px;
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+#code2{
+	display: none;
+}
+
+.mode-alert{
+	width: 260px;
+	padding: 20px 40px;
+	border-radius: 6px;
+	background: rgba(0,0,0,0.7);
+	position: fixed;
+	top: 240px;
+	left: 50%;
+	margin-left: -150px;
+	z-index: 999999;
+	text-align: center;
+	display: none;
+}
+
+.mode-alert h2{
+	color: #fff;
+	font-size: 16pt;
+}
+
+

@@ -1,0 +1,234 @@
+/*
+======================
+==Keyboard Styling==
+======================
+*/
+
+.desktop .kmw-osk-frame, .desktop .kmw-osk-inner-frame, .desktop .kmw-key-layer-group {
+    background-color: #95C6D6 !important;
+}
+
+.desktop .kmw-key-default {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #EEEFF0), color-stop(100%, #D3D3D9));
+    background-image: -moz-linear-gradient(#EEEFF0,#D3D3D9);
+    background-color: #E0E0E4;
+}
+
+.desktop .kmw-key-touched {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #B5B5B5), color-stop(100%, #93969B));
+    background-image: -moz-linear-gradient(#B5B5B5, #93969B) !important;
+    background-color: #B5B5B5;
+ }
+ 
+.desktop .kmw-key-shift{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #DBDBDB), color-stop(100%, #C0C0C4));
+    background-image: -moz-linear-gradient(#DBDBDB, #C0C0C4) !important;
+    background-color: #DBDBDB;
+}
+ 
+ .desktop .kmw-key-shift-on {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #B5B5B5), color-stop(100%, #93969B));
+    background-image: -moz-linear-gradient(#B5B5B5, #93969B) !important;
+    background-color: #93969B;
+ }
+ 
+ .desktop  .kmw-key-shift .kmw-key-text, .desktop  .kmw-key-shift-on .kmw-key-text { color: gray; font-size: 0.9em !important; text-shadow: 0 1px 1px #fff;}
+ .desktop  .kmw-key-shift .kmw-key-text, .desktop  .kmw-key-shift-on .kmw-key-text { top: 10%; }
+ .desktop  .kmw-key-label { top: 5%; }
+ .desktop  .kmw-key-label { left: 10%; }
+ .desktop  .kmw-key-default .kmw-key-text { top: 25%; }
+  .desktop .kmw-footer, .desktop .kmw-title-bar { background: #2EADD3 !important; }
+  .desktop .kmw-title-bar div{min-height: 100%;}
+ .kmw-osk-frame, .kmw-osk-inner-frame { border-color: #2EADD3 !important; }
+ .kmw-key-shift, .kmw-key-shift-on { border-width: 2px !important; }
+ .kmw-key-shift, .kmw-key-shift-on { border-radius: 6px !important; }
+ .kmw-key-shift, .kmw-key-shift-on { border-color: #95C6D6 !important; }
+ .kmw-key-default { border-width: 2px !important; }
+ .kmw-key-default { border-radius: 6px !important; }
+ .kmw-key-default { border-color: #95C6D6 !important; }
+ .kmw-key-label { color: #2EADD3 !important; }
+ .kmw-key-label { top: 10% !important; }
+ .kmw-key-label { left: 15% !important; }
+ .kmw-key-default {
+    color: #313149;
+ }
+
+ 
+ /* 
+======================
+==Keyboard Styling==
+======================
+*/
+
+.tablet .kmw-osk-frame, .tablet .kmw-osk-inner-frame, .tablet .kmw-key-layer-group {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #9199A4), color-stop(50%, #7D8591), color-stop(100%, #535C69)) !important;
+    background-color: #9199A4;
+    border-top: 1px solid #3A3D42 !important;
+    padding-top: 3px !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset !important;
+}
+
+.tablet .kmw-key-shift {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #EEEFF0), color-stop(50%, #E0E0E4), color-stop(100%, #D3D3D9));
+    background-color: #E0E0E4;
+    -webkit-box-shadow: #333 1px 1px 5px 0px;
+    border-color: rgba(255, 255, 255, 0.45) -moz-use-text-color -moz-use-text-color;
+    border-width: 1px;
+    border-radius: 6px;
+    text-shadow: 0 1px 1px white;
+}
+
+.tablet .kmw-key-shift, .tablet .kmw-key-shift-on {
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: #71717A;
+}
+
+ .tablet .kmw-key-shift-on {
+    background-image: -webkit-linear-gradient(#B5B5B5, #93969B) !important;
+ }
+ 
+ .tablet .kmw-key-touched {
+    background-image: -webkit-linear-gradient(#B5B5B5, #93969B) !important;
+ }
+ 
+.tablet #kmw-popup-keys{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #9199A4), color-stop(50%, #7D8591), color-stop(100%, #535C69)) !important;
+    padding-top: 1px !important;
+    border: 2px solid #7D8591 !important;
+}
+
+.tablet #kmw-popup-keys .arrow-border{
+    border-top-color: #7D8591 !important;
+}
+
+.tablet #kmw-popup-keys .arrow-content{
+    border-top-color: #535C69 !important;
+}
+ 
+.tablet .kmw-key-default {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #EEEFF0), color-stop(50%, #E0E0E4), color-stop(100%, #D3D3D9));
+    background-color: #E0E0E4;
+    -webkit-box-shadow: #333 1px 1px 5px 0px;
+    border-color: rgba(255, 255, 255, 0.45) -moz-use-text-color -moz-use-text-color;
+    border-width: 1px;
+    border-radius: 6px;
+    text-shadow: 0 1px 1px white;
+}
+.tablet .kmw-key-shift .kmw-key-text {
+    color: gray;
+    font-size: 0.9em !important;
+    text-shadow: 0 1px 1px #fff;
+}
+
+.tablet .kmw-key-shift-on .kmw-key-text{
+    color: #fff;
+    font-size: 0.9em !important;
+    text-shadow: 0 1px 1px gray;
+}
+
+.tablet .kmw-key-default .kmw-key-text {
+    top: 15%;
+}
+
+.tablet .kmw-spacebar-caption{
+    color: #B2B2B2 !important;
+}
+
+.tablet .kmw-key-popup-icon{
+  text-shadow: 0 1px 1px #fff;
+}
+
+#kmw-language-menu p {
+  color: #000 !important; 
+}
+
+#kmw-language-menu .selected {
+  background-color: gray !important; 
+}
+
+
+/* 
+======================
+==Keyboard Styling==
+======================
+*/
+
+.phone .kmw-osk-frame, .phone .kmw-osk-inner-frame, .phone .kmw-key-layer-group {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #8E959E), color-stop(50%, #666C75), color-stop(100%, #3D434C)) !important;
+    background-color: #9199A4;
+    border-top: 1px solid #3A3D42 !important;
+    padding-top: 3px !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset !important;
+}
+
+.phone .kmw-key-shift {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #fff), color-stop(100%, #D3D3D9));
+    background-color: #E0E0E4;
+    border-color: rgba(255, 255, 255, 0.45) -moz-use-text-color -moz-use-text-color;
+    border-width: 1px;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px white;
+}
+
+.phone .kmw-key-shift, .tablet .kmw-key-shift-on {
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: #71717A;
+    text-shadow: 0 1px 1px white;
+}
+
+.phone .kmw-key-shift-on {
+    background-image: -webkit-linear-gradient(#B5B5B5, #93969B) !important;
+ }
+ 
+.phone .kmw-key-touched {
+    background-image: -webkit-linear-gradient(#B5B5B5, #93969B) !important;
+ }
+ 
+.phone #kmw-popup-keys{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #8E959E), color-stop(50%, #666C75), color-stop(100%, #3D434C)) !important;
+    padding-top: 1px !important;
+    border: 2px solid #7D8591 !important;
+}
+
+.phone #kmw-popup-keys .kmw-key-text{
+    top: -10%;
+}
+
+.phone #kmw-popup-keys .arrow-border{
+    border-top-color: #7D8591 !important;
+}
+
+.phone #kmw-popup-keys .arrow-content{
+    border-top-color: #3D434C !important;
+}
+ 
+.phone .kmw-key-default {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #fff), color-stop(100%, #D3D3D9));
+    background-color: #E0E0E4;
+    border-color: rgba(255, 255, 255, 0.45) -moz-use-text-color -moz-use-text-color;
+    border-width: 1px;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px white;
+}
+
+.phone .kmw-key-shift .kmw-key-text {
+    color: gray;
+    font-size: 0.9em !important;
+    text-shadow: 0 1px 1px #fff;
+}
+
+.phone .kmw-key-shift-on .kmw-key-text{
+    color: #fff;
+    font-size: 0.9em !important;
+    text-shadow: 0 1px 1px gray;
+}
+
+.phone .kmw-key-default .kmw-key-text {
+    top: 10%;
+}
+
+.phone .kmw-spacebar-caption{
+    color: #B2B2B2 !important;
+}
