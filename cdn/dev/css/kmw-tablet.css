@@ -178,6 +178,15 @@ header > div > img {
   background-image:url('../img/btn_google_small_white.png');
 }
 
+#copy.links, #copy{
+  background-image:url('../img/btn_copy_small.png');
+
+}
+
+#copy.linksOff{
+  background-image:url('../img/btn_copy_small_white.png');
+}
+
 #buttons div * {
   display:inline;
   }
@@ -201,11 +210,8 @@ div.linksOff * {
   font: bold 0.8em Helvetica, Verdana, Arial, sans-serif;
   text-shadow: 0 1px 1px white;
   }
-  
-#copy {
-  display:none;
-  }
-  
+
+
 /* Aside Elements */
 
 aside {
@@ -490,10 +496,6 @@ nav a {
     height: 40px;
     }      
   #twitter { margin-left: 10px; margin-right: 10px;}
-  
-  #copy{
-    display: none !important;
-  }
   
   #font{
     position: relative;

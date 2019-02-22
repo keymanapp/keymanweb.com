@@ -108,7 +108,7 @@ header,#headerBackground,#headerLeft,#headerRight {
     display: none;
   }
 
-/* KMW App Buttons */	
+/* KMW App Buttons */
           
 #buttons {
   float: right;
@@ -173,6 +173,15 @@ header,#headerBackground,#headerLeft,#headerRight {
   background-image:url('../img/btn_google_white.png');
 }
 
+#copy,#copy.links{
+  background-image:url('../img/btn_copy.png');
+
+}
+
+#copy.linksOff{
+  background-image:url('../img/btn_copy_white.png');
+}
+
 #buttons div * {
   display:inline;
   }
@@ -205,10 +214,6 @@ div.linksOff * {
   left: 6px !important;
 }
 
-#copy {
-  display:none;
-  }
-  
 #mobile-font{
   display: none;
   width: 40px;

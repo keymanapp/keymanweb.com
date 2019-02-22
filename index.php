@@ -44,7 +44,7 @@ require_once('inc/head.php');
       <div id='search' class='linksOff'><p>Search</p></div>
       <div id="font"><span id="mobile-font-size" style="font-size:12pt">A</span><span style="font-size:20pt">A</span><p>Font Size</p></div>
       <hr/>
-      <div id='copy' class='links'><p>Copy</p></div>
+      <div id='copy' class='linksOff' data-clipboard-target="#message"><p>Copy</p></div>
     </div>
     <div id="font-size">
       <span class="font-letter" id="font-small">A</span><div id="slider"></div><span class="font-letter" id="font-large">A</span>
@@ -105,7 +105,6 @@ require_once('inc/head.php');
             <div>
               <a href="https://facebook.com/KeymanApp" target="_blank" data-icon='&#xf203;'>Facebook</a>
               <a href="https://twitter.com/keyman" target="_blank" data-icon='&#xf202;'>Twitter</a>
-              <a href="https://plus.google.com/+KeymanApp" target="_blank" data-icon='&#xf206;'>Google+</a>
               <a href="https://blog.keyman.com/" target="_blank" data-icon='&#xf413;'>Keyman blog</a>
               <a href="https://github.com/keymanapp" target="_blank" data-icon='&#xf200;'>GitHub</a>
               <a href="https://community.software.sil.org/c/keyman" target="_blank" id='footer-community'>Keyman Community</a>
