@@ -112,7 +112,7 @@ $(document).ready(function() {
 
   /* Keep a static copy of message length */
   window.lastMessageLength=-1;
-  
+
   // Detect desktop browser height and modify css
   function updateSize(){
     // Set OSK size/position
@@ -155,39 +155,7 @@ $(document).ready(function() {
   }
 
   window.onresize = updateSize;
-   
-  // Check for flash support
-  var hasFlash = false;
-  try {
-    var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-    if(fo) hasFlash = true;
-  }catch(e){
-    if(navigator.mimeTypes ["application/x-shockwave-flash"] != undefined) hasFlash = true;
-  }
-  if (!hasFlash) {
-    $('#copy').hide();
-    $('#buttons').children('hr').hide();
-  }
-  
-  // Copy functionality
-  var zclipInit = function() {
-    !$("#copy").zclip ? window.setTimeout(function() {zclipInit();}, 100) :
-    $("#copy").zclip({
-      path: zeroClipboardSwfPath,
-      copy: function(){
-        return $('#message').val();
-      },
-      afterCopy:function(){
-        $('#copy').children('p').html('Copied');
-        setTimeout(function(){
-          $('#copy').children('p').html('Copy');
-        },2000);
-      }
-    });
-  }
-  
-  zclipInit();
-  
+
   //$('#example').css('height','50px');
   
   /* Check for result for other modules in the query string */
@@ -224,7 +192,7 @@ $(document).ready(function() {
       function(data)
       {
         box.remove();
-	$('.messageBox').focus();
+        $('.messageBox').focus();
         if(data['result'] == 'success') showTwitterSuccess(data['data'], focusMessage);
         else if(data['result'] == 'login') location.href = data['login'];
         else showError('twitter', data['error'], focusMessage);
@@ -237,9 +205,38 @@ $(document).ready(function() {
     var newURL='http://www.google.com/search?q='+encodeURIComponent($('#message').val());
     window.open(newURL,'_blank');
     //location.href = 'http://www.google.com/search?q='+encodeURIComponent($('#message').val());
-  });  
+  });
 
-  //Cannot detect change of content from KMW, so use a timer instead to refresh button state 
+  var copy = document.getElementById('copy');
+  var clipboard = new ClipboardJS(copy);
+  var isSupported = ClipboardJS.isSupported('copy');
+  if (isSupported === false) {
+    $('#copy').attr('class', 'linksOff');
+    $('#copy').attr('disabled', 'disabled');
+    $('#copy').hide();
+  }
+  $('#message').removeAttr('disabled');
+
+
+  clipboard.on('success', function(e) {
+    //console.log(e);
+    $('#copy').children('p').html('Copied');
+    e.clearSelection();
+    setTimeout(function(){
+        $('#copy').children('p').html('Copy');
+    },2000);
+  });
+
+  clipboard.on('error', function(e) {
+    //console.log(e);
+    $('#copy').children('p').html('Copy Failed');
+    e.clearSelection();
+    setTimeout(function(){
+        $('#copy').children('p').html('Copy');
+    },2000);
+  });
+
+  //Cannot detect change of content from KMW, so use a timer instead to refresh button state
   //$('#message').bind("keypress keyup keydown change click focus blur", refreshButtons);
   window.setInterval(refreshButtons,200);  
 });
@@ -254,8 +251,10 @@ function refreshButtons() {
   // if message length is 0, use white SM buttons
   if(len == 0) {
     $('#buttons').children('div').attr('class','linksOff');
+    $('#buttons div').attr('disabled', 'disabled');
   } else {
     $('#buttons').children('div').attr('class','links');
+    $('#buttons div').removeAttr('disabled');
   }
 
   if(len != lastMessageLength) {
@@ -263,12 +262,6 @@ function refreshButtons() {
     
     $('#twitter span').text((140 - len).toString()).toggleClass('long', len > 140);
     $('#twitter span').toggle(len > 0);
-    
-    if(len == 0) {
-      $('#buttons div').attr('disabled', 'disabled')
-    } else {
-      $('#buttons div').removeAttr('disabled');
-    }
     
     if(len > 140) {
       $('#twitter').attr('disabled', 'disabled');

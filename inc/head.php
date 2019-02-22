@@ -17,7 +17,7 @@
     $kmwbuild = $json->version;
   } else {
     // If the get-version API fails, we'll use the latest known version
-    $kmwbuild = "2.0.469";
+    $kmwbuild = "10.0.103";
   }
 
   $version = explode(".", $kmwbuild);
@@ -47,7 +47,6 @@
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
       
 <script type="text/javascript">
-  var zeroClipboardSwfPath = "<?php echo cdn("js/ZeroClipboard.swf"); ?>";
   var demoDomain="<?php echo $site_keymanwebdemo; ?>";
   var KeymanWeb_StaticRoot = "<?php echo $staticDomainRoot; ?>";
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
@@ -140,6 +139,7 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
 
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
