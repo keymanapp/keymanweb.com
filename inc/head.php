@@ -13,13 +13,19 @@
   if($json) {
     $json = json_decode($json);
   }
+    
   if($json && property_exists($json, 'version')) {
     $kmwbuild = $json->version;
   } else {
     // If the get-version API fails, we'll use the latest known version
     $kmwbuild = "10.0.103";
   }
-
+  
+  // TEMPORARY DOWNGRADE DUE TO ISSUE IN kmwuitoolbar.ts:340:
+  // Uncaught TypeError: a.util.za is not a function
+  //  at p.N (kmwuitoolbar.ts:340)
+  $kmwbuild = "10.0.103";
+  
   $version = explode(".", $kmwbuild);
 
   if(intval($version[0]) >= 10) {
