@@ -21,11 +21,6 @@
     $kmwbuild = "10.0.103";
   }
   
-  // TEMPORARY DOWNGRADE DUE TO ISSUE IN kmwuitoolbar.ts:340:
-  // Uncaught TypeError: a.util.za is not a function
-  //  at p.N (kmwuitoolbar.ts:340)
-  $kmwbuild = "10.0.103";
-  
   $version = explode(".", $kmwbuild);
 
   if(intval($version[0]) >= 10) {
