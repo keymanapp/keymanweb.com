@@ -15,11 +15,12 @@ function loaded() {
         p['height'] = 382;
         p['left'] = appLeft;
         p['top'] = appTop;
-        tavultesoft['keymanweb']['setActiveKeyboard']('us','eng');
-        tavultesoft['keymanweb']['osk']['show'](true);
-        tavultesoft['keymanweb']['osk']['setRect'](p);
+        var kmw=window['keyman'];
+        kmw.setActiveKeyboard('us','eng');
+        kmw['osk']['show'](true);
+        kmw['osk']['setRect'](p);
         $('.screener').css('top',p['top']);
-        if (tavultesoft['keymanweb']['osk'].height == 344) {
+        if (kmw['osk'].height == 344) {
             window.clearInterval(a);
         }
     }

@@ -2,10 +2,10 @@ if(typeof KeyRenderer == 'undefined')
 {
   var KeyRenderer = new function()
   {
-    if(location.hostname.indexOf('tavultesoft.local')>=0)
-      var site='s.keymanweb.tavultesoft.local';
+    if(location.hostname.indexOf('keymanweb.com.local')>=0)
+      var site='s.keyman.com.local';
     else
-      var site='s.keymanweb.com';
+      var site='s.keyman.com';
   
     this.render = function(s)
     {

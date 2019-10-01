@@ -24,7 +24,7 @@
   $version = explode(".", $kmwbuild);
 
   if(intval($version[0]) >= 10) {
-    $kmwroot = "keyman";
+    $kmwroot = "window.keyman";
   } else {
     $kmwroot = "tavultesoft.keymanweb";
   }
