@@ -15,12 +15,12 @@ function loaded() {
         p['height'] = 382;
         p['left'] = appLeft;
         p['top'] = appTop;
-        var kmw=window['keyman'];
+        var kmw=window.keyman;
         kmw.setActiveKeyboard('us','eng');
-        kmw['osk']['show'](true);
-        kmw['osk']['setRect'](p);
+        kmw.osk.show(true);
+        kmw.osk.setRect(p);
         $('.screener').css('top',p['top']);
-        if (kmw['osk'].height == 344) {
+        if (kmw.osk.height == 344) {
             window.clearInterval(a);
         }
     }

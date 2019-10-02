@@ -5,8 +5,8 @@ $.urlParam = function(name){
 }
 
 function getKeymanWeb() {
-  if(window.keyman) {
-    return window.keyman;
+  if(window.tavultesoft) {
+    return window.tavultesoft.keymanweb;
   }
   return keyman;
 }

@@ -18,13 +18,13 @@
     $kmwbuild = $json->version;
   } else {
     // If the get-version API fails, we'll use the latest known version
-    $kmwbuild = "12.0.88";
+    $kmwbuild = "12.0.89";
   }
-  
+
   $version = explode(".", $kmwbuild);
 
   if(intval($version[0]) >= 10) {
-    $kmwroot = "window.keyman";
+    $kmwroot = "keyman";
   } else {
     $kmwroot = "tavultesoft.keymanweb";
   }
