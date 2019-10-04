@@ -59,7 +59,11 @@ require_once('inc/head.php');
 	<aside id='offer'>
 	  <div class='box' id='keymandesktop'>
 		  <!--<h3>Windows Version</h3>-->
-		  <p><span id='desktop-title'>Use this keyboard in any Windows app!</span> <a id='keyman-desktop-download' href='<?php echo "http://$site_tavultesoft/go/download.php" ?>'><img src="<?php echo cdn("img/small_download.png"); ?>" alt='Download' title='Download free and open source Keyman Desktop with this keyboard bundled' /></a><span id='free-open-source'>Free and open source!</span></p>
+		  <p><span id='desktop-title'>Use this keyboard in any Windows app!</span>
+              <a id='keyman-desktop-download' href='<?= "{$site_protocol}{$site_keyman}/keyboards/" ?>'>
+              <img src="<?php echo cdn("img/small_download.png"); ?>" alt='Download'
+              title='Download free and open source Keyman Desktop with this keyboard bundled' /></a>
+              <span id='free-open-source'>Free and open source!</span></p>
 	  </div>
 	  <div class='box' id='bookmarklet'>
 	    <h3>Browser Add-in</h3>

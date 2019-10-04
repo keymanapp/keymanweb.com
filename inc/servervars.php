@@ -43,15 +43,15 @@
     $staticDomainRoot="https://s.keyman.com/";
   } else {
     $TestServer = true;
-    $url_keymanweb_res = "http://r.keymanweb.com{$site_suffix}";
-    $staticDomainRoot="http://s.keyman.com{$site_suffix}/";
+    $url_keymanweb_res = "https://r.keymanweb.com"; /// local dev domain is usually not available
+    $staticDomainRoot="https://s.keyman.com/";
   }
 
   $site_keymanwebhelp = "help.keyman.com{$site_suffix}";
   $site_keymanwebdemo = "keymanweb.com{$site_suffix}";
-  $site_tavultesoft = "tavultesoft.com{$site_suffix}";
-  
-  $staticDomain="s.keyman.com{$site_suffix}/kmw/live";
+  $site_keyman        = "keyman.com";
+
+  $staticDomain="s.keyman.com/kmw/engine";
 
   function cdn($file) {
     global $cdn, $staticDomain, $TestServer;

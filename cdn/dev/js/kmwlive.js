@@ -449,8 +449,8 @@ function updateDownload(kbd) {
     $('#keymandesktop').hide();
   }else{
     var kbdname = kbd.InternalName.substr(9);
-    var rex = /^(.+\.php)/.exec($('#keyman-desktop-download').attr('href'));
-    var url = rex[0] + '?Keyboard='+kbdname;
+    var rex = $('#keyman-desktop-download').attr('href');
+    var url = rex + kbdname;
     $('#keyman-desktop-download').attr('href', url);
     $('#keyman-desktop-download').unbind('click').click(function() {
       if(typeof _gaq != 'undefined')
