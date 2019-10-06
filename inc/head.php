@@ -1,19 +1,19 @@
 <?php
   session_start();
   require_once('servervars.php');
-  
-  if(isset($_REQUEST['tier']) && 
+
+  if(isset($_REQUEST['tier']) &&
       in_array($_REQUEST['tier'], array('alpha','beta','stable'), TRUE)) {
     $tier = $_REQUEST['tier'];
   } else {
     $tier = 'stable';
-  }    
+  }
 
   $json = @file_get_contents("{$url_keymanweb_res}/code/get-version/web/$tier");
   if($json) {
     $json = json_decode($json);
   }
-    
+
   if($json && property_exists($json, 'version')) {
     $kmwbuild = $json->version;
   } else {
@@ -46,14 +46,14 @@
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("fonts/fonts.css"); ?>" />
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
-      
+
 <script type="text/javascript">
   var demoDomain="<?php echo $site_keymanwebdemo; ?>";
   var KeymanWeb_StaticRoot = "<?php echo $staticDomainRoot; ?>";
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
 
-  // Load (only) the appropriate CSS for the device form factor 
-  
+  // Load (only) the appropriate CSS for the device form factor
+
   var mapBCP47_ISO6393={}, mapISO6393_BCP47={};
   (function(d,e) {
     d.aar='aa';d.abk='ab';d.afr='af';d.aka='ak';d.amh='am';d.ara='ar';d.arg='an';d.asm='as';d.ava='av';d.ave='ae';d.aym='ay';d.aze='az';d.bak='ba';
@@ -87,7 +87,7 @@
     e.ug='uig';e.uk='ukr';e.ur='urd';e.uz='uzb';e.ve='ven';e.vi='vie';e.vo='vol';e.wa='wln';e.wo='wol';e.xh='xho';e.yi='yid';e.yo='yor';e.za='zha';
     e.zh='zho';e.zu='zul';
   })(mapISO6393_BCP47, mapBCP47_ISO6393);
-  
+
   function iso6393ToBCP47(iso) {
     var bcp=mapISO6393_BCP47[iso];
     return bcp?bcp:iso;
@@ -102,9 +102,9 @@
     if(locationHash) {
       localKeyboard = locationHash[2];
       localLanguage = locationHash[1];
-      
+
       // Translate the language ID if necessary between ISO639-3 <> BCP47
-<?php      
+<?php
       if($version[0] >= 10) {
         // Translate to BCP-47
         echo "      localLanguage = iso6393ToBCP47(localLanguage);\n";
@@ -122,7 +122,7 @@
   }
 
   loadKeyboardFromHash();
-  
+
   if(navigator.userAgent.indexOf('Opera Mini') >= 0) {
     location.href='mini.php';
   }
@@ -151,13 +151,13 @@
  <?=$kmwroot?>.addKeyboards();
 
  pageLoading = false;
- 
+
  // Add a script element as a child of the body
  function downloadJSAtOnload() {
   downloadJS("<?php echo cdn("js/jquery.zclip.js"); ?>");
   downloadJS("<?php echo cdn("js/kmwlive.js"); ?>");
  }
- 
+
  function downloadJS(src) {
  var element = document.createElement("script");
  element.src = src;
@@ -216,33 +216,6 @@
   })();
 </script>
 
-<script>
-  function isIEOnWin81orEarlier() {
-    // If we are running IE11/or earlier on Windows 8.1 or earlier, then
-    // the autolink generates filenames that are misrecognised for download links,
-    // meaning users on those browesrs cannot easily download Keyman.
-    // Easiest way to test this is to test against navigator.userAgent
-    // Yes, we get some muddled analytics of cross-site of IE visitors but 
-    // it's a small enough percentage that we don't need to worry about it.
-    return (navigator.userAgent.indexOf('Trident/') >= 0 && navigator.userAgent.indexOf('Windows NT 6') >= 0) || 
-           (document.documentMode < 11);
-  }
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-249828-1',  'auto', {'allowLinker': !isIEOnWin81orEarlier()});
-    if(!isIEOnWin81orEarlier()) { 
-      ga('require', 'linker');
-      ga('linker:autoLink', 
-        ['keyman.com', 'www.keyman.com', 
-         'keymanweb.com', 'www.keymanweb.com', 
-         'help.keyman.com', 
-         'blog.keyman.com',
-        'www.tavultesoft.com', 'tavultesoft.com', 'secure.tavultesoft.com'] );
-    }
-  ga('send', 'pageview');
-</script>
+<?php require_once('analytics.php'); ?>
 
 </head>
