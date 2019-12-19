@@ -9,16 +9,21 @@
     $tier = 'stable';
   }
 
-  $json = @file_get_contents("{$url_keymanweb_res}/code/get-version/web/$tier");
-  if($json) {
-    $json = json_decode($json);
+  if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
+    $kmwbuild = $_REQUEST['version'];
   }
+  else {
+    $json = @file_get_contents("{$url_keymanweb_res}/code/get-version/web/$tier");
+    if($json) {
+      $json = json_decode($json);
+    }
 
-  if($json && property_exists($json, 'version')) {
-    $kmwbuild = $json->version;
-  } else {
-    // If the get-version API fails, we'll use the latest known version
-    $kmwbuild = "12.0.89";
+    if($json && property_exists($json, 'version')) {
+      $kmwbuild = $json->version;
+    } else {
+      // If the get-version API fails, we'll use the latest known version
+      $kmwbuild = "12.0.89";
+    }
   }
 
   $version = explode(".", $kmwbuild);
@@ -122,10 +127,6 @@
   }
 
   loadKeyboardFromHash();
-
-  if(navigator.userAgent.indexOf('Opera Mini') >= 0) {
-    location.href='mini.php';
-  }
 
   // Set JS variable from twitter SESSION value
   var twitterMessage;
