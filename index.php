@@ -1,32 +1,30 @@
 <?php /*
   Name:             Index.php
   Copyright:        Copyright (C) 2013 Tavultesoft Pty Ltd.
-  Documentation:    
+  Documentation:
   Description:      Wrapper for KeymanWeb LIVE demo page
   Create Date:      11 Apr 2013
 
-  Modified Date:    
+  Modified Date:
   Authors:          jmdurdin,jkirkham
-  Related Files:    
-  Dependencies:     
+  Related Files:
+  Dependencies:
 
-  Bugs:             
-  Todo:             
-  Notes:            
+  Bugs:
+  Todo:
+  Notes:
   History:          11 Apr 2013 - jmd - Create
 */
 require_once('inc/head.php');
-
-//phpinfo();
 
 ?>
 <body>
 
 <header>
-  <div id='headerBackground'> 
+  <div id='headerBackground'>
     <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' /></div>
     <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
-    <div id='headerRight'><a href='https://www.tavultesoft.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a></div>
+    <div id='headerRight'><a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a></div>
   </div>
 </header>
 
@@ -76,7 +74,7 @@ require_once('inc/head.php');
 			<div><a href='https://keyman.com/developer/keymanweb/'>Learn more</a> | <a href='http://keyman.com/developer/keymanweb'>Get the source</a></div>
 		</div>
 	</aside>
-  	
+
 </section>
 
 <!-- Footer copied from keyman.com -->

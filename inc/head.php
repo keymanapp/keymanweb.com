@@ -46,6 +46,23 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" >
 
 <title>KeymanWeb.com <?php if($tier != 'stable') echo "($tier)"; ?></title>
+
+<?php
+/* Our local CDN version is identical to this file:
+  <script
+    src="https://browser.sentry-cdn.com/5.28.0/bundle.min.js"
+    integrity="sha384-1HcgUzJmxPL9dRnZD2wMIj5+xsJfHS+WR+pT2yJNEldbOr9ESTzgHMQOcsb2yyDl"
+    crossorigin="anonymous"
+  ></script>*/
+?>
+<script src="<?= cdn('js/sentry.bundle.5.28.0.min.js'); ?>"></script>
+  <script>
+    Sentry.init({
+      dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
+    });
+  </script>
+
+
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
