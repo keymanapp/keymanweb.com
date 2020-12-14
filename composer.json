@@ -1,0 +1,6 @@
+{
+    "name": "keyman/keymanweb.com",
+    "require": {
+        "sentry/sdk": "^3.1"
+    }
+}
