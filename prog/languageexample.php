@@ -20,7 +20,10 @@
                     25 Jan 2010 - mcdurdin - Tweak display of "no keyboard" text
                     20 Aug 2010 - mcdurdin-admin - Fix non-english requests
 */
-  require_once('../inc/servervars.php');
+  require_once __DIR__ . '/../_include/autoload.php';
+  require_once __DIR__ . '/../inc/servervars.php';
+
+  use \Keyman\Site\Common\KeymanHosts;
 
   if(isset($_REQUEST['keyboard'])) $keyboard = $_REQUEST['keyboard']; else $keyboard = '';
   if(isset($_REQUEST['language'])) $language = $_REQUEST['language']; else $language = '';
@@ -32,17 +35,23 @@
     $data = renderLanguageExample($keyboard, $language);
   }
 
+  function renderHelpIcon($keyboard, $language) {
+    if(empty($keyboard)) return '';
+    $site = KeymanHosts::Instance()->help_keyman_com;
+    $morehelp =
+      "<a target='KeymanWebHelp' onclick='javascript:return openALink(this)' " .
+      "title='Keyboard help'" .
+      "href='$site/go?" .
+      (empty($language) ? "" : "language=$language&amp;") .
+      "keyboard=$keyboard'> <img src='".cdn("img/helpIcon.png")."'> </a>";
+    return $morehelp;
+  }
+
   if($data !== FALSE) {
     echo $data;
   } else {
-    // TODO: unify with keyboard-help-ajax.php
-    $morehelp = "  <a target='KeymanWebHelp' onclick='javascript:return openALink(this)' " .
-      "title='Keyboard help'" .
-      "href=\"http://$site_keymanwebhelp/go?language=$language&amp;keyboard=$keyboard\">Keyboard help</a>";
-    $morehelp = "  <a target='KeymanWebHelp' onclick='javascript:return openALink(this)' " .
-      "title='Keyboard help'" .
-      "href=\"http://$site_keymanwebhelp/go?language=$language&amp;keyboard=$keyboard\"> <img src='".cdn("img/helpIcon.png")."'> </a>";
-
-    echo '<br/>No example is available, please refer to keyboard help'.$morehelp;
+    echo "<br/>No example is available, please refer to keyboard help";
   }
+
+  echo renderHelpIcon($keyboard, $language);
 ?>

@@ -20,7 +20,7 @@
 
   use \Keyman\Site\Common\KeymanHosts;
 
-  function renderLanguageExample($keyboard, $language){
+  function renderLanguageExample($keyboard, $language) {
     $keyboard = str_replace('Keyboard_','',$keyboard);
     $string = KeymanHosts::Instance()->api_keyman_com . "/keyboard/" . rawurlencode($keyboard);
     $json = @file_get_contents($string);
