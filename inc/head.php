@@ -165,8 +165,12 @@
 
 <script type='text/javascript'>
  var pageLoading = true;
- <?=$kmwroot?>.init({attachType:'auto'}); //{resources:'resources'});
- <?=$kmwroot?>.addKeyboards();
+ <?=$kmwroot?>.init({
+    attachType:'auto',
+    //{resources:'resources'});
+  }).then(function() {
+    <?=$kmwroot?>.addKeyboards();
+  }); 
 
  pageLoading = false;
 
