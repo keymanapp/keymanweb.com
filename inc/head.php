@@ -25,14 +25,6 @@
       $kmwbuild = "12.0.89";
     }
   }
-
-  $version = explode(".", $kmwbuild);
-
-  if(intval($version[0]) >= 10) {
-    $kmwroot = "keyman";
-  } else {
-    $kmwroot = "tavultesoft.keymanweb";
-  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -127,13 +119,8 @@
 
       // Translate the language ID if necessary between ISO639-3 <> BCP47
 <?php
-      if($version[0] >= 10) {
-        // Translate to BCP-47
-        echo "      localLanguage = iso6393ToBCP47(localLanguage);\n";
-      } else {
-        // Translate from BCP-47
-        echo "      localLanguage = bcp47ToISO6393(localLanguage);\n";
-      }
+      // Translate from BCP-47
+      echo "      localLanguage = bcp47ToISO6393(localLanguage);\n";
 ?>
       document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
       document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
@@ -165,11 +152,11 @@
 
 <script type='text/javascript'>
  var pageLoading = true;
- <?=$kmwroot?>.init({
+ keyman.init({
     attachType:'auto',
     //{resources:'resources'});
   }).then(function() {
-    <?=$kmwroot?>.addKeyboards();
+    keyman.addKeyboards();
   }); 
 
  pageLoading = false;
@@ -209,7 +196,7 @@
     phones=['iPhone','Opera Mobi','OPR/'];
 
     //if('ontouchstart' in window || navigator.msMaxTouchPoints)
-    if(<?=$kmwroot?>.util.isTouchDevice()) {  // Rely on KeymanWeb's touch detection.
+    if(keyman.util.isTouchDevice()) {  // Rely on KeymanWeb's touch detection.
       // General rule to distinguish between phones and tablets
       ff=(Math.min(screen.width,screen.height) > 720) ? 'tablet' : 'mobile';
 
