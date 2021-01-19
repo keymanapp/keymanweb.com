@@ -51,6 +51,7 @@
   <script>
     Sentry.init({
       dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
+      environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
     });
   </script>
 
