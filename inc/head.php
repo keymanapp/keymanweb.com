@@ -119,8 +119,8 @@
 
       // Translate the language ID if necessary between ISO639-3 <> BCP47
 <?php
-      // Translate from BCP-47
-      echo "      localLanguage = bcp47ToISO6393(localLanguage);\n";
+      // Translate to BCP-47
+      echo "      localLanguage = iso6393ToBCP47(localLanguage);\n";
 ?>
       document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
       document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
