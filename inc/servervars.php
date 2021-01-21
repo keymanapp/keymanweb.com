@@ -15,8 +15,12 @@
   Notes:
   History:          17 Oct 2009 - mcdurdin - Alter help base dir
 */
+
   require_once __DIR__ . '/../vendor/autoload.php';
+  require_once __DIR__ . '/../_include/autoload.php';
   require_once __DIR__ . '/../_common/KeymanSentry.php';
+
+  use \Keyman\Site\Common\KeymanHosts;
 
   const SENTRY_DSN = 'https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10';
   \Keyman\Site\Common\KeymanSentry::init(SENTRY_DSN);
@@ -31,7 +35,10 @@
 
   function GetHostSuffix() {
     global $site_url;
+    if(!isset($_SERVER['SERVER_NAME'])) return '';
+
     $name = $_SERVER['SERVER_NAME'];
+
     if(stripos($name, $site_url.'.') == 0) {
       return substr($name, strlen($site_url), 1024);
     }
@@ -66,6 +73,26 @@
       return "/cdn/deploy{$cdn['/'.$file]}";
     }
     return "/cdn/dev/{$file}";
+  }
+
+
+  function get_major_version($version) {
+    return preg_replace('/^(\\d+)\\.(\\d+).*$/', '$1.$2', $version);
+  }
+
+  function get_keymanweb_version($tier) {
+    $json = @file_get_contents(KeymanHosts::Instance()->r_keymanweb_com . "/code/get-version/web/$tier");
+    if($json) {
+      $json = json_decode($json);
+    }
+
+    if($json && property_exists($json, 'version')) {
+      $version = $json->version;
+    } else {
+      // If the get-version API fails, we'll use the latest known version
+      $version = "13.0.109";
+    }
+    return $version;
   }
 
 ?>
