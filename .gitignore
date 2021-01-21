@@ -2,3 +2,4 @@
 cdn/deploy
 
 /vendor/
+.data/

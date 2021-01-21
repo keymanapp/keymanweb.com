@@ -11,20 +11,10 @@
 
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
+  } else {
+    $kmwbuild = get_keymanweb_version($tier);
   }
-  else {
-    $json = @file_get_contents("{$url_keymanweb_res}/code/get-version/web/$tier");
-    if($json) {
-      $json = json_decode($json);
-    }
-
-    if($json && property_exists($json, 'version')) {
-      $kmwbuild = $json->version;
-    } else {
-      // If the get-version API fails, we'll use the latest known version
-      $kmwbuild = "12.0.89";
-    }
-  }
+  $version = get_major_version($kmwbuild);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,26 +102,33 @@
     return iso?iso:bcp;
   }
 
+  var localKeyboard, localLanguage;
+
   function loadKeyboardFromHash() {
-    var locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i), localKeyboard, localLanguage;
+    var locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
     if(locationHash) {
       localKeyboard = locationHash[2];
       localLanguage = locationHash[1];
 
-      // Translate the language ID if necessary between ISO639-3 <> BCP47
-<?php
-      // Translate to BCP-47
-      echo "      localLanguage = iso6393ToBCP47(localLanguage);\n";
-?>
+      // Translate the language ID if necessary from ISO639-3 to BCP 47
+      localLanguage = iso6393ToBCP47(localLanguage);
+
       document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
       document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
     } else if(location.hash == '#') {
       document.cookie = 'KeymanWeb_Keyboard=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
       document.cookie = 'KeymanWeb_Toolbar=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    } else {
+      let cookie = keyman.util.loadCookie('KeymanWeb_Keyboard');
+      if(cookie['current']) {
+        var cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
+        if(cookieMatch) {
+          localKeyboard = cookieMatch[1];
+          localLanguage = iso6393ToBCP47(cookieMatch[2]);
+        }
+      }
     }
   }
-
-  loadKeyboardFromHash();
 
   // Set JS variable from twitter SESSION value
   var twitterMessage;
@@ -140,9 +137,6 @@
   <?php } ?>
 </script>
 
-<!--[if lt IE 9]>
-<script src="<?php echo cdn("js/html5.js"); ?>"></script>
-<![endif]-->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -150,41 +144,30 @@
 
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
+<!--
+<script src="http://localhost/keymanweb/release/unminified/web/keymanweb.js"></script>
+<script src="http://localhost/keymanweb/release/unminified/web/kmwuitoolbar.js"></script>
+-->
 
-<script type='text/javascript'>
- var pageLoading = true;
- keyman.init({
-    attachType:'auto',
-    //{resources:'resources'});
-  }).then(function() {
-    keyman.addKeyboards();
-  }); 
-
- pageLoading = false;
-
- // Add a script element as a child of the body
- function downloadJSAtOnload() {
-  downloadJS("<?php echo cdn("js/jquery.zclip.js"); ?>");
-  downloadJS("<?php echo cdn("js/kmwlive.js"); ?>");
- }
-
- function downloadJS(src) {
- var element = document.createElement("script");
- element.src = src;
- document.body.appendChild(element);
- }
-
- // Check for browser support of event handling capability
- if (window.addEventListener){
-  window.addEventListener("load", downloadJSAtOnload, false);
- }else if (window.attachEvent){
-  window.attachEvent("onload", downloadJSAtOnload);
- }else{
-  window.onload = downloadJSAtOnload;
- }
-</script>
-
+<script src="<?= cdn("js/jquery.zclip.js"); ?>"></script>
+<script src="<?= cdn("js/kmwlive.js"); ?>"></script>
+<script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
 <script>
+  loadKeyboardFromHash();
+  var pageLoading = true;
+
+  keyman.init({
+    attachType:'auto',
+    setActiveOnRegister:'false'
+  }).then(function() {
+    addKeyboards();
+    if(localKeyboard && localLanguage)
+      keyman.setActiveKeyboard(localKeyboard, localLanguage);
+    document.getElementById('message').focus();
+  });
+
+  pageLoading = false;
+
   (function() {
     var css = {
       "desktop" : "<?php echo cdn("css/kmw-desktop.css"); ?>",
