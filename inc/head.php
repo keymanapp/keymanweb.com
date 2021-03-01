@@ -17,10 +17,7 @@
     $tier = $_REQUEST['tier'];
   } else {
     // Select the 'stable' version unless we're in a beta cycle.
-    $beta_version   = get_major_version($kmw_builds['beta']);
-    $stable_version = get_major_version($kmw_builds['stable']);
-
-    if(version_compare($stable_version, $beta_version) < 0) {
+    if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
       $tier = 'beta';
     } else {
       $tier = 'stable';
