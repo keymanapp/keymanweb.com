@@ -2,18 +2,34 @@
   session_start();
   require_once('servervars.php');
 
-  if(isset($_REQUEST['tier']) &&
-      in_array($_REQUEST['tier'], array('alpha','beta','stable'), TRUE)) {
-    $tier = $_REQUEST['tier'];
-  } else {
-    $tier = 'stable';
-  }
+  $kmw_tiers = array('alpha', 'beta', 'stable');
+  $kmw_builds = array();
 
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
   } else {
-    $kmwbuild = get_keymanweb_version($tier);
+    foreach ($kmw_tiers as $index => $possible_tier) {
+      $kmw_builds[$possible_tier] = get_keymanweb_version($possible_tier);
+    }
   }
+
+  if(isset($_REQUEST['tier']) &&
+      in_array($_REQUEST['tier'], array('alpha','beta','stable'), TRUE)) {
+    $tier = $_REQUEST['tier'];
+  } else {
+    // Select the 'stable' version unless we're in a beta cycle.
+    $beta_version   = get_major_version($kmw_builds['beta']);
+    $stable_version = get_major_version($kmw_builds['stable']);
+
+    if($stable_version < $beta_version) {
+      $tier = 'beta';
+    } else {
+      $tier = 'stable';
+    }
+    $tier = 'stable';
+  }
+
+  $kmwbuild = $kmw_builds[$tier];
   $version = get_major_version($kmwbuild);
 ?>
 <!DOCTYPE html>
