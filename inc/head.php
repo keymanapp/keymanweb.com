@@ -54,12 +54,35 @@
   ></script>*/
 ?>
 <script src="<?= cdn('js/sentry.bundle.5.28.0.min.js'); ?>"></script>
-  <script>
-    Sentry.init({
-      dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
-      environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
-    });
-  </script>
+<script>
+  // Tags all exceptions with the active KMW instance's metadata.
+  // Compare against the definition in the main repo:
+  // - keymanapp/keyman/common/core/web/tools/sentry-manager/src/index.ts
+  //
+  // Currently separate in part b/c we can't guarantee 14.0+ in order to use
+  // the generalized sentry-manager module yet; we allow users to specify older
+  // versions of KMW for use.  Also in part b/c keymanweb.com itself may produce errors.
+  let prepareEvent = function(event) {
+    // Make sure the metadata-generation function actually exists... (14.0+)
+    if(window['keyman']['getDebugInfo']) {
+      event.extra = event.extra || {};
+      event.extra.keymanState = window['keyman']['getDebugInfo']();
+      event.extra.keymanHostPlatform = 'keymanweb.com';
+    }
+
+    return event;
+  };
+
+  // We'll let 'environment' handle 'development' vs 'production' tagging.
+  let kmw_release = $version . "-" . $tier;
+
+  Sentry.init({
+    beforeSend: prepareEvent,
+    dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
+    release: kmw_release,
+    environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
+  });
+</script>
 
 
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
