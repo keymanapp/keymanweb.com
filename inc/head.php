@@ -8,20 +8,19 @@
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
   } else {
-    foreach ($kmw_tiers as $index => $possible_tier) {
+    foreach ($kmw_tiers as $possible_tier) {
       $kmw_builds[$possible_tier] = get_keymanweb_version($possible_tier);
     }
   }
 
-  if(isset($_REQUEST['tier']) &&
-      in_array($_REQUEST['tier'], array('alpha','beta','stable'), TRUE)) {
+  if(isset($_REQUEST['tier']) && in_array($_REQUEST['tier'], $kmw_tiers, TRUE)) {
     $tier = $_REQUEST['tier'];
   } else {
     // Select the 'stable' version unless we're in a beta cycle.
     $beta_version   = get_major_version($kmw_builds['beta']);
     $stable_version = get_major_version($kmw_builds['stable']);
 
-    if($stable_version < $beta_version) {
+    if(version_compare($stable_version, $beta_version) < 0) {
       $tier = 'beta';
     } else {
       $tier = 'stable';
@@ -63,19 +62,27 @@
   // versions of KMW for use.  Also in part b/c keymanweb.com itself may produce errors.
   let prepareEvent = function(event) {
     // Make sure the metadata-generation function actually exists... (14.0+)
-    if(window['keyman']['getDebugInfo']) {
-      event.extra = event.extra || {};
-      event.extra.keymanState = window['keyman']['getDebugInfo']();
-      event.extra.keymanHostPlatform = 'keymanweb.com';
-    }
+    try {
+      if(window['keyman']['getDebugInfo']) {
+        event.extra = event.extra || {};
+        event.extra.keymanState = window['keyman']['getDebugInfo']();
+        event.extra.keymanHostPlatform = 'keymanweb.com';
+      }
+    } catch (ex) { /* Swallow any errors produced here */ }
 
     return event;
   };
 
+<?php if($tier == 'stable') { ?>
+  var sentryRelease = "<?=$version?>";
+<?php } else { ?>
+  var sentryRelease = "<?=$version."-".$tier?>";
+<?php } ?>
+
   Sentry.init({
     beforeSend: prepareEvent,
     dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
-    release: "<?=$version."-".$tier?>",
+    release: sentryRelease,
     environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
   });
 </script>
