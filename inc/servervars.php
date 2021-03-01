@@ -80,6 +80,8 @@
     return preg_replace('/^(\\d+)\\.(\\d+).*$/', '$1.$2', $version);
   }
 
+  // Uses official API for version checking, but is not optimized for
+  // version-checking against multiple release tiers.
   function get_keymanweb_version($tier) {
     $json = @file_get_contents(KeymanHosts::Instance()->r_keymanweb_com . "/code/get-version/web/$tier");
     if($json) {
@@ -90,9 +92,37 @@
       $version = $json->version;
     } else {
       // If the get-version API fails, we'll use the latest known version
-      $version = "13.0.109";
+      $version = "13.0.111";
     }
     return $version;
+  }
+
+  function get_keymanweb_versions() {
+    // WARNING:  Internal API!  Subject to change.
+    $json = @file_get_contents(KeymanHosts::Instance()->downloads_keyman_com . "/api/version/web");
+    if($json) {
+      $json = json_decode($json);
+    }
+
+    $version_map = array();
+    if($json && property_exists($json, 'web')) {
+      $json = $json->web;
+    }
+
+    $fallback_version = "13.0.111";
+    
+    foreach(array('alpha', 'beta', 'stable') as $tier) {
+      if(!property_exists($json, $tier)) {
+        $version_map[$tier] = $fallback_version;
+      } else if(version_compare($json->{$tier}, "0.0.1") < 0) {
+        // The version string didn't properly validate.
+        $version_map[$tier] = $fallback_version;
+      } else {
+        $version_map[$tier] = $json->{$tier};
+      }
+    }
+
+    return $version_map;
   }
 
 ?>

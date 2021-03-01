@@ -3,28 +3,32 @@
   require_once('servervars.php');
 
   $kmw_tiers = array('alpha', 'beta', 'stable');
-  $kmw_builds = array();
 
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
+    $tier = 'stable';
   } else {
-    foreach ($kmw_tiers as $possible_tier) {
-      $kmw_builds[$possible_tier] = get_keymanweb_version($possible_tier);
-    }
-  }
+    // Used to enable the release-tier selection code below.
+    // For general usage, we recommend `get_keymanweb_version($tier)` instead.
+    $kmw_builds = get_keymanweb_versions();
 
-  if(isset($_REQUEST['tier']) && in_array($_REQUEST['tier'], $kmw_tiers, TRUE)) {
-    $tier = $_REQUEST['tier'];
-  } else {
-    // Select the 'stable' version unless we're in a beta cycle.
-    if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
-      $tier = 'beta';
+    if(isset($_REQUEST['tier']) && in_array($_REQUEST['tier'], $kmw_tiers, TRUE)) {
+      $tier = $_REQUEST['tier'];
     } else {
-      $tier = 'stable';
+      // Selects the 'stable' version unless we're in a beta cycle.
+      //
+      // Note:  if API calls fail to retrieve proper version data,
+      //        the return will be 0 due to equal fallback versions.
+      //        Net result: selection of the 'stable' tier.
+      if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
+        $tier = 'beta';
+      } else {
+        $tier = 'stable';
+      }
     }
-  }
 
-  $kmwbuild = $kmw_builds[$tier];
+    $kmwbuild = $kmw_builds[$tier];
+  }
   $version = get_major_version($kmwbuild);
 ?>
 <!DOCTYPE html>
