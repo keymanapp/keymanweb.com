@@ -26,7 +26,6 @@
     } else {
       $tier = 'stable';
     }
-    $tier = 'stable';
   }
 
   $kmwbuild = $kmw_builds[$tier];
@@ -73,13 +72,10 @@
     return event;
   };
 
-  // We'll let 'environment' handle 'development' vs 'production' tagging.
-  let kmw_release = $version . "-" . $tier;
-
   Sentry.init({
     beforeSend: prepareEvent,
     dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
-    release: kmw_release,
+    release: "<?=$version."-".$tier?>",
     environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
   });
 </script>
