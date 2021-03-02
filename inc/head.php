@@ -64,9 +64,9 @@
   let prepareEvent = function(event) {
     // Make sure the metadata-generation function actually exists... (14.0+)
     try {
-      if(window['keyman']['getDebugInfo']) {
+      if(window.keyman.getDebugInfo) {
         event.extra = event.extra || {};
-        event.extra.keymanState = window['keyman']['getDebugInfo']();
+        event.extra.keymanState = window.keyman.getDebugInfo();
         event.extra.keymanHostPlatform = 'keymanweb.com';
       }
     } catch (ex) { /* Swallow any errors produced here */ }
