@@ -2,17 +2,32 @@
   session_start();
   require_once('servervars.php');
 
-  if(isset($_REQUEST['tier']) &&
-      in_array($_REQUEST['tier'], array('alpha','beta','stable'), TRUE)) {
-    $tier = $_REQUEST['tier'];
-  } else {
-    $tier = 'stable';
-  }
+  $kmw_tiers = array('alpha', 'beta', 'stable');
 
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
+    $tier = 'stable';
   } else {
-    $kmwbuild = get_keymanweb_version($tier);
+    // Used to enable the release-tier selection code below.
+    // For general usage, we recommend `get_keymanweb_version($tier)` instead.
+    $kmw_builds = get_keymanweb_versions();
+
+    if(isset($_REQUEST['tier']) && in_array($_REQUEST['tier'], $kmw_tiers, TRUE)) {
+      $tier = $_REQUEST['tier'];
+    } else {
+      // Selects the 'stable' version unless we're in a beta cycle.
+      //
+      // Note:  if API calls fail to retrieve proper version data,
+      //        the return will be 0 due to equal fallback versions.
+      //        Net result: selection of the 'stable' tier.
+      if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
+        $tier = 'beta';
+      } else {
+        $tier = 'stable';
+      }
+    }
+
+    $kmwbuild = $kmw_builds[$tier];
   }
   $version = get_major_version($kmwbuild);
 ?>
@@ -38,12 +53,40 @@
   ></script>*/
 ?>
 <script src="<?= cdn('js/sentry.bundle.5.28.0.min.js'); ?>"></script>
-  <script>
-    Sentry.init({
-      dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
-      environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
-    });
-  </script>
+<script>
+  // Tags all exceptions with the active KMW instance's metadata.
+  // Compare against the definition in the main repo:
+  // - keymanapp/keyman/common/core/web/tools/sentry-manager/src/index.ts
+  //
+  // Currently separate in part b/c we can't guarantee 14.0+ in order to use
+  // the generalized sentry-manager module yet; we allow users to specify older
+  // versions of KMW for use.  Also in part b/c keymanweb.com itself may produce errors.
+  let prepareEvent = function(event) {
+    // Make sure the metadata-generation function actually exists... (14.0+)
+    try {
+      if(window['keyman']['getDebugInfo']) {
+        event.extra = event.extra || {};
+        event.extra.keymanState = window['keyman']['getDebugInfo']();
+        event.extra.keymanHostPlatform = 'keymanweb.com';
+      }
+    } catch (ex) { /* Swallow any errors produced here */ }
+
+    return event;
+  };
+
+<?php if($tier == 'stable') { ?>
+  var sentryRelease = "<?=$version?>";
+<?php } else { ?>
+  var sentryRelease = "<?=$version."-".$tier?>";
+<?php } ?>
+
+  Sentry.init({
+    beforeSend: prepareEvent,
+    dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
+    release: sentryRelease,
+    environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
+  });
+</script>
 
 
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
