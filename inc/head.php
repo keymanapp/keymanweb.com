@@ -2,9 +2,9 @@
   session_start();
   require_once('servervars.php');
 
-  $hasBeta = false;
   $kmw_tiers = array('alpha', 'beta', 'stable');
   $kmw_builds = get_keymanweb_versions();
+  $hasBeta = version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0;
 
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
@@ -21,18 +21,10 @@
       // Note:  if API calls fail to retrieve proper version data,
       //        the return will be 0 due to equal fallback versions.
       //        Net result: selection of the 'stable' tier.
-      if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
-        $tier = 'beta';
-      } else {
-        $tier = 'stable';
-      }
+      $tier = $hasBeta ? 'beta' :'stable';
     }
 
     $kmwbuild = $kmw_builds[$tier];
-  }
-
-  if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
-    $hasBeta = true;
   }
 
   $version = get_major_version($kmwbuild);
