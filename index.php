@@ -22,9 +22,16 @@ require_once('inc/head.php');
 
 <header>
   <div id='headerBackground'>
+    <div id='headerRight'>
+      <?php if($tier != 'stable') { ?>
+      <span id='headerRight-beta'>Pre-release version</span> <a id='headerRight-link' href='?tier=stable'>Return to version <?= $kmw_builds['stable'] ?></a>
+      <?php } else if($hasBeta) { ?>
+        <span id='headerRight-beta'>New release!</span> <a id='headerRight-link' href='?tier=beta'>Try beta version <?= $kmw_builds['beta'] ?></a>
+      <?php } ?>
+    <!--<a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a>-->
+    </div>
     <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' /></div>
     <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
-    <div id='headerRight'><a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a></div>
   </div>
 </header>
 

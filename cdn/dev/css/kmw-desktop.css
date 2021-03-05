@@ -1,6 +1,6 @@
 /* Desktop browser CSS rules */
 
-/* 
+/*
 ======================
 ==Universal Elements==
 ======================
@@ -29,13 +29,13 @@ a:hover {
 
 h3 {
   font-size:18px;
-  }		
-  
+  }
+
 p {
   font-size:13px;
   line-height:1.5em;
   }
-  
+
 header, #content, footer {
   /* width:960px; */
   margin:0px auto;
@@ -46,17 +46,17 @@ header, #content, footer {
   -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
   }
-  
-/* 
+
+/*
 ===================
 ==Header Elements==
 ===================
-*/	
+*/
 header {
   margin-top:0px;
   height: 96px;
   }
-  
+
 header > div > img {
   width: 100%;
   display: block;
@@ -69,12 +69,26 @@ header > div > img {
   margin-left:28px;
   height:88px;
   /*width: 660px;*/
-  /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/	
+  /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/
   }
 #headerRight {
-  display: none;
+  display: block;
+  float: right;
+  text-align: right;
   }
-/* 
+
+#headerRight-beta {
+  display: block;
+  font-weight: bold;
+  color: red;
+  font-size: 16pt;
+  padding: 20px 12px 0;
+}
+
+#headerRight-link {
+  padding: 0 12px 0;
+}
+/*
 ====================
 ==Content Elements==
 ====================
@@ -83,8 +97,8 @@ header > div > img {
   min-height:375px;
   }
 
-  
-/* KMW Main App */	
+
+/* KMW Main App */
 #app {
   float:left;
   /*height:330px;*/
@@ -94,24 +108,24 @@ header > div > img {
 #KeymanWebControl {
   width:710px;
   height: 35px;
-  display:block;  
+  display:block;
   -webkit-border-radius: 8px 8px 0px 0px; -moz-border-radius: 8px 8px 0px 0px; border-radius: 8px 8px 0px 0px;
   }
-  
+
   #kmw_controls{
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
   }
-  
+
   #kmw_btn_osk{
     border-top-right-radius: 10px;
   }
-  
+
   #kmw_controls_start{
     border-top-left-radius: 10px;
   }
-  
+
   #exampleBox{
     min-height: 25px;
   }
@@ -130,14 +144,14 @@ header > div > img {
   min-height: 45px;
   padding-top: 5px;
 }
-  
+
 #example a{
   float: right;
   margin-right: 10px;
   position: relative;
   top: -10px;
 }
-      
+
 textarea {
   height:260px;
   width:554px;
@@ -147,17 +161,17 @@ textarea {
   font-size:16px;
   font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
   }
-    
+
 form {
   padding-right:10px;
   float:left;
-  }	
+  }
 #messageContainer {
   float:left;
   width:80%;
   }
-  
-/* KMW App Buttons */	
+
+/* KMW App Buttons */
 
 #instructions {
   margin:-1px 0px 2px;
@@ -167,10 +181,10 @@ form {
   float:right;
   padding-right:10px;
   }
-  
+
 #buttons div {
   width:120px;
-  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;	
+  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
 	background-color: #eeeeee;
   border: 1px solid #888888;
   margin: 0px 10px;
@@ -318,30 +332,30 @@ form {
 div.links {
   cursor:pointer;
   }
-  
+
 div.linksOff {
   cursor:default !important;
-  border: 1px solid #cccccc !important;  
+  border: 1px solid #cccccc !important;
   }
-  
+
 div.linksOff * {
   color: gray;
   -moz-user-select:none;
   }
-    
+
 #tweetcount, #twitter span {
   color: #666;
   font: bold 0.8em Helvetica, Verdana, Arial, sans-serif;
   text-shadow: 0 1px 1px white;
   }
 
-  
+
 hr {
   margin: 6px 4px 6px 4px;
   }
-  
-  
-/* Aside Elements */	
+
+
+/* Aside Elements */
 aside {
   float:right;
   width:200px;
@@ -353,10 +367,10 @@ aside h3 {
   margin:0px;
   -webkit-border-radius: 8px 8px 0px 0px; -moz-border-radius: 8px 8px 0px 0px; border-radius: 8px 8px 0px 0px;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }	
+  }
 aside > div {
   margin:30px 0px 0px;
-  }	
+  }
 aside p {
   padding:10px;
   margin:0px;
@@ -365,7 +379,7 @@ aside  #learn {
   font-size:13px;
   text-align:center;
   }
-  
+
 #socialshare > .fb-like {
   margin: 10px;
   width: 77px;
@@ -411,7 +425,7 @@ aside  #learn {
   display: none;
 }
 
-/* 
+/*
 ===================
 ==Footer Elements==
 ===================
@@ -496,7 +510,7 @@ aside  #learn {
   font-family: "social-logos";
   src: url("../../fonts/social-logos.ttf");
   font-weight: normal;
-  font-style: normal; 
+  font-style: normal;
 }
 
 [data-icon]:before {
@@ -553,7 +567,7 @@ aside  #learn {
 #footer-social a#footer-community {
   padding-left: 27px;
 }
-  
+
 .subscribe{
     width: 90px;
     margin: 0px;
@@ -602,18 +616,18 @@ aside  #learn {
     margin-top: 10px;
 }
 
-/* 
+/*
 ===================
 ==Extras==
 ===================
 */
-  
+
 #fblike{
 position: absolute;
 left: 50%;
 margin-left: 320px;
   }
-  
+
 nav ul {
   list-style: none outside none;
   width:90%;
@@ -631,7 +645,7 @@ nav a {
   font-family:Tahoma;
   font-weight:bold;
   font-size:10.7px;
-  }	
+  }
 
 .messageBox {
   -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
@@ -682,7 +696,7 @@ nav a {
   margin: 0 auto 6px;
   padding: 3px;
   }
-  
+
 .messageBox button:disabled {
   cursor: default !important;
   color: gray !important;
@@ -771,19 +785,19 @@ nav a {
     background-image: -moz-linear-gradient(#B5B5B5, #93969B) !important;
     background-color: #B5B5B5;
  }
- 
+
 .desktop .kmw-key-shift{
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #DBDBDB), color-stop(100%, #C0C0C4));
     background-image: -moz-linear-gradient(#DBDBDB, #C0C0C4) !important;
     background-color: #DBDBDB;
 }
- 
+
  .desktop .kmw-key-shift-on {
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #B5B5B5), color-stop(100%, #93969B));
     background-image: -moz-linear-gradient(#B5B5B5, #93969B) !important;
     background-color: #93969B;
  }
- 
+
  .desktop  .kmw-key-shift .kmw-key-text, .desktop  .kmw-key-shift-on .kmw-key-text { color: gray; font-size: 0.9em !important; text-shadow: 0 1px 1px #fff;}
  .desktop  .kmw-key-shift .kmw-key-text, .desktop  .kmw-key-shift-on .kmw-key-text { top: 10%; }
  .desktop  .kmw-key-label { top: 5%; }
@@ -819,7 +833,7 @@ nav a {
 }
 
 #free-open-source {
-  color: #606060; 
+  color: #606060;
   font-size: 8pt;
   font-weight: normal;
   display: block;
@@ -847,7 +861,7 @@ nav a {
   font-size: 9px;
   text-align: justify;
 }
-  
+
 #bookmarklet div a {
   padding: 4px 4px 4px 24px;
 	background: #D3DAED url('../img/keymanweb-icon-16.png') 4px 4px no-repeat;
@@ -859,7 +873,7 @@ nav a {
 	display: inline-block;
 	height: 16px;
 	overflow: hidden;
-  white-space: nowrap;	
+  white-space: nowrap;
 }
 
 #learn div {

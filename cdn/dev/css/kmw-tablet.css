@@ -1,6 +1,6 @@
-/* KMW LIVE CSS for iPad and other tablet devices */   
+/* KMW LIVE CSS for iPad and other tablet devices */
 
-/* 
+/*
 ======================
 ==Universal Elements==
 ======================
@@ -30,19 +30,19 @@ a:hover {
 
 h3 {
   font-size:18px;
-  }		
-  
+  }
+
 p {
   font-size:13px;
   line-height:1.5em;
   }
-  
+
 header, footer {
   width:100%;
   margin:0px auto;
   /*clear: both;*/
   }
-  
+
 hr {
   display: none;
   }
@@ -51,12 +51,12 @@ hr {
   -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
   }
-  
-/* 
+
+/*
 ===================
 ==Header Elements==
 ===================
-*/	
+*/
 header {
   margin-top:0px;
   }
@@ -65,16 +65,16 @@ header {
   display: block; /* default (inline) display inserts an unwanted bottom border */
   margin-top:0px;
   height:60px;
-  /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/	
-  }	
+  /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/
+  }
 
 header > div > img {
   display: block;
   width: 100%;
   height: 8px;
 }
-  
-/* 
+
+/*
 ====================
 ==Content Elements==
 ====================
@@ -86,8 +86,8 @@ header > div > img {
   /*min-height:375px;*/
   }
 
-  
-/* KMW Main App */	
+
+/* KMW Main App */
 #app {
   /*float:left;*/
   /*height:330px;*/
@@ -101,13 +101,13 @@ header > div > img {
 
 #exampleBox, #example {
   display: none;
-  }	
+  }
 
 #messageContainer {
   width: 80%;
   float:left;
   }
-  
+
 #message {
   height:195px;
   width: 100%;/*554px;*/
@@ -117,8 +117,8 @@ header > div > img {
   font-size:17px;
   font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
   }
-    
-/* KMW App Buttons */	
+
+/* KMW App Buttons */
 
 #buttons {
   float: right;
@@ -129,7 +129,7 @@ header > div > img {
 
 #buttons div {
   width:140px;
-  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;	
+  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
   background: #fff;
   border: 1px solid #888888;
   margin: 0px 10px;
@@ -146,7 +146,7 @@ header > div > img {
   color: gray !important;
   border-color: gray !important;
   }
-  
+
 #buttons p{
   margin-left: 41px;
 }
@@ -194,12 +194,12 @@ header > div > img {
 div.links {
   cursor:pointer;
   }
-  
+
 div.linksOff {
   cursor:default !important;
-  border: 1px solid #cccccc !important;  
+  border: 1px solid #cccccc !important;
   }
-  
+
 div.linksOff * {
   color: gray;
   -webkit-user-select:none;
@@ -238,7 +238,7 @@ aside {
   position: fixed;
   /* -webkit-border-radius: 8px 8px 0px 0px;	-moz-border-radius: 8px 8px 0px 0px; border-radius: 8px 8px 0px 0px; */
   }
-  
+
 nav ul {
   list-style: none outside none;
   width:90%;
@@ -256,8 +256,8 @@ nav a {
   font-family:Tahoma;
   font-weight:bold;
   font-size:10.7px;
-  }	
-  
+  }
+
 #facebookPost {
   position: fixed;
   width: 640px;
@@ -335,7 +335,7 @@ nav a {
   margin: 0 auto 6px;
   padding: 3px;
   }
-  
+
 .messageBox button:disabled {
   cursor: default !important;
   color: gray !important;
@@ -408,18 +408,33 @@ nav a {
 #headerBackground {
   width: 100%;
   background-color:white;
-  }
+}
+
 #headerLeft {
   float: left;
   margin-left: 28px;
-  }
+}
+
 #headerRight {
-  display: none;
+  text-align: right;
   height: 40px;
   float: right;
   padding-bottom: 33px;
   padding-right: 10px;
-  }
+}
+
+#headerRight-beta {
+  display: block;
+  font-weight: bold;
+  color: red;
+  font-size: 16pt;
+  padding: 16px 12px 0;
+}
+
+#headerRight-link {
+  padding: 0 12px 0;
+}
+
 
 #instructions {
   margin:10px;
@@ -427,7 +442,7 @@ nav a {
   color: white;
 }
 
-/* Additional rules for portrait orientation */  
+/* Additional rules for portrait orientation */
 @media only screen and (orientation: landscape) {
   #buttons{
     padding-top: 11px;
@@ -456,34 +471,34 @@ nav a {
     font-size: 24pt;
     background: #fff;
   }
-    
+
   #mobile-increase{
     height: 40px;
     line-height: 40px;
     border-bottom: solid 1px #000;
   }
-  
+
   #mobile-decrease{
     height: 40px;
     line-height: 40px;
   }
 }
-  
-/* Additional rules for portrait orientation */  
+
+/* Additional rules for portrait orientation */
 @media only screen and (orientation: portrait) {
-  
+
   #app {
     width: 97%;
     }
-    
+
   #message {
     height: 350px;
     }
-    
+
   #messageContainer {
     width: 100%;
     }
-      
+
   #buttons {
     clear:both;
     width: 90%;
@@ -494,24 +509,24 @@ nav a {
     margin: 10px 10px 0;
     width: 130px;
     height: 40px;
-    }      
+    }
   #twitter { margin-left: 10px; margin-right: 10px;}
-  
+
   #font{
     position: relative;
     top: 4px;
   }
-  
+
   #font span:first-child{
     margin-left: 3px;
   }
-  
+
   #font p{
     margin-left: 8px;
     position: relative;
     top: -4px;
   }
-  
+
   #mobile-font{
     display: none;
     width: 301px;
@@ -522,7 +537,7 @@ nav a {
     text-align: center;
     font-size: 24pt;
   }
-    
+
   #mobile-increase{
     float: right;
     width: 136px;
@@ -532,7 +547,7 @@ nav a {
     border: 1px solid #888888;
     border-radius: 4px;
   }
-  
+
   #mobile-decrease{
     float: right;
     width: 136px;
@@ -545,18 +560,18 @@ nav a {
   }
 }
 
-/* 
+/*
 ======================
 ==Keyboard Styling==
 ======================
 */
 
 #kmw-language-menu p {
-  color: #000 !important; 
+  color: #000 !important;
 }
 
 #kmw-language-menu .selected {
-  background-color: gray !important; 
+  background-color: gray !important;
 }
 
 .tablet .kmw-keyboard-dari_clra .kmw-key-default .kmw-key-text {

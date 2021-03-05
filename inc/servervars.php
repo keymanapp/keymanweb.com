@@ -83,7 +83,7 @@
   // Uses official API for version checking, but is not optimized for
   // version-checking against multiple release tiers.
   function get_keymanweb_version($tier) {
-    $json = @file_get_contents(KeymanHosts::Instance()->r_keymanweb_com . "/code/get-version/web/$tier");
+    $json = @file_get_contents(KeymanHosts::Instance()->api_keyman_com . "/version/web/$tier");
     if($json) {
       $json = json_decode($json);
     }

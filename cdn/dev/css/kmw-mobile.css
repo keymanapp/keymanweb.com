@@ -1,6 +1,6 @@
 /* KMW LIVE CSS for iPhone and other mobiles */
 
-/* 
+/*
 ======================
 ==Universal Elements==
 ======================
@@ -15,7 +15,7 @@ body {
   width:100%;height:100%;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color:#2D2C2C;
-  background-color: #eeeeee;  
+  background-color: #eeeeee;
   margin:0px;
   }
 
@@ -30,39 +30,53 @@ a:hover {
 
 h3 {
   font-size:18px;
-  }		
-  
+  }
+
 p {
   font-size:13px;
   line-height:1.5em;
   }
-/*  
+/*
 header, #content, footer {
   margin:0px auto;
   clear: both;
   }
-*/ 
+*/
 
 hr {
   display: none;
   }
 
-/*  
+/*
 .box {
   -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
   }
-*/   
-/* 
+*/
+/*
 ===================
 ==Header Elements==
 ===================
-*/	
-header,#headerBackground,#headerLeft,#headerRight {
+*/
+header img, #headerLeft {
   display: none;
-  }
+}
+header {
+  position: absolute;
+  top: 190px;
+  background: #776666;
+  font-size: 9pt;
+  padding: 6px 0;
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+header a {
+  color: #c0c0ff;
+  text-decoration: underline;
+}
 
-/* 
+/*
 ====================
 ==Content Elements==
 ====================
@@ -70,12 +84,12 @@ header,#headerBackground,#headerLeft,#headerRight {
 #content {
   width: 100%;    /* specific for mobile and tablet */
   margin: 0px auto;
-  background-color: #eeeeee;  
+  background-color: #eeeeee;
   /* min-height:375px; */
   }
 
-  
-/* KMW Main App */	
+
+/* KMW Main App */
 #app {
   width:100%;
   margin: 0px;
@@ -86,14 +100,14 @@ header,#headerBackground,#headerLeft,#headerRight {
 
 #exampleBox,#example {
   display:none;
-  }	
+  }
 
 #messageContainer {
   width: 80%;
   float:left;
   height: 50%;
   }
-  
+
 #message {
   height:144px;
   width: 100%;/*554px;*/
@@ -103,13 +117,13 @@ header,#headerBackground,#headerLeft,#headerRight {
   font-size:17px;
   font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
   }
-  
+
   #font-size{
     display: none;
   }
 
 /* KMW App Buttons */
-          
+
 #buttons {
   float: right;
   width: 40px;
@@ -119,10 +133,10 @@ header,#headerBackground,#headerLeft,#headerRight {
 
 #buttons div {
   /*width:50px;*/
-  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;	
+  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
   background: #eeeeee;
   border: none;
-  margin: 0px 0px 4px 10px;  
+  margin: 0px 0px 4px 10px;
   height:40px;
   width: 41px;
   padding: 0px;
@@ -185,7 +199,7 @@ header,#headerBackground,#headerLeft,#headerRight {
 #buttons div * {
   display:inline;
   }
-  
+
 #buttons p {  /* buttons have no text label on mobiles */
   display:none;
   }
@@ -193,18 +207,18 @@ header,#headerBackground,#headerLeft,#headerRight {
 div.links {
   cursor:pointer;
   }
-  
+
 div.linksOff {
   cursor:default !important;
   border:none;
-  /*border: 1px solid #cccccc !important; */  
+  /*border: 1px solid #cccccc !important; */
   }
-  
+
 div.linksOff * {
   color: gray;
   -webkit-user-select:none;
   }
-  
+
 #tweetcount,#twitter span {
   display: block;
   font: bold 0.6em Helvetica, Verdana, Arial, sans-serif;
@@ -226,7 +240,7 @@ div.linksOff * {
   font-size: 24pt;
   background: #fff;
 }
-  
+
 #mobile-increase{
   height: 40px;
   line-height: 40px;
@@ -237,13 +251,13 @@ div.linksOff * {
   height: 40px;
   line-height: 40px;
 }
-  
-/* Aside Elements */	
+
+/* Aside Elements */
 aside, aside div {
   display:none;
   }
-	    
-/* 
+
+/*
 ===================
 ==Footer Elements==
 ===================
@@ -251,7 +265,7 @@ aside, aside div {
 .footer,footer {
   display:none;
   }
-    
+
 #facebookPost {
   position: fixed;
   width: 640px;
@@ -326,7 +340,7 @@ aside, aside div {
   margin: 0 auto 6px;
   padding: 3px;
   }
-  
+
 .messageBox button:disabled {
   cursor: default !important;
   color: gray !important;
@@ -384,67 +398,67 @@ aside, aside div {
 }
 
 #twitter span {
-  font-weight: normal; 
-  text-align: center;   
-  position:relative; 
-  display:block; 
-  width:30px; 
+  font-weight: normal;
+  text-align: center;
+  position:relative;
+  display:block;
+  width:30px;
   height:10px;
   left: 0px;
-  top:31px; 
+  top:31px;
 }
 
 #twitter span.long {
   color: red;
 }
- 
- /* Additional rules for portrait orientation */  
+
+ /* Additional rules for portrait orientation */
 @media only screen and (orientation: portrait) {
-    
+
   #message {
     height: 170px;
     }
-    
+
   #messageContainer {
     float: left;
     width: 80%;
     height: 40%;
-    }    
-}      
+    }
+}
 
 
- /* Additional rules for landscape orientation */  
+ /* Additional rules for landscape orientation */
 @media only screen and (orientation: landscape) {
 
   #messageContainer {
     float: left;
     width: 85%;
     height: 50%;
-    }    
+    }
   #message {
     height: 50%;
     }
   #buttons {
     margin: 4px 15px 4px 0;
     }
-    
+
     #font{
       display: none;
     }
 }
 
-/* 
+/*
 ======================
 ==Keyboard Styling==
 ======================
 */
 
 #kmw-language-menu p {
-  color: #000 !important; 
+  color: #000 !important;
 }
 
 #kmw-language-menu .selected {
-  background-color: gray !important; 
+  background-color: gray !important;
 }
 
 

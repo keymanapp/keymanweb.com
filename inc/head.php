@@ -3,14 +3,15 @@
   require_once('servervars.php');
 
   $kmw_tiers = array('alpha', 'beta', 'stable');
+  $kmw_builds = get_keymanweb_versions();
+  $hasBeta = version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0;
 
   if(isset($_REQUEST['version']) && preg_match('/^(\d+)\.(\d+)\.(\d+)$/', $_REQUEST['version'])) {
     $kmwbuild = $_REQUEST['version'];
-    $tier = 'stable';
+    $tier = 'stable'; // this may be inaccurate
   } else {
     // Used to enable the release-tier selection code below.
     // For general usage, we recommend `get_keymanweb_version($tier)` instead.
-    $kmw_builds = get_keymanweb_versions();
 
     if(isset($_REQUEST['tier']) && in_array($_REQUEST['tier'], $kmw_tiers, TRUE)) {
       $tier = $_REQUEST['tier'];
@@ -20,15 +21,12 @@
       // Note:  if API calls fail to retrieve proper version data,
       //        the return will be 0 due to equal fallback versions.
       //        Net result: selection of the 'stable' tier.
-      if(version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0) {
-        $tier = 'beta';
-      } else {
-        $tier = 'stable';
-      }
+      $tier = $hasBeta ? 'beta' :'stable';
     }
 
     $kmwbuild = $kmw_builds[$tier];
   }
+
   $version = get_major_version($kmwbuild);
 ?>
 <!DOCTYPE html>
@@ -203,7 +201,9 @@
     attachType:'auto',
     setActiveOnRegister:'false'
   }).then(function() {
-    addKeyboards();
+    if(typeof addKeyboards == 'function') {
+      addKeyboards();
+    }
     if(localKeyboard && localLanguage)
       keyman.setActiveKeyboard(localKeyboard, localLanguage);
     document.getElementById('message').focus();
