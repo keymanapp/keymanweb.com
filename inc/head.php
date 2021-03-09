@@ -59,7 +59,7 @@
   // Currently separate in part b/c we can't guarantee 14.0+ in order to use
   // the generalized sentry-manager module yet; we allow users to specify older
   // versions of KMW for use.  Also in part b/c keymanweb.com itself may produce errors.
-  let prepareEvent = function(event) {
+  var prepareEvent = function(event) {
     // Make sure the metadata-generation function actually exists... (14.0+)
     try {
       if(window.keyman.getDebugInfo) {
@@ -160,7 +160,7 @@
       document.cookie = 'KeymanWeb_Keyboard=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
       document.cookie = 'KeymanWeb_Toolbar=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
     } else {
-      let cookie = keyman.util.loadCookie('KeymanWeb_Keyboard');
+      var cookie = keyman.util.loadCookie('KeymanWeb_Keyboard');
       if(cookie['current']) {
         var cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
         if(cookieMatch) {
