@@ -29,15 +29,9 @@ if(locationmatch) {
   location.href = '/#'+locationmatch[1]+',Keyboard_'+locationmatch[2];
 }
 
-$(document).ready(function() { 
-  
-  // Focus on message box
-  setTimeout(function(){
-    if (!!$('.messageBox').length) {
-      getKeymanWeb().moveToElement('message');
-    }
-  },1000);
-  
+// Perform all page-load init that is NOT dependent on KeymanWeb.
+// That script may not load in time for this method.
+$(document).ready(function() {   
   // Font size function
   $( "#slider" ).slider({
       value:16,
@@ -45,24 +39,26 @@ $(document).ready(function() {
       max: 132,
       step: 2,
       slide: function( event, ui ) {
-	$('#message').css('font-size',ui.value);
-	$('#message').focus();
+        $('#message').css('font-size',ui.value);
+        $('#message').focus();
       }
   });
   
   var font = document.getElementById('font');
   var fontIncrease = document.getElementById('mobile-increase');
   var fontDecrease = document.getElementById('mobile-decrease');
+
   font.addEventListener('touchstart', function(event) {
     $('#mobile-font').show();
     $('#twitter,#search').css('visibility','hidden');
     var r = setTimeout(function(){
       $('#mobile-font').hide();
       setTimeout(function(){
-	$('#twitter,#search').css('visibility','visible');
+	      $('#twitter,#search').css('visibility','visible');
       },1000);
     },3000);
     var size = Number($('#mobile-font-size1').val());
+
     fontIncrease.addEventListener('touchstart', function(event) {
       clearInterval(r);
       size = size * 1.2;
@@ -70,12 +66,13 @@ $(document).ready(function() {
       $('textarea').css('font-size',size);
       $('.keymanweb-input').css('font-size',size).focus();
       r = setTimeout(function(){
-	$('#mobile-font').hide();
-	setTimeout(function(){
-	  $('#twitter,#search').css('visibility','visible');
-	},600);
+        $('#mobile-font').hide();
+        setTimeout(function(){
+          $('#twitter,#search').css('visibility','visible');
+        },600);
       },2000);
     });
+
     fontDecrease.addEventListener('touchstart', function(event) {
       clearInterval(r);
       size = size / 1.2;
@@ -83,10 +80,10 @@ $(document).ready(function() {
       $('textarea').css('font-size',size);
       $('.keymanweb-input').css('font-size',size).focus();
       r = setTimeout(function(){
-	$('#mobile-font').hide();
-	setTimeout(function(){
-	  $('#twitter,#search').css('visibility','visible');
-	},600);
+        $('#mobile-font').hide();
+        setTimeout(function(){
+          $('#twitter,#search').css('visibility','visible');
+        },600);
       },2000);
     });
     
@@ -95,10 +92,10 @@ $(document).ready(function() {
   setTimeout(function(){
     $('.kmw_button_a').click(function(){
       if ($(this).parent().attr('id') == 'kmw_btn_off') {
-	//$('body').removeClass('osk-always-visible');
-	$('#message').blur();
-      }else{
-	//$('body').addClass('osk-always-visible');
+        //$('body').removeClass('osk-always-visible');
+        $('#message').blur();
+      } else {
+        //$('body').addClass('osk-always-visible');
       }
     });
   },5000);
@@ -106,8 +103,8 @@ $(document).ready(function() {
  
   /* Setup the bookmarklet */
   $('#bookmarklet div a').click( function() {
-	alert("Don't click this: drag it to your Bookmarks toolbar.  Then you can click the '" + $(this).text() + "' bookmark on any web page to access your web keyboard on that page!")
-	return false;
+	  alert("Don't click this: drag it to your Bookmarks toolbar.  Then you can click the '" + $(this).text() + "' bookmark on any web page to access your web keyboard on that page!")
+    return false;
   });
 
   /* Keep a static copy of message length */
@@ -122,6 +119,12 @@ $(document).ready(function() {
     var width = $(window).width();
     var appPos = $('#app').position();
     var appLeft = appPos.left;
+
+    // We can't proceed any further if KMW hasn't loaded yet.
+    // No point handling resizes until that's occurred.
+    if(!getKeymanWeb()) {
+      return;
+    }
     
     // Adjust the message box height only if a desktop browser
     if(!getKeymanWeb().util.isTouchDevice()) 
@@ -180,9 +183,6 @@ $(document).ready(function() {
   if (twitterMessage) {
     $('#message').val(twitterMessage);
   }
-  
-  getKeymanWeb().util.attachDOMEvent(window,'orientationchange',
-    function(){window.scrollTo(0,1);},false);
 
   $('#twitter').click(function(event){
     event.preventDefault();
@@ -215,7 +215,6 @@ $(document).ready(function() {
     $('#copy').attr('disabled', 'disabled');
     $('#copy').hide();
   }
-  $('#message').removeAttr('disabled');
 
 
   clipboard.on('success', function(e) {
@@ -239,6 +238,28 @@ $(document).ready(function() {
   //Cannot detect change of content from KMW, so use a timer instead to refresh button state
   //$('#message').bind("keypress keyup keydown change click focus blur", refreshButtons);
   window.setInterval(refreshButtons,200);  
+});
+
+// The KeymanWeb script will have loaded by this point, though initialization may be another matter.
+// Promises only started being supported in KMW 13 (keymanapp/keyman#1432), but this site supports
+// earlier versions, too, so we can't rely on their presence.
+$(window).on("load", function() { 
+  // Focus on message box
+  setTimeout(function(){
+    if (!!$('.messageBox').length) {
+      getKeymanWeb().moveToElement('message');
+    }
+    // On touch devices, this is necessary (but not sufficient) for ClipboardJS compatibility.
+    // Must take affect AFTER KMW has initialized.
+    $('#message').removeAttr('disabled');
+  },1000);
+
+  getKeymanWeb().util.attachDOMEvent(window,'orientationchange', function() {
+    window.scrollTo(0,1);
+  },false);
+
+  //getKeymanWeb().addEventListener('keyboardloaded',function(p){changeKeyboard(p['keyboardName']);});
+  getKeymanWeb().addEventListener('keyboardchange',function(p){if(!pageLoading) changeKeyboard(p['internalName'],p['languageCode'],p);});
 });
 
 function refreshButtons() {
@@ -382,14 +403,6 @@ function getTextLength(s)
 
 
 /* Keyboard Changed - IE font switching and language example */
-
-var ts=getKeymanWeb();
-
-if(ts !== null) 
-{
-  //ts.keymanweb.addEventListener('keyboardloaded',function(p){changeKeyboard(p['keyboardName']);});  
-  ts.addEventListener('keyboardchange',function(p){if(!pageLoading) changeKeyboard(p['internalName'],p['languageCode'],p);});
-}
 
 function changeKeyboard(kbdname,languageCode,p)
 {
