@@ -39,7 +39,7 @@
     if(empty($keyboard)) return '';
     $site = KeymanHosts::Instance()->help_keyman_com;
     $morehelp =
-      "<a target='KeymanWebHelp' onclick='javascript:return openALink(this)' " .
+      "<a target='KeymanWebHelp' " .
       "title='Keyboard help'" .
       "href='$site/go?" .
       (empty($language) ? "" : "language=$language&amp;") .
