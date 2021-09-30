@@ -92,25 +92,19 @@
       $version = $json->version;
     } else {
       // If the get-version API fails, we'll use the latest known version
-      $version = "13.0.111";
+      $version = "14.0.282";
     }
     return $version;
   }
 
   function get_keymanweb_versions() {
-    // WARNING:  Internal API!  Subject to change.
-    $json = @file_get_contents(KeymanHosts::Instance()->downloads_keyman_com . "/api/version/web");
+    $json = @file_get_contents(KeymanHosts::Instance()->api_keyman_com . "/version/web/all");
     if($json) {
       $json = json_decode($json);
     }
 
-    $version_map = array();
-    if($json && property_exists($json, 'web')) {
-      $json = $json->web;
-    }
+    $fallback_version = "14.0.282";
 
-    $fallback_version = "13.0.111";
-    
     foreach(array('alpha', 'beta', 'stable') as $tier) {
       if(!property_exists($json, $tier)) {
         $version_map[$tier] = $fallback_version;
