@@ -80,7 +80,7 @@
 
   Sentry.init({
     beforeSend: prepareEvent,
-    dsn: "https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10",
+    dsn: "https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.sentry.io/5983523",
     release: sentryRelease,
     environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
   });

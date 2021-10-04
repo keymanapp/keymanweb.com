@@ -22,7 +22,7 @@
 
   use \Keyman\Site\Common\KeymanHosts;
 
-  const SENTRY_DSN = 'https://11f513ea178d438e8f12836de7baa87d@sentry.keyman.com/10';
+  const SENTRY_DSN = 'https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.sentry.io/5983523';
   \Keyman\Site\Common\KeymanSentry::init(SENTRY_DSN);
 
   if(file_exists(__DIR__ . '/../cdn/deploy/cdn.php')) {
