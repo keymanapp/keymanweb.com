@@ -52,7 +52,7 @@
   }
 
   function get_cache_url($version) {
-    return KeymanHosts::Instance()->api_keyman_com ."/cloud/4.0/keyboards?jsonp=keyman.register&languageidtype=bcp47&version=$version&timerid=1"    ;
+    return KeymanHosts::Instance()->api_keyman_com ."/cloud/4.0/keyboards?jsonp=keyman.register&languageidtype=bcp47&version=$version";
   }
 
   function get_cache_file($version) {
