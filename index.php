@@ -30,7 +30,7 @@ require_once('inc/head.php');
       <?php } ?>
     <!--<a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a>-->
     </div>
-    <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' /></div>
+    <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>" /></div>
     <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
   </div>
 </header>
@@ -108,6 +108,8 @@ require_once('inc/head.php');
             <!--End mc_embed_signup-->
             <br>
             <div id="privacy-policy"><a href="https://software.sil.org/language-software-privacy-policy/">Privacy policy</a></div>
+
+            <div id="version">KeymanWeb version <?= $VersionWithTag ?></div>
         </div>
         <div class="footer-third" id="footer-social">
             <h2 class="footer-third-title">Keep in touch</h2>
