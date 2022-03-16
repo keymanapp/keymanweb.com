@@ -266,6 +266,18 @@ aside, aside div {
   display:none;
   }
 
+#mobile-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+#mobile-footer #mobile-version {
+  font-size: 7pt;
+  text-align: center;
+  width: 100%;
+}
+
 #facebookPost {
   position: fixed;
   width: 640px;

@@ -558,6 +558,17 @@ aside  #learn {
     color: #444444;
 }
 
+#version {
+  color: #666666;
+  font-size: 10pt;
+  margin-top: 46px;
+  text-align: center;
+}
+
+#mobile-footer {
+  display: none;
+}
+
 #footer-social div {
   display: inline-block;
   text-align: left;

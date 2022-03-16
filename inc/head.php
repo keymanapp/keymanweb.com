@@ -28,6 +28,7 @@
   }
 
   $version = get_major_version($kmwbuild);
+  $VersionWithTag = $kmwbuild . ($tier == 'stable' ? '' : "-$tier");
 ?>
 <!DOCTYPE html>
 <html lang="en">
