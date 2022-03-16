@@ -86,6 +86,10 @@ require_once('inc/head.php');
 
 <!-- Footer copied from keyman.com -->
 
+<div id="mobile-footer">
+  <div id="mobile-version">KeymanWeb version <?= $VersionWithTag ?></div>
+</div>
+
 <div class="footer">
     <div class="wrapper">
         <div class="footer-third" id="footer-mailchimp">

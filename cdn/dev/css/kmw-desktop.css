@@ -565,6 +565,10 @@ aside  #learn {
   text-align: center;
 }
 
+#mobile-footer {
+  display: none;
+}
+
 #footer-social div {
   display: inline-block;
   text-align: left;
