@@ -1,8 +1,0 @@
-  @font-face {
-    font-family: NKoWeb;
-    font-style:  normal;
-    font-weight: normal;
-    src: url(Conakry.ttf) format("truetype");
-  }
-
- .KeymanWeb_VK_Char_Keyboard_nko, .kmw-key-text {font-family: NKoWeb !important}

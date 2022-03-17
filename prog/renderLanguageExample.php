@@ -49,11 +49,11 @@
       if(isset($x['note'])) $note = " ({$x['note']})"; else $note = '';
 
       if($table)
-        $result .= "<td class='highlightExample lang2' lang='$language'>$out</td><td>{$x['note']}</td><td class='highlightKeys'>$keys</td>";
+        $result .= "<td class='highlightExample keymanweb-font' lang='$language'>$out</td><td>{$x['note']}</td><td class='highlightKeys'>$keys</td>";
       else
       $result .=
         "To enter ".
-        "<span class='highlightExample lang2' lang='$language'>$out</span>$note, ".
+        "<span class='highlightExample keymanweb-font' lang='$language'>$out</span>$note, ".
         "<br/>type ".
         "<span class='highlightKeys'>$keys</span>$morehelp";
        //" to get ";

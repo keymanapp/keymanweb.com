@@ -91,7 +91,6 @@
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("fonts/fonts.css"); ?>" />
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">

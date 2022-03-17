@@ -1,8 +1,0 @@
-  @font-face {
-    font-family: DzongkhaWeb;
-    font-style:  normal;
-    font-weight: normal;
-    src: url(ddc_uchen.ttf) format("truetype");
-  }
-
- .KeymanWeb_VK_Char_Keyboard_dzongkha, .kmw-key-text {font-family: DzongkhaWeb !important}
