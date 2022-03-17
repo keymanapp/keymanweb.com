@@ -201,6 +201,9 @@
     attachType:'auto',
     setActiveOnRegister:'false'
   }).then(function() {
+    if(typeof afterInit == 'function') {
+      afterInit();
+    }
     if(typeof addKeyboards == 'function') {
       addKeyboards();
     }
