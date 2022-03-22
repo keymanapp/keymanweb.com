@@ -1,9 +1,0 @@
-  @font-face {
-    font-family: EgyptianWeb;
-    font-style:  normal;
-    font-weight: normal;
-    src: url(Gardiner.ttf)  format("truetype");
-  }
-
- .KeymanWeb_VK_Char_Keyboard_hieroglyphic, .kmw-key-text {font-family: Arial !important}
-

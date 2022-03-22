@@ -1,8 +1,0 @@
-  @font-face {
-    font-family: YorubaWeb;
-    font-style:  normal;
-    font-weight: normal;
-    src: url(GentiumPlus-R.ttf) format("truetype");
-  }
-  
- .KeymanWeb_VK_Char_Keyboard_yorubadot, .kmw-key-text {font-family: YorubaWeb !important}

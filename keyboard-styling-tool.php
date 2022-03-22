@@ -10,8 +10,7 @@ require_once('inc/servervars.php');
 <head>
     <title>KeymanWeb Styling Tool</title>
     <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("fonts/fonts.css"); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
 
     <script type='text/javascript'>
       //tavultesoft.keymanweb.addKeyboards('us@eng');
@@ -32,7 +31,7 @@ require_once('inc/servervars.php');
     <script type="text/javascript" src="<?php echo cdn("js/styling-tool/jquery.classygradient.js"); ?>"></script>
     <script type="text/javascript" src="<?php echo cdn("js/styling-tool/styling.js"); ?>"></script>
     <script type="text/javascript" src="<?php echo cdn("js/styling-tool/style-generator.js"); ?>"></script>
-    
+
 </head>
 <body class="osk-always-visible osk-fixed-width">
     <div class="header">
@@ -43,7 +42,7 @@ require_once('inc/servervars.php');
         <h2 id="title">KeymanWeb Styling Tool <span id="title-link"><a href="keyboard-styling-tool-help.php" target="blank">How do I use this?</a></span></h2>
         <div id='KeymanWebControl'></div>
         <div id='messageContainer'>
-            <input type="text" id='message' />	
+            <input type="text" id='message' />
         </div>
         <div class="screener">
             <div class="sc header"></div>
@@ -99,8 +98,8 @@ require_once('inc/servervars.php');
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <div class="styling-section" id="standard-styling">
                 <div class="control-third">
                     <label>Background</label>
@@ -151,8 +150,8 @@ require_once('inc/servervars.php');
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <div class="styling-section" id="special-styling">
                 <div class="control-third">
                     <label>Background</label>
