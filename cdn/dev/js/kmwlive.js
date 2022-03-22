@@ -25,13 +25,13 @@ function setCookie(c_name,value,exdays){
 
 var locationmatch = location.pathname.match(/^\/go\/([^/]+)\/([^/]+)/);
 if(locationmatch) {
-  
+
   location.href = '/#'+locationmatch[1]+',Keyboard_'+locationmatch[2];
 }
 
 // Perform all page-load init that is NOT dependent on KeymanWeb.
 // That script may not load in time for this method.
-$(document).ready(function() {   
+$(document).ready(function() {
   // Font size function
   $( "#slider" ).slider({
       value:16,
@@ -43,7 +43,7 @@ $(document).ready(function() {
         $('#message').focus();
       }
   });
-  
+
   var font = document.getElementById('font');
   var fontIncrease = document.getElementById('mobile-increase');
   var fontDecrease = document.getElementById('mobile-decrease');
@@ -86,9 +86,9 @@ $(document).ready(function() {
         },600);
       },2000);
     });
-    
+
   });
-  
+
   setTimeout(function(){
     $('.kmw_button_a').click(function(){
       if ($(this).parent().attr('id') == 'kmw_btn_off') {
@@ -99,8 +99,8 @@ $(document).ready(function() {
       }
     });
   },5000);
-  
- 
+
+
   /* Setup the bookmarklet */
   $('#bookmarklet div a').click( function() {
 	  alert("Don't click this: drag it to your Bookmarks toolbar.  Then you can click the '" + $(this).text() + "' bookmark on any web page to access your web keyboard on that page!")
@@ -114,7 +114,7 @@ $(document).ready(function() {
   function updateSize(){
     // Set OSK size/position
     p = new Object();
-    
+
     var height = $(window).height();
     var width = $(window).width();
     var appPos = $('#app').position();
@@ -125,9 +125,9 @@ $(document).ready(function() {
     if(!getKeymanWeb()) {
       return;
     }
-    
+
     // Adjust the message box height only if a desktop browser
-    if(!getKeymanWeb().util.isTouchDevice()) 
+    if(!getKeymanWeb().util.isTouchDevice())
     {
       if (height <= 768) {
         // Hide footer
@@ -152,7 +152,7 @@ $(document).ready(function() {
     p['top'] = $('#app').offset().top + $('#app').outerHeight() + 8;
     p['left'] = appLeft + 15;
     p['width'] = 710;
-    
+
     // Update keyboard position and size
     getKeymanWeb().osk.setRect(p);
   }
@@ -160,7 +160,7 @@ $(document).ready(function() {
   window.onresize = updateSize;
 
   //$('#example').css('height','50px');
-  
+
   /* Check for result for other modules in the query string */
   var result = $.urlParam('result');
   if(result)
@@ -178,7 +178,7 @@ $(document).ready(function() {
     }
     return;
   }
- 
+
   // Check for twitter message from first time app auth
   if (twitterMessage) {
     $('#message').val(twitterMessage);
@@ -198,7 +198,7 @@ $(document).ready(function() {
         else showError('twitter', data['error'], focusMessage);
       });
   });
-  
+
   $('#search').click(function(event){
     event.preventDefault();
     if($('#search').attr('disabled') == 'disabled') return;
@@ -237,22 +237,30 @@ $(document).ready(function() {
 
   //Cannot detect change of content from KMW, so use a timer instead to refresh button state
   //$('#message').bind("keypress keyup keydown change click focus blur", refreshButtons);
-  window.setInterval(refreshButtons,200);  
+  window.setInterval(refreshButtons,200);
 });
 
 // The KeymanWeb script will have loaded by this point, though initialization may be another matter.
 // Promises only started being supported in KMW 13 (keymanapp/keyman#1432), but this site supports
 // earlier versions, too, so we can't rely on their presence.
-$(window).on("load", function() { 
+$(window).on("load", function() {
+  setTimeout(afterInit, 1000);
+});
+
+let afterInitRun = false;
+function afterInit() {
+  if(afterInitRun) {
+    return;
+  }
+  afterInitRun = true;
+
   // Focus on message box
-  setTimeout(function(){
-    if (!!$('.messageBox').length) {
-      getKeymanWeb().moveToElement('message');
-    }
-    // On touch devices, this is necessary (but not sufficient) for ClipboardJS compatibility.
-    // Must take affect AFTER KMW has initialized.
-    $('#message').removeAttr('disabled');
-  },1000);
+  if (!!$('.messageBox').length) {
+    getKeymanWeb().moveToElement('message');
+  }
+  // On touch devices, this is necessary (but not sufficient) for ClipboardJS compatibility.
+  // Must take affect AFTER KMW has initialized.
+  $('#message').removeAttr('disabled');
 
   getKeymanWeb().util.attachDOMEvent(window,'orientationchange', function() {
     window.scrollTo(0,1);
@@ -260,7 +268,7 @@ $(window).on("load", function() {
 
   //getKeymanWeb().addEventListener('keyboardloaded',function(p){changeKeyboard(p['keyboardName']);});
   getKeymanWeb().addEventListener('keyboardchange',function(p){if(!pageLoading) changeKeyboard(p['internalName'],p['languageCode'],p);});
-});
+}
 
 function refreshButtons() {
   var len=getKMWInputLength('message'); // returns -1 for desktop page element
@@ -279,11 +287,11 @@ function refreshButtons() {
   }
 
   if(len != lastMessageLength) {
-    lastMessageLength = len;  
-    
+    lastMessageLength = len;
+
     $('#twitter span').text((140 - len).toString()).toggleClass('long', len > 140);
     $('#twitter span').toggle(len > 0);
-    
+
     if(len > 140) {
       $('#twitter').attr('disabled', 'disabled');
     }
@@ -310,9 +318,9 @@ function getKMWInputElement(id){
 function getKMWInputLength(id)
 {
   var el=getKMWInputElement(id);
-  if(el == null) 
+  if(el == null)
     return -1;
-  else if('textContent' in el) 
+  else if('textContent' in el)
     return el.textContent.length;
   else if('innerText' in el)
     return el.innerText.length;
@@ -328,7 +336,7 @@ function setKMWInputMessage(id,bShow)
   }
   else
   {
-  }  
+  }
 }
 
 function showError(module, message, callback)
@@ -373,7 +381,7 @@ function focusMessage()
 
 function showFacebookSuccess(data, callback)
 {
-  if(data) 
+  if(data)
   {
     showSuccess('facebook', "<p>Your message was successfully posted to your Facebook wall.</p><p><a href='http://www.facebook.com/"+data+"' target='_blank'>View your message on Facebook</a></p>", callback);
   }
@@ -383,7 +391,7 @@ function showFacebookSuccess(data, callback)
 
 function showTwitterSuccess(data, callback)
 {
-  if(data && data.match(/^.*\/status\/\d+$/)) 
+  if(data && data.match(/^.*\/status\/\d+$/))
   {
     showSuccess('twitter', "<p>Your message was successfully posted to your Twitter stream.</p><p><a href='http://www.twitter.com/"+data+"' target='_blank'>View your tweet</a></p>", callback);
   }
@@ -397,7 +405,7 @@ function getTextLength(s)
   var len = s.length;
   for(var i = 0; i < urls.length; i++)
     len = len - urls[i].length + Math.min(urls[i].length, 20);
-    
+
   return len;
 }
 
@@ -415,7 +423,7 @@ function changeKeyboard(kbdname,languageCode,p)
 
   if(typeof _gaq != 'undefined')
     _gaq.push(['_trackEvent', 'Keyboard', 'Selecting', languageCode+','+kbdname ]);
-  
+
   var kbd = getKeymanWeb().getKeyboard(kbdname,languageCode);
   if(kbd) {
     $('#message').attr('placeholder', 'The '+kbd.LanguageName+' keyboard is selected.  Just start typing');
@@ -437,8 +445,8 @@ function updateBookmarklet(kbd) {
   } else {
     var oskFontInformation = kbd.OskFont ? encodeURIComponent('&oskFont='+JSON.stringify(kbd.OskFont)) : '';
     var fontInformation = kbd.Font ? encodeURIComponent('&font='+JSON.stringify(kbd.Font)) : '';
-    
-    var code = 
+
+    var code =
       "javascript:void((function(){try{var%20e=document.createElement('script');e.type='text/javascript';"+
       "e.src='"+resourceDomain+"/code/bml20.php"+
       "?langid="+encodeURIComponent(kbd.LanguageCode)+
@@ -448,8 +456,8 @@ function updateBookmarklet(kbd) {
       fontInformation+
       "';document.body.appendChild(e);}catch(v){}})())";
     $('#bookmarklet div a').text(kbd.LanguageName+' Keyboard').attr('href', code);
-    $('#bookmarklet div a').unbind('mousedown').bind('mousedown', 
-      function() { 
+    $('#bookmarklet div a').unbind('mousedown').bind('mousedown',
+      function() {
         if(typeof _gaq != 'undefined')
           _gaq.push(['_trackEvent', 'Bookmarklet', 'Installing', kbd.LanguageCode+','+kbd.Name ]);
       });
@@ -471,7 +479,7 @@ function updateDownload(kbd) {
     });
     $('#desktop-title').text("Use "+kbd.LanguageName+" Keyboard in any Windows app!");
     $("#keymandesktop").show();
-  }  
+  }
 }
 
 function updateLink(kbdname)
@@ -480,9 +488,9 @@ function updateLink(kbdname)
   if(e)
   {
     kbdname = kbdname.substr(9);
-    var re = /^\/(.+)\/(.+)\.php$/; 
+    var re = /^\/(.+)\/(.+)\.php$/;
     var rex = re.exec(location.pathname);
-    
+
     if(rex != null)
     {
       if(rex[1] != 'en') var lang = '?lang='+rex[1]; else var lang = '';
@@ -499,31 +507,31 @@ function updateExample(kbdname) {
   var keymanExample=document.getElementById("example"),
   exampleBox=document.getElementById("exampleBox");
   if (!keymanExample || !exampleBox) return false;
- 	
+
   if(kbdname == '')
   {
     exampleBox.style.visibility='hidden';
-    keymanExample.style.visibility='hidden';  
+    keymanExample.style.visibility='hidden';
     //keymanExample.innerHTML = 'Select a keyboard from the Keyboard Toolbar above';
     return true;
   }
- 
+
   exampleBox.style.visibility='visible';
   keymanExample.style.visibility='visible';
   var activeLanguage=getKeymanWeb().getActiveLanguage();
   if(langExamples[activeLanguage + '_' + kbdname])
   {
-    keymanExample.innerHTML = langExamples[activeLanguage + '_' + kbdname];    
+    keymanExample.innerHTML = langExamples[activeLanguage + '_' + kbdname];
     return true;
   }
-  
+
   langExamples[activeLanguage + '_' + kbdname] = 'Loading...';
-	
+
 	var xmlhttp;
 	if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
 	else if(window.ActiveXObject) xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
 	else return false;
-	
+
   xmlhttp.onreadystatechange = function()
 	{
 	  if(xmlhttp.readyState == 4)
@@ -535,7 +543,7 @@ function updateExample(kbdname) {
 	var link = '//'+demoDomain+'/prog/languageexample.php?keyboard='+kbdname+'&language='+activeLanguage;
 	xmlhttp.open('GET', link, true);
 	xmlhttp.send(null);
-	
+
 	//keymanExample.style.display = 'block';
 	//keymanExample.innerHTML = "Example: To enter <span class='highlightExample'>?????</span>, type <span class='highlightExample'>thamiz</span> on your keyboard";
 }
