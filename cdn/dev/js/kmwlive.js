@@ -247,7 +247,7 @@ $(window).on("load", function() {
   setTimeout(afterInit, 1000);
 });
 
-let afterInitRun = false;
+var afterInitRun = false;
 function afterInit() {
   if(afterInitRun) {
     return;
