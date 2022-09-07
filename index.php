@@ -65,7 +65,7 @@ require_once('inc/head.php');
 	  <div class='box' id='keymandesktop'>
 		  <!--<h3>Windows Version</h3>-->
 		  <p><span id='desktop-title'>Use this keyboard in any Windows app!</span>
-              <a id='keyman-desktop-download' href='<?= "{$site_protocol}{$site_keyman}/keyboards/" ?>'>
+              <a id='keyman-desktop-download'>
               <img src="<?php echo cdn("img/small_download.png"); ?>" alt='Download'
               title='Download free and open source Keyman Desktop with this keyboard bundled' /></a>
               <span id='free-open-source'>Free and open source!</span></p>
@@ -78,7 +78,7 @@ require_once('inc/head.php');
 	  <div class='box' id='learn'>
       <h3>Website Plugin</h3>
       <p>Install the Keyman Engine for Web into your blog, CMS or website</p>
-			<div><a href='https://keyman.com/developer/keymanweb/'>Learn more</a> | <a href='http://keyman.com/developer/keymanweb'>Get the source</a></div>
+			<div><a href='https://keyman.com/developer/keymanweb/'>Learn more</a> | <a href='https://keyman.com/developer/keymanweb'>Get the source</a></div>
 		</div>
 	</aside>
 

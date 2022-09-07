@@ -2,6 +2,8 @@
   session_start();
   require_once('servervars.php');
 
+  use \Keyman\Site\Common\KeymanHosts;
+
   $kmw_tiers = array('alpha', 'beta', 'stable');
   $kmw_builds = get_keymanweb_versions();
   $hasBeta = version_compare($kmw_builds['stable'], $kmw_builds['beta']) < 0;
@@ -97,6 +99,7 @@
   var demoDomain="<?php echo $site_keymanwebdemo; ?>";
   var KeymanWeb_StaticRoot = "<?php echo $staticDomainRoot; ?>";
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
+  var site_keyman_com="<?php echo KeymanHosts::Instance()->keyman_com ?>";
 
   // Load (only) the appropriate CSS for the device form factor
 

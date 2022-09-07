@@ -202,7 +202,7 @@ $(document).ready(function() {
   $('#search').click(function(event){
     event.preventDefault();
     if($('#search').attr('disabled') == 'disabled') return;
-    var newURL='http://www.google.com/search?q='+encodeURIComponent($('#message').val());
+    var newURL='https://www.google.com/search?q='+encodeURIComponent($('#message').val());
     window.open(newURL,'_blank');
     //location.href = 'http://www.google.com/search?q='+encodeURIComponent($('#message').val());
   });
@@ -470,12 +470,11 @@ function updateDownload(kbd) {
     $('#keymandesktop').hide();
   }else{
     var kbdname = kbd.InternalName.substr(9);
-    var rex = $('#keyman-desktop-download').attr('href');
-    var url = rex + kbdname;
+    var url = site_keyman_com + '/keyboards/' + kbdname;
     $('#keyman-desktop-download').attr('href', url);
     $('#keyman-desktop-download').unbind('click').click(function() {
       if(typeof _gaq != 'undefined')
-	_gaq.push(['_trackPageview', url]);
+	      _gaq.push(['_trackPageview', url]);
     });
     $('#desktop-title').text("Use "+kbd.LanguageName+" Keyboard in any Windows app!");
     $("#keymandesktop").show();
