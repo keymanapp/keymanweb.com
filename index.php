@@ -127,7 +127,7 @@ require_once('inc/head.php');
         </div>
         <div class="footer-third sil-logo">
             <br>
-            <a href="/about/"><img id="sil-logo" src="<?php echo cdn("img/sil-logo-blue-2017_1.png"); ?>" alt='SIL' /></a>
+            <a href="https://www.sil.org/about/"><img id="sil-logo" src="<?php echo cdn("img/sil-logo-blue-2017_1.png"); ?>" alt='SIL' /></a>
             <p>Created by <a href="https://www.sil.org/about/">SIL International</a></p>
         </div>
     </div>
