@@ -122,7 +122,7 @@ $(document).ready(function() {
 
     // We can't proceed any further if KMW hasn't loaded yet.
     // No point handling resizes until that's occurred.
-    if(!getKeymanWeb()) {
+    if(!getKeymanWeb() || !getKeymanWeb().osk) {
       return;
     }
 
