@@ -182,6 +182,7 @@
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
+<script src="https://r.keymanweb.com/code/bml_builder.js"></script>
 
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>

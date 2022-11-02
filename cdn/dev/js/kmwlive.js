@@ -443,24 +443,15 @@ function updateBookmarklet(kbd) {
   if(!kbd) {
     $('#bookmarklet').hide();
   } else {
-    var oskFontInformation = kbd.OskFont ? encodeURIComponent('&oskFont='+JSON.stringify(kbd.OskFont)) : '';
-    var fontInformation = kbd.Font ? encodeURIComponent('&font='+JSON.stringify(kbd.Font)) : '';
+    let bml_element_old = document.getElementsByClassName('keyman-bookmarklet').item(0);
+    let bml_parent = bml_element_old.parentElement;
 
-    var code =
-      "javascript:void((function(){try{var%20e=document.createElement('script');e.type='text/javascript';"+
-      "e.src='"+resourceDomain+"/code/bml20.php"+
-      "?langid="+encodeURIComponent(kbd.LanguageCode)+
-      "&keyboard="+encodeURIComponent(kbd.InternalName.substr('Keyboard_'.length))+
-      "&lang="+encodeURIComponent(kbd.LanguageName+' '+kbd.Name)+
-      oskFontInformation+
-      fontInformation+
-      "';document.body.appendChild(e);}catch(v){}})())";
-    $('#bookmarklet div a').text(kbd.LanguageName+' Keyboard').attr('href', code);
-    $('#bookmarklet div a').unbind('mousedown').bind('mousedown',
-      function() {
-        if(typeof _gaq != 'undefined')
-          _gaq.push(['_trackEvent', 'Bookmarklet', 'Installing', kbd.LanguageCode+','+kbd.Name ]);
-      });
+    let kbdid = kbd.InternalName.substr('Keyboard_'.length);
+    let label = kbd.LanguageName + ' Keyboard';
+    let bml_element_new = construct_bookmarklet(kbdid, kbd.LanguageCode, kbd.Name, label);
+
+    bml_parent.replaceChild(bml_element_new, bml_element_old); // unusual order:  needs 'new' before 'old'.
+
     $('#bookmarklet').show();
   }
 }
