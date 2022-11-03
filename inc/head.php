@@ -87,9 +87,9 @@
   });
 </script>
 
-
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo "$url_keymanweb_res/code/bookmarklet_ui.css"; ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
 
@@ -182,7 +182,7 @@
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
-<script src="https://r.keymanweb.com/code/bookmarklet_builder.js"></script>
+<script src="<?php echo "$url_keymanweb_res" ?>/code/bookmarklet_builder.js"></script>
 
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
