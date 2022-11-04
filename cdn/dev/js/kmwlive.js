@@ -247,7 +247,7 @@ $(window).on("load", function() {
   setTimeout(afterInit, 1000);
 });
 
-let afterInitRun = false;
+var afterInitRun = false;
 function afterInit() {
   if(afterInitRun) {
     return;
@@ -443,13 +443,13 @@ function updateBookmarklet(kbd) {
   if(!kbd) {
     $('#bookmarklet').hide();
   } else {
-    let bml_element_old = document.getElementsByClassName('keyman-bookmarklet').item(0);
-    let bml_parent = bml_element_old.parentElement;
+    var bml_element_old = document.getElementsByClassName('keyman-bookmarklet').item(0);
+    var bml_parent = bml_element_old.parentElement;
 
-    let kbdid = kbd.InternalName.substr('Keyboard_'.length);
-    let label = kbd.LanguageName + ' Keyboard';
+    var kbdid = kbd.InternalName.substr('Keyboard_'.length);
+    var label = kbd.LanguageName + ' Keyboard';
     // resourceDomain set by inc/head.php
-    let bml_element_new = construct_bookmarklet(resourceDomain, kbdid, kbd.LanguageCode, kbd.Name, label);
+    var bml_element_new = construct_bookmarklet(resourceDomain, kbdid, kbd.LanguageCode, kbd.Name, label);
 
     bml_parent.replaceChild(bml_element_new, bml_element_old); // unusual order:  needs 'new' before 'old'.
 
