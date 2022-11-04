@@ -448,7 +448,8 @@ function updateBookmarklet(kbd) {
 
     let kbdid = kbd.InternalName.substr('Keyboard_'.length);
     let label = kbd.LanguageName + ' Keyboard';
-    let bml_element_new = construct_bookmarklet(kbdid, kbd.LanguageCode, kbd.Name, label);
+    // resourceDomain set by inc/head.php
+    let bml_element_new = construct_bookmarklet(resourceDomain, kbdid, kbd.LanguageCode, kbd.Name, label);
 
     bml_parent.replaceChild(bml_element_new, bml_element_old); // unusual order:  needs 'new' before 'old'.
 
