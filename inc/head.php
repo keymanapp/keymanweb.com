@@ -207,7 +207,13 @@
     }
     if(typeof addKeyboards == 'function') {
       addKeyboards();
-    }
+    } <?php if ($site_suffix == ".local") {
+      echo 'else {
+      console.warn("-- Fallback:  not using the server\'s cached keyboard set! --");
+      // Server caching may not be active in local dev instances of the server.
+      keyman.addKeyboards();
+    }';
+    } ?>
     if(localKeyboard && localLanguage)
       keyman.setActiveKeyboard(localKeyboard, localLanguage);
     document.getElementById('message').focus();
