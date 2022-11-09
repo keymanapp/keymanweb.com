@@ -1,0 +1,59 @@
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+<IfModule mod_mime.c>
+    AddType font/ttf .ttf
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+    AddType font/otf .otf
+    AddType application/octet-stream .eot
+    AddType application/x-apple-aspen-config .mobileconfig
+    AddType image/svg+xml .svg
+    AddType application/javascript .js 
+
+    AddCharset UTF-8 .js
+</IfModule>
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteBase /
+
+
+# TODO: <add extension=".js" policy="DisableCache" kernelCachePolicy="DontCache" />
+
+
+# Redirect http://keymanweb.keyman.com and http://www.keymanweb.com to https://keymanweb.com,
+# but only if on a live site (help.keyman.com) and not
+# matching `/.well-known/(.*)$` (for Let's Encrypt)
+<If "%{REQUEST_SCHEME} == 'http' && %{HTTP_HOST} == 'keymanweb.com' && %{REQUEST_URI} !~ m#^/.well-known/(.*)$#" >
+    Redirect "/" "https://keymanweb.com"
+</If>
+<If "%{REQUEST_SCHEME} == 'http' && %{HTTP_HOST} == 'www.keymanweb.com' && %{REQUEST_URI} !~ m#^/.well-known/(.*)$#" >
+    Redirect "/" "https://keymanweb.com"
+</If>
+
+
+# Custom error messages (need to pass the original request)
+# ErrorDocument 404 /_includes/errors/404.php?uri=%{REQUEST_URI}
+
+
+# Keymanweb.com 2.0 rewrite rules for Keymanweb.com 1.0 /go/lang/kbd urls
+
+# Rewrite /go/lang/kbd/app[?...] to /?kmwlang=lang,kmwkbd=kbd
+RewriteRule "^go/([^/]+)/([^/]+)/([^?]+)(\?)?(.+)?$" "/index.php?kmwlang=$1&kmwkbd=Keyboard_$2&$5"
+
+# Rewrite /go/lang/kbd[?...] to /?kmwlang=lang,kmwkbd=kbd
+RewriteRule "^go/([^/]+)/([^?]+)(\?)?(.+)?$" "/index.php?kmwlang=$1&kmwkbd=Keyboard_$2&$4"
+
+# Keymanweb.com 2.0 rewrite rules for Keymanweb.com 1.0 /lang/app.php urls
+
+# Redirect /lang/app?kmwlang=lang,kmwkbd=kbd to /?kmwlang=lang,kmwkbd=kbd
+RedirectMatch "^../[^?]+?kmwlang=(.+)&amp;kmwkbd=(.+)(&amp;(.+))?$" "/go/$1/$2"
+
+# Redirect /lang/app to /
+RedirectMatch "^../[^?]+$" "/"
+
+# Redirect /mini/* to /
+RedirectMatch "^mini/" "/"
+
+</IfModule>
+
