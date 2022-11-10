@@ -72,7 +72,7 @@ require_once('inc/head.php');
 	  </div>
 	  <div class='box' id='bookmarklet'>
 	    <h3>Browser Add-in</h3>
-	    <div><a href='#'></a></div>
+	    <div class='keyman-bookmarklet'><a href='#'></a></div>
 	    <p>Drag this button to your Bookmarks toolbar to install this keyboard to your web browser! <a href='https://keyman.com/bookmarklet' target='_blank'>Learn more</a></p>
 	  </div>
 	  <div class='box' id='learn'>

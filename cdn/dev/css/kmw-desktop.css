@@ -873,20 +873,6 @@ nav a {
   text-align: justify;
 }
 
-#bookmarklet div a {
-  padding: 4px 4px 4px 24px;
-	background: #D3DAED url('../img/keymanweb-icon-16.png') 4px 4px no-repeat;
-	box-shadow: 3px 3px 6px rgba(50,52,56,0.3);
-  text-decoration: none;
-  color: #000000;
-  font-size: 11px;
-  text-align: left;
-	display: inline-block;
-	height: 16px;
-	overflow: hidden;
-  white-space: nowrap;
-}
-
 #learn div {
   margin: 0;
   padding-bottom: 12px;
