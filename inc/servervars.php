@@ -92,7 +92,7 @@
       $version = $json->version;
     } else {
       // If the get-version API fails, we'll use the latest known version
-      $version = "14.0.282";
+      $version = "15.0.272";
     }
     return $version;
   }
