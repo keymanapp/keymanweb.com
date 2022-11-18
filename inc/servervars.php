@@ -106,7 +106,7 @@
     $fallback_version = "14.0.282";
 
     foreach(array('alpha', 'beta', 'stable') as $tier) {
-      if(!property_exists($json, $tier)) {
+      if(!$json || !property_exists($json, $tier)) {
         $version_map[$tier] = $fallback_version;
       } else if(version_compare($json->{$tier}, "0.0.1") < 0) {
         // The version string didn't properly validate.
