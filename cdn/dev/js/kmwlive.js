@@ -8,7 +8,7 @@ function getKeymanWeb() {
   if(window.tavultesoft) {
     return window.tavultesoft.keymanweb;
   }
-  return keyman;
+  return window.keyman;
 }
 
 //
@@ -238,13 +238,6 @@ $(document).ready(function() {
   //Cannot detect change of content from KMW, so use a timer instead to refresh button state
   //$('#message').bind("keypress keyup keydown change click focus blur", refreshButtons);
   window.setInterval(refreshButtons,200);
-});
-
-// The KeymanWeb script will have loaded by this point, though initialization may be another matter.
-// Promises only started being supported in KMW 13 (keymanapp/keyman#1432), but this site supports
-// earlier versions, too, so we can't rely on their presence.
-$(window).on("load", function() {
-  setTimeout(afterInit, 1000);
 });
 
 var afterInitRun = false;
