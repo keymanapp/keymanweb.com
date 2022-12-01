@@ -3,12 +3,6 @@
 </IfModule>
 <IfModule mod_mime.c>
     AddType font/ttf .ttf
-    AddType font/woff .woff
-    AddType font/woff2 .woff2
-    AddType font/otf .otf
-    AddType application/octet-stream .eot
-    AddType application/x-apple-aspen-config .mobileconfig
-    AddType image/svg+xml .svg
     AddType application/javascript .js 
 
     AddCharset UTF-8 .js
