@@ -131,5 +131,10 @@
       $this->donate_keyman_com_host = preg_replace('/^http(s)?:\/\/(.+)$/', '$2', $this->donate_keyman_com);
       $this->translate_keyman_com_host = preg_replace('/^http(s)?:\/\/(.+)$/', '$2', $this->translate_keyman_com);
       $this->sentry_keyman_com_host = preg_replace('/^http(s)?:\/\/(.+)$/', '$2', $this->sentry_keyman_com);
+
+      // DDW: Don't check to production
+      $this->s_keyman_com = "https://s.keyman.com";
+      $this->api_keyman_com = "https://api.keyman.com";
+      $this->downloads_keyman_com = "https://downloads.keyman.com";
     }
   }
