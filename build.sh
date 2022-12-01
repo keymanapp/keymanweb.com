@@ -30,7 +30,7 @@ function _stop_docker_container() {
 }
 
 builder_describe \
-  "Setup keymanweb.com site to run via Docker." \
+  "Setup keymanweb.com site to run via Docker at http://localhost:8057." \
   configure \
   clean \
   build \
