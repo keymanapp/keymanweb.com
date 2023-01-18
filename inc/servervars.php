@@ -103,7 +103,7 @@
       $json = json_decode($json);
     }
 
-    $fallback_version = "14.0.282";
+    $fallback_version = "15.0.274";
 
     foreach(array('alpha', 'beta', 'stable') as $tier) {
       if(!$json || !property_exists($json, $tier)) {
