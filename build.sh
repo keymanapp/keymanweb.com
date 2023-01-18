@@ -49,9 +49,9 @@ if builder_start_action configure; then
     echo "Skipping because vendor already exists"
   else
     # Create link to vendor/ folder
-    HELP_CONTAINER=$(_get_docker_container_id)
-    if [ ! -z "$HELP_CONTAINER" ]; then
-      docker exec -i $HELP_CONTAINER sh -c "ln -s /var/www/vendor vendor && chown -R www-data:www-data vendor"
+    KEYMANWEB_CONTAINER=$(_get_docker_container_id)
+    if [ ! -z "$KEYMANWEB_CONTAINER" ]; then
+      docker exec -i $KEYMANWEB_CONTAINER sh -c "ln -s /var/www/vendor vendor && chown -R www-data:www-data vendor"
     else
       echo "No Docker container to configure"
     fi
