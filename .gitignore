@@ -1,5 +1,5 @@
 .idea/**
 cdn/deploy
 
-vendor*
+/vendor
 .data/
