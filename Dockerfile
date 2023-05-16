@@ -20,6 +20,7 @@ RUN composer install
 # Site
 FROM php:7.4-apache
 COPY resources/keyman-site.conf /etc/apache2/conf-available/
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 RUN chown -R www-data:www-data /var/www/html/
 COPY resources/run.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/run.sh
