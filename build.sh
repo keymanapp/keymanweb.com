@@ -58,11 +58,11 @@ if builder_start_action clean; then
   else
     echo "No Docker container to clean"
   fi
-    
+
   KEYMANWEB_IMAGE=$(_get_docker_image_id)
   if [ ! -z "$KEYMANWEB_IMAGE" ]; then
     docker rmi web-keyman-website
-  else 
+  else
     echo "No Docker image to clean"
   fi
 
@@ -76,7 +76,7 @@ if builder_start_action stop; then
 fi
 
 if builder_start_action build; then
-  # Download docker image. --mount option requires BuildKit  
+  # Download docker image. --mount option requires BuildKit
   DOCKER_BUILDKIT=1 docker build -t web-keyman-website .
 
   builder_finish_action success build
@@ -116,7 +116,7 @@ fi
 if builder_start_action test; then
   # TODO: lint tests
 
-  #composer check-docker-links
+  composer check-docker-links
 
   builder_finish_action success test
 fi
