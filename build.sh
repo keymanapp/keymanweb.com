@@ -58,11 +58,11 @@ if builder_start_action clean; then
   else
     echo "No Docker container to clean"
   fi
-    
+
   KEYMANWEB_IMAGE=$(_get_docker_image_id)
   if [ ! -z "$KEYMANWEB_IMAGE" ]; then
     docker rmi web-keyman-website
-  else 
+  else
     echo "No Docker image to clean"
   fi
 
@@ -76,7 +76,7 @@ if builder_start_action stop; then
 fi
 
 if builder_start_action build; then
-  # Download docker image. --mount option requires BuildKit  
+  # Download docker image. --mount option requires BuildKit
   DOCKER_BUILDKIT=1 docker build -t web-keyman-website .
 
   builder_finish_action success build
@@ -87,9 +87,17 @@ if builder_start_action start; then
   if [ ! -z $(_get_docker_image_id) ]; then
     if [[ $OSTYPE =~ msys|cygwin ]]; then
       # Windows needs leading slashes for path
-      docker run -d -p 8057:80 -v //$(pwd):/var/www/html/ -e S_KEYMAN_COM=localhost:8054 web-keyman-website
+      docker run -d -p 8057:80 \
+        -v //$(pwd):/var/www/html/ \
+        -e S_KEYMAN_COM=localhost:8054 \
+        --name keymanweb.com \
+        web-keyman-website
     else
-      docker run -d -p 8057:80 -v $(pwd):/var/www/html/ -e S_KEYMAN_COM=localhost:8054 web-keyman-website
+      docker run -d -p 8057:80 \
+        -v $(pwd):/var/www/html/ \
+        -e S_KEYMAN_COM=localhost:8054 \
+        --name keymanweb.com \
+        web-keyman-website
     fi
   else
     echo "${COLOR_RED}ERROR: Docker container doesn't exist. Run ./build.sh build first${COLOR_RESET}"
@@ -116,7 +124,7 @@ fi
 if builder_start_action test; then
   # TODO: lint tests
 
-  #composer check-docker-links
+  composer check-docker-links
 
   builder_finish_action success test
 fi
