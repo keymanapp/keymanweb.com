@@ -265,6 +265,4 @@
   })();
 </script>
 
-<?php require_once('analytics.php'); ?>
-
 </head>
