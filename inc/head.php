@@ -201,9 +201,12 @@
   loadKeyboardFromHash();
   var pageLoading = true;
 
+  // We finally made it properly boolean in 17.0 as part of https://github.com/keymanapp/keyman/pull/8560.
+  var setActiveOnRegister = Number.parseFloat(keyman.version) >= 17.0 ? false : 'false';
+
   keyman.init({
     attachType:'auto',
-    setActiveOnRegister:'false'
+    setActiveOnRegister: setActiveOnRegister
   }).then(function() {
     if(typeof afterInit == 'function') {
       afterInit();
@@ -217,8 +220,9 @@
       keyman.addKeyboards();
     }';
     } ?>
-    if(localKeyboard && localLanguage)
+    if(localKeyboard && localLanguage) {
       keyman.setActiveKeyboard(localKeyboard, localLanguage);
+    }
     document.getElementById('message').focus();
   });
 
