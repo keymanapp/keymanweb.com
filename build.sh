@@ -87,20 +87,17 @@ if builder_start_action start; then
   if [ ! -z $(_get_docker_image_id) ]; then
     if [[ $OSTYPE =~ msys|cygwin ]]; then
       # Windows needs leading slashes for path
-      docker run -d -p 8057:80 \
-        -v //$(pwd):/var/www/html/ \
-        -e S_KEYMAN_COM=localhost:8054 \
-        --name keymanweb.com \
-        web-keyman-website
+      SITE_HTML="//$(pwd):/var/www/html/"
     else
-      docker run -d -p 8057:80 \
-        -v $(pwd):/var/www/html/ \
+      SITE_HTML="$(pwd):/var/www/html/"
+    fi
+
+    docker run --rm -d -p 8057:80 -v ${SITE_HTML} \
         -e S_KEYMAN_COM=localhost:8054 \
         --name keymanweb.com \
         web-keyman-website
-    fi
   else
-    echo "${COLOR_RED}ERROR: Docker container doesn't exist. Run ./build.sh build first${COLOR_RESET}"
+    builder_die "ERROR: Docker container doesn't exist. Run ./build.sh build first$"
     builder_finish_action fail start
   fi
 
@@ -116,7 +113,6 @@ if builder_start_action start; then
       echo "No Docker container running to create link to vendor/"
     fi
   fi
-
 
   builder_finish_action success start
 fi
