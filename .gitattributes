@@ -2,5 +2,5 @@
 # cron file needs to have LF line endings
 /resources/cache-keyboards-cron eol=lf
 
-Dockerfile  test eol=lf
+Dockerfile  text eol=lf
 *.sh        eol=lf
