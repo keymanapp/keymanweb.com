@@ -7,7 +7,7 @@ readonly BOOTSTRAP_VERSION=chore/v0.4
 ## END STANDARD SITE BUILD SCRIPT INCLUDE
 
 readonly KEYMANWEB_CONTAINER_NAME=web-keyman-website
-readonly KEYMANWEB_CONTAINER_DESC=web-keymanw-com-app
+readonly KEYMANWEB_CONTAINER_DESC=web-keyman-com-app
 readonly KEYMANWEB_IMAGE_NAME=web-keyman-website
 readonly HOST_KEYMANWEB_COM=keymanweb.com.localhost
 
