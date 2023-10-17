@@ -23,7 +23,7 @@ jobs:
         fail-fast: true
 
     #
-    # Finally, run the tests
+    # Finally, run the tests; note that this is almost all replicated in build.sh; here logging is reduced (TODO sync)
     #
     - name: Lint
       shell: bash
