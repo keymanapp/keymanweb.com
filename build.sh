@@ -2,31 +2,22 @@
 ## START STANDARD SITE BUILD SCRIPT INCLUDE
 readonly THIS_SCRIPT="$(readlink -f "${BASH_SOURCE[0]}")"
 readonly BOOTSTRAP="$(dirname "$THIS_SCRIPT")/resources/bootstrap.inc.sh"
-readonly BOOTSTRAP_VERSION=v0.2
+readonly BOOTSTRAP_VERSION=chore/v0.4
 [ -f "$BOOTSTRAP" ] && source "$BOOTSTRAP" || source <(curl -fs https://raw.githubusercontent.com/keymanapp/shared-sites/$BOOTSTRAP_VERSION/bootstrap.inc.sh)
 ## END STANDARD SITE BUILD SCRIPT INCLUDE
 
+readonly KEYMANWEB_CONTAINER_NAME=web-keyman-website
+readonly KEYMANWEB_CONTAINER_DESC=web-keyman-com-app
+readonly KEYMANWEB_IMAGE_NAME=web-keyman-website
+readonly HOST_KEYMANWEB_COM=keymanweb.com.localhost
+
+source _common/keyman-local-ports.inc.sh
+source _common/docker.inc.sh
+
 ################################ Main script ################################
 
-function _get_docker_image_id() {
-  echo "$(docker images -q web-keyman-website)"
-}
-
-function _get_docker_container_id() {
-  echo "$(docker ps -a -q --filter ancestor=web-keyman-website)"
-}
-
-function _stop_docker_container() {
-  KEYMANWEB_CONTAINER=$(_get_docker_container_id)
-  if [ ! -z "$KEYMANWEB_CONTAINER" ]; then
-    docker container stop $KEYMANWEB_CONTAINER
-  else
-    echo "No Docker container to stop"
-  fi
-}
-
 builder_describe \
-  "Setup keymanweb.com site to run via Docker at http://localhost:8057." \
+  "Setup keymanweb.com site to run via Docker." \
   configure \
   clean \
   build \
@@ -36,81 +27,24 @@ builder_describe \
 
 builder_parse "$@"
 
+function test_docker_container() {
+  # Note: ci.yml replicates these
+
+  # TODO: Run unit tests
+  #docker exec $KEYMANWEB_CONTAINER_DESC sh -c "vendor/bin/phpunit --testdox"
+
+  # Lint .php files for obvious errors
+  docker exec $KEYMANWEB_CONTAINER_DESC sh -c "find . -name '*.php' | grep -v '/vendor/' | xargs -n 1 -d '\\n' php -l"
+
+  # Check all internal links
+  # NOTE: link checker runs on host rather than in docker image
+  npx broken-link-checker http://localhost:8057 --ordered --recursive --host-requests 10 -e --filter-level 3
+}
+
 builder_run_action configure   bootstrap_configure
+builder_run_action clean       clean_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME
+builder_run_action stop        stop_docker_container  $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME
+builder_run_action build       build_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME
+builder_run_action start       start_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME $KEYMANWEB_CONTAINER_DESC $HOST_KEYMANWEB_COM $PORT_KEYMANWEB_COM
 
-if builder_start_action clean; then
-  # Stop and cleanup Docker containers and images used for the site
-  _stop_docker_container
-
-  KEYMANWEB_CONTAINER=$(_get_docker_container_id)
-  if [ ! -z "$KEYMANWEB_CONTAINER" ]; then
-    docker container rm $KEYMANWEB_CONTAINER
-  else
-    echo "No Docker container to clean"
-  fi
-
-  KEYMANWEB_IMAGE=$(_get_docker_image_id)
-  if [ ! -z "$KEYMANWEB_IMAGE" ]; then
-    docker rmi web-keyman-website
-  else
-    echo "No Docker image to clean"
-  fi
-
-  builder_finish_action success clean
-fi
-
-if builder_start_action stop; then
-  # Stop the Docker container
-  _stop_docker_container
-  builder_finish_action success stop
-fi
-
-if builder_start_action build; then
-  # Download docker image. --mount option requires BuildKit
-  DOCKER_BUILDKIT=1 docker build -t web-keyman-website .
-
-  builder_finish_action success build
-fi
-
-if builder_start_action start; then
-  # Start the Docker container
-  if [ ! -z $(_get_docker_image_id) ]; then
-    if [[ $OSTYPE =~ msys|cygwin ]]; then
-      # Windows needs leading slashes for path
-      SITE_HTML="//$(pwd):/var/www/html/"
-    else
-      SITE_HTML="$(pwd):/var/www/html/"
-    fi
-
-    docker run --rm -d -p 8057:80 -v ${SITE_HTML} \
-        -e S_KEYMAN_COM=localhost:8054 \
-        --name keymanweb.com \
-        web-keyman-website
-  else
-    builder_die "ERROR: Docker container doesn't exist. Run ./build.sh build first$"
-    builder_finish_action fail start
-  fi
-
-  # Skip if link already exists
-  if [ -L vendor ]; then
-    echo "Link to vendor/ already exists"
-  else
-    # Create link to vendor/ folder
-    KEYMANWEB_CONTAINER=$(_get_docker_container_id)
-    if [ ! -z "$KEYMANWEB_CONTAINER" ]; then
-      docker exec -i $KEYMANWEB_CONTAINER sh -c "ln -s /var/www/vendor vendor && chown -R www-data:www-data vendor"
-    else
-      echo "No Docker container running to create link to vendor/"
-    fi
-  fi
-
-  builder_finish_action success start
-fi
-
-if builder_start_action test; then
-  # TODO: lint tests
-
-  composer check-docker-links
-
-  builder_finish_action success test
-fi
+builder_run_action test        test_docker_container
