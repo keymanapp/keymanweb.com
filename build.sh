@@ -25,7 +25,7 @@ builder_describe \
   stop \
   test \
 
-builder_parse "$@":
+builder_parse "$@"
 
 function test_docker_container() {
   # Note: ci.yml replicates these
