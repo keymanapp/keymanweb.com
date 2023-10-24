@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3.5.2
 
     # Build the docker image and create link to vendor/ dependencies
     - name: Build the Docker image
@@ -25,6 +25,11 @@ jobs:
     #
     # Finally, run the tests; note that this is almost all replicated in build.sh; here logging is reduced (TODO sync)
     #
+    - name: PHP unit tests
+      shell: bash
+      run: |
+        docker exec web-keyman-com-app sh -c "vendor/bin/phpunit --testdox"
+
     - name: Lint
       shell: bash
       run: |
