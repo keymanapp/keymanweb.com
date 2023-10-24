@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: help-keyman-com
+  name: web-keyman-com
   namespace: keyman
   finalizers:
   - kubernetes.io/pvc-protection
@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: help-keyman-com
+  name: web-keyman-com
   namespace: keyman
 data:
   # This key is for local testing, or development of k8s yaml files 
@@ -29,8 +29,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: help-keyman-com
-  name: help-keyman-com
+    run: web-keyman-com
+  name: web-keyman-com
   namespace: keyman
 spec:
   type: NodePort
@@ -44,5 +44,5 @@ spec:
     protocol: TCP
     nodePort: 30900
   selector:
-    app: help-keyman-com
+    app: web-keyman-com
 
