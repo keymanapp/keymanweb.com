@@ -20,7 +20,7 @@
                     25 Jan 2010 - mcdurdin - Tweak display of "no keyboard" text
                     20 Aug 2010 - mcdurdin-admin - Fix non-english requests
 */
-  require_once __DIR__ . '/../_include/autoload.php';
+  require_once __DIR__ . '/../_includes/autoload.php';
   require_once __DIR__ . '/../inc/servervars.php';
 
   use \Keyman\Site\Common\KeymanHosts;

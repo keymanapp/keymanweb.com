@@ -17,7 +17,7 @@
 */
 
   require_once __DIR__ . '/../vendor/autoload.php';
-  require_once __DIR__ . '/../_include/autoload.php';
+  require_once __DIR__ . '/../_includes/autoload.php';
   require_once __DIR__ . '/../_common/KeymanSentry.php';
 
   use \Keyman\Site\Common\KeymanHosts;
