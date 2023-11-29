@@ -2,8 +2,8 @@ if(typeof KeyRenderer == 'undefined')
 {
   var KeyRenderer = new function()
   {
-    if(location.hostname.indexOf('keymanweb.com.local')>=0)
-      var site='s.keyman.com.local';
+    if(location.hostname.indexOf('keymanweb.com.localhost')>=0)
+      var site='s.keyman.com.localhost';
     else
       var site='s.keyman.com';
   
