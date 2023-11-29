@@ -25,6 +25,9 @@
   const SENTRY_DSN = 'https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.sentry.io/5983523';
   \Keyman\Site\Common\KeymanSentry::init(SENTRY_DSN);
 
+  // latest known version of KeymanWeb
+  const FALLBACK_KMW_VERSION = '16.0.143';
+
   if(file_exists(__DIR__ . '/../cdn/deploy/cdn.php')) {
     require_once __DIR__ . '/../cdn/deploy/cdn.php';
   }
@@ -92,7 +95,7 @@
       $version = $json->version;
     } else {
       // If the get-version API fails, we'll use the latest known version
-      $version = "15.0.272";
+      $version = FALLBACK_KMW_VERSION;
     }
     return $version;
   }
@@ -103,7 +106,7 @@
       $json = json_decode($json);
     }
 
-    $fallback_version = "15.0.274";
+    $fallback_version = FALLBACK_KMW_VERSION;
 
     foreach(array('alpha', 'beta', 'stable') as $tier) {
       if(!$json || !property_exists($json, $tier)) {
