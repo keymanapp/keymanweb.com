@@ -36,7 +36,7 @@
     (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) ? true : false;
 
   // $site_protocol is used only by util.php at this time.
-  $site_protocol = $testServer ? 'http://' : 'https://';
+  $site_protocol = $TestServer ? 'http://' : 'https://';
     
   $url_keymanweb_res = KeymanHosts::Instance()->r_keymanweb_com;
   $staticDomainRoot= KeymanHosts::Instance()->s_keyman_com;  
