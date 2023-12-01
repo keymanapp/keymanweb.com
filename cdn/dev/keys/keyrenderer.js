@@ -2,10 +2,10 @@ if(typeof KeyRenderer == 'undefined')
 {
   var KeyRenderer = new function()
   {
-    if(location.hostname.indexOf('keymanweb.com.local')>=0)
-      var site='s.keyman.com.local';
+    if(location.hostname.indexOf('keymanweb.com.localhost')>=0)
+      var site='http://s.keyman.com.localhost';
     else
-      var site='s.keyman.com';
+      var site='https://s.keyman.com';
   
     this.render = function(s)
     {
@@ -53,14 +53,14 @@ if(typeof KeyRenderer == 'undefined')
               kn = spkey[ks];
               if(kn) 
               { 
-                u = "<img src='http://"+site+"/keys/tr.gif' title='"+ks+"' alt='"+ks+"' class='key-"+kn+"' />";
+                u = "<img src='"+site+"/keys/tr.gif' title='"+ks+"' alt='"+ks+"' class='key-"+kn+"' />";
                 t = t.substr(0,x); ch = '*';
               }
             }
             
-            if(t.indexOf('C') >= 0) r += "<img src='http://"+site+"/keys/tr.gif' title='Ctrl' alt='Ctrl' class='key-ctrl' />";
-            if(t.indexOf('S') >= 0) r += "<img src='http://"+site+"/keys/tr.gif' title='Shift' alt='Shift' class='key-shift' />";
-            if(t.indexOf('A') >= 0) r += "<img src='http://"+site+"/keys/tr.gif' title='Alt' alt='Alt' class='key-alt' />";
+            if(t.indexOf('C') >= 0) r += "<img src='"+site+"/keys/tr.gif' title='Ctrl' alt='Ctrl' class='key-ctrl' />";
+            if(t.indexOf('S') >= 0) r += "<img src='"+site+"/keys/tr.gif' title='Shift' alt='Shift' class='key-shift' />";
+            if(t.indexOf('A') >= 0) r += "<img src='"+site+"/keys/tr.gif' title='Alt' alt='Alt' class='key-alt' />";
             
             r += u;
             endspan = true;
@@ -86,7 +86,7 @@ if(typeof KeyRenderer == 'undefined')
             else if(ch == '&quot;') ch = '"';
           }
           chv = ch.charCodeAt(0);
-          r += "<img src='http://"+site+"/keys/tr.gif' class='key-"+chv.toString()+"' title='"+this.encodeEntities(ch)+"' alt='"+this.encodeEntities(ch)+"' />";
+          r += "<img src='"+site+"/keys/tr.gif' class='key-"+chv.toString()+"' title='"+this.encodeEntities(ch)+"' alt='"+this.encodeEntities(ch)+"' />";
         }
         if(endspan) r += "</span>";
         i++;
