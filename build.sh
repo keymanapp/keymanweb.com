@@ -30,6 +30,7 @@ builder_parse "$@"
 
 function test_docker_container() {
   # Note: ci.yml replicates these
+  echo "TIER_TEST" > tier.txt
 
   # Run unit tests
   docker exec $KEYMANWEB_CONTAINER_DESC sh -c "vendor/bin/phpunit --testdox"
@@ -40,6 +41,16 @@ function test_docker_container() {
   # Check all internal links
   # NOTE: link checker runs on host rather than in docker image
   npx broken-link-checker http://localhost:${PORT_KEYMANWEB_COM} --ordered --recursive --host-requests 10 -e --filter-level 3
+
+  # Check for errors
+  if docker container logs $KEYMANWEB_CONTAINER_DESC 2>&1 | grep -q 'php7'; then
+    echo 'PHP reported errors or warnings:'
+    docker container logs $KEYMANWEB_CONTAINER_DESC 2>&1 | grep 'php7'
+    exit 1
+  else
+    echo 'No PHP errors found'
+    exit 0
+  fi
 }
 
 builder_run_action configure  bootstrap_configure
