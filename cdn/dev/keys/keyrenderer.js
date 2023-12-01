@@ -3,7 +3,7 @@ if(typeof KeyRenderer == 'undefined')
   var KeyRenderer = new function()
   {
     if(location.hostname.indexOf('keymanweb.com.localhost')>=0)
-      var site='https://s.keyman.com';
+      var site='http://s.keyman.com.localhost';
     else
       var site='https://s.keyman.com';
   
