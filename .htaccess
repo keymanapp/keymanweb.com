@@ -32,4 +32,5 @@ RedirectMatch "^../[^?]+$" "/"
 # Redirect /mini/* to /
 RedirectMatch "^mini/" "/"
 
-
+# Ready
+RewriteRule "^_control/ready$" "_control/ready.php" [END]
