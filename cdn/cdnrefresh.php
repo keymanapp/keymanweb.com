@@ -36,7 +36,7 @@
       $dest_file = $source_file_short;
     }
     if(!file_exists($deploy . $dest_file)) {
-      echo $source_file . " => " . $deploy . $dest_file . "<br/>";
+      echo $source_file . " => " . $deploy . $dest_file . "\n";
      
       // Copy the new hashed filename into the deploy folder
       copy($source_file, $deploy . $dest_file);
@@ -52,7 +52,7 @@
   function generate_hash($root, $resource_file) {
     global $resource_list;
     $resource_list = array();
-    
+
     $deploy = $root . DIRECTORY_SEPARATOR . "deploy";
     $source = $root . DIRECTORY_SEPARATOR . "dev";
 

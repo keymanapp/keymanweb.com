@@ -524,7 +524,7 @@ function updateExample(kbdname) {
 	  }
 	}
 	keymanExample.innerHTML = 'Loading...';
-	var link = '//'+demoDomain+'/prog/languageexample.php?keyboard='+kbdname+'&language='+activeLanguage;
+	var link = demoDomain+'/prog/languageexample.php?keyboard='+kbdname+'&language='+activeLanguage;
 	xmlhttp.open('GET', link, true);
 	xmlhttp.send(null);
 
