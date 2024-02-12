@@ -1,0 +1,3 @@
+
+## Run every 5 minutes; log php
+*/5 * * * * root /usr/local/bin/php /var/www/html/resources/cache_keyboards.php > /proc/1/fd/1 2>&1

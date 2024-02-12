@@ -15,7 +15,7 @@
   Notes:
   History:          21 Dec 2009 - mcdurdin - Fixup rendering of special keys
 */
-  require_once __DIR__ . '/../_include/autoload.php';
+  require_once __DIR__ . '/../_includes/autoload.php';
   require_once __DIR__ . '/../inc/servervars.php';
 
   use \Keyman\Site\Common\KeymanHosts;

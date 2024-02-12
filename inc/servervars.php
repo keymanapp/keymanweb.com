@@ -17,7 +17,7 @@
 */
 
   require_once __DIR__ . '/../vendor/autoload.php';
-  require_once __DIR__ . '/../_include/autoload.php';
+  require_once __DIR__ . '/../_includes/autoload.php';
   require_once __DIR__ . '/../_common/KeymanSentry.php';
 
   use \Keyman\Site\Common\KeymanHosts;
@@ -32,42 +32,21 @@
     require_once __DIR__ . '/../cdn/deploy/cdn.php';
   }
 
-  $site_url = 'keymanweb.com';
-
-  // We allow the site to strip off everything post its basic siteurl
-
-  function GetHostSuffix() {
-    global $site_url;
-    if(!isset($_SERVER['SERVER_NAME'])) return '';
-
-    $name = $_SERVER['SERVER_NAME'];
-
-    if(stripos($name, $site_url.'.') == 0) {
-      return substr($name, strlen($site_url), 1024);
-    }
-    return '';
-  }
-
-  $site_suffix = GetHostSuffix();
+  $site_suffix = KeymanHosts::Instance()->Site_Suffix();
 
   // $site_protocol is used only by util.php at this time.
-  $site_protocol = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+  $TestServer = (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT) || 
+    (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) ? true : false;
+  $site_protocol = $TestServer ? 'http://' : 'https://';
+    
+  $url_keymanweb_res = KeymanHosts::Instance()->r_keymanweb_com;
+  $staticDomainRoot= KeymanHosts::Instance()->s_keyman_com;  
 
-  if($site_suffix == '') {
-    $TestServer = false;
-    $url_keymanweb_res = "https://r.keymanweb.com";
-    $staticDomainRoot="https://s.keyman.com/";
-  } else {
-    $TestServer = true;
-    $url_keymanweb_res = "https://r.keymanweb.com"; /// local dev domain is usually not available
-    $staticDomainRoot="https://s.keyman.com/";
-  }
+  $site_keymanwebhelp = KeymanHosts::Instance()->help_keyman_com;
+  $site_keymanwebdemo = KeymanHosts::Instance()->keymanweb_com;
+  $site_keyman        = KeymanHosts::Instance()->keyman_com;
 
-  $site_keymanwebhelp = "help.keyman.com{$site_suffix}";
-  $site_keymanwebdemo = "keymanweb.com{$site_suffix}";
-  $site_keyman        = "keyman.com";
-
-  $staticDomain="s.keyman.com/kmw/engine";
+  $staticDomain= $staticDomainRoot . "/kmw/engine";
 
   function cdn($file) {
     global $cdn, $staticDomain, $TestServer;

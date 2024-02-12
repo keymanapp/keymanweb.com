@@ -85,7 +85,11 @@
     beforeSend: prepareEvent,
     dsn: "https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.sentry.io/5983523",
     release: sentryRelease,
-    environment: location.host.match(/\.local$/) ? 'development' : location.host.match(/(^|\.)keyman-staging\.com$/) ? 'staging' : 'production',
+    environment:
+      // TODO: https://github.com/keymanapp/shared-sites/issues/13
+      ['www.keymanweb.com','keymanweb.com', 'web.keyman.com'].includes(location.host) ? 'production' :
+      ['web.keyman-staging.com'].includes(location.host) ? 'staging' :
+      'development',
   });
 </script>
 
@@ -213,7 +217,7 @@
     }
     if(typeof addKeyboards == 'function') {
       addKeyboards();
-    } <?php if ($site_suffix == ".local") {
+    } <?php if ($site_suffix == ".localhost") {
       echo 'else {
       console.warn("-- Fallback:  not using the server\'s cached keyboard set! --");
       // Server caching may not be active in local dev instances of the server.

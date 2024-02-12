@@ -2,5 +2,8 @@
     "name": "keyman/keymanweb.com",
     "require": {
         "sentry/sdk": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
     }
 }

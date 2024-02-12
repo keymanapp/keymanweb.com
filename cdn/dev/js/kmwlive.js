@@ -487,7 +487,7 @@ function updateLink(kbdname)
 
 var langExamples = [];
 
-function updateExample(kbdname) {
+async function updateExample(kbdname) {
   var keymanExample=document.getElementById("example"),
   exampleBox=document.getElementById("exampleBox");
   if (!keymanExample || !exampleBox) return false;
@@ -510,24 +510,19 @@ function updateExample(kbdname) {
   }
 
   langExamples[activeLanguage + '_' + kbdname] = 'Loading...';
-
-	var xmlhttp;
-	if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
-	else if(window.ActiveXObject) xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-	else return false;
-
-  xmlhttp.onreadystatechange = function()
-	{
-	  if(xmlhttp.readyState == 4)
-	  {
-      langExamples[activeLanguage + '_' + kbdname] = keymanExample.innerHTML = xmlhttp.responseText;
-	  }
-	}
 	keymanExample.innerHTML = 'Loading...';
-	var link = '//'+demoDomain+'/prog/languageexample.php?keyboard='+kbdname+'&language='+activeLanguage;
-	xmlhttp.open('GET', link, true);
-	xmlhttp.send(null);
 
-	//keymanExample.style.display = 'block';
-	//keymanExample.innerHTML = "Example: To enter <span class='highlightExample'>?????</span>, type <span class='highlightExample'>thamiz</span> on your keyboard";
+	const link = '/prog/languageexample.php?keyboard='+kbdname+'&language='+activeLanguage;
+  try {
+    const response = await fetch(link);
+    if(response.status == 200) {
+      const content = await response.text();
+      langExamples[activeLanguage + '_' + kbdname] = keymanExample.innerHTML = content;
+    } else {
+      throw new Error(`Unable to retrieve content, status was ${response.status}: ${response.statusText}`);
+    }
+  } catch(e) {
+    langExamples[activeLanguage + '_' + kbdname] = keymanExample.innerHTML = 'Error retrieving example: '+e.message;
+    throw e;
+  }
 }
