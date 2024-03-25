@@ -235,6 +235,11 @@ $(document).ready(function() {
     },2000);
   });
 
+  // Email subscribe form
+  $('.subscribe').click(function(){
+    $('#mc-embedded-subscribe-form').submit();
+  });
+
   //Cannot detect change of content from KMW, so use a timer instead to refresh button state
   //$('#message').bind("keypress keyup keydown change click focus blur", refreshButtons);
   window.setInterval(refreshButtons,200);
