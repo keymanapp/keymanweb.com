@@ -272,7 +272,14 @@ function refreshButtons() {
   var len=getKMWInputLength('message'); // returns -1 for desktop page element
 
   if(len < 0) {
-    len=$('#message').val().length;
+    // refreshButtons runs via setInterval.  It is possible for one call to persist through page reload,
+    // in which case the #message element is unavailable.
+    var message = $('#message').val();
+    if(!message) {
+      return;
+    }
+
+    len = message.length;
   }
 
   // if message length is 0, use white SM buttons
