@@ -45,15 +45,18 @@
 
 <title>KeymanWeb.com <?php if($tier != 'stable') echo "($tier)"; ?></title>
 
-<?php
-/* Our local CDN version is identical to this file:
+<!-- note: using CDN and not bundle for now -->
+<script
+  src="https://browser.sentry-cdn.com/7.111.0/bundle.tracing.min.js"
+  integrity="sha384-zbLcy9H6obT3ZcKjGlb5Ai7vi4G0vXMLB1UU56WRyPJWarHEDeLOkuJ3HwR/7IDd"
+  crossorigin="anonymous"
+></script>
   <script
-    src="https://browser.sentry-cdn.com/5.28.0/bundle.min.js"
-    integrity="sha384-1HcgUzJmxPL9dRnZD2wMIj5+xsJfHS+WR+pT2yJNEldbOr9ESTzgHMQOcsb2yyDl"
+  src="https://browser.sentry-cdn.com/7.111.0/captureconsole.min.js"
+  integrity="sha384-29aW5YLMCGJnTd6js4VqwRHQk4lBe44qavgMQDtiMsXya0LpJqw5UqQDVyenw+SW"
     crossorigin="anonymous"
-  ></script>*/
-?>
-<script src="<?= cdn('js/sentry.bundle.5.28.0.min.js'); ?>"></script>
+></script>
+
 <script>
   // Tags all exceptions with the active KMW instance's metadata.
   // Compare against the definition in the main repo:
@@ -81,16 +84,31 @@
   var sentryRelease = "<?=$version."-".$tier?>";
 <?php } ?>
 
+  // Note: not currently using js Loader as it does not seem to work correctly
+  // with integrations
+  doInitSentry();
+
+  function doInitSentry() {
+    if(!Sentry) {
+      // may be blocked by client
+      return;
+    }
   Sentry.init({
     beforeSend: prepareEvent,
-    dsn: "https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.sentry.io/5983523",
+      dsn: "https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.us.sentry.io/5983523",
     release: sentryRelease,
+      integrations: [
+        Sentry.captureConsoleIntegration({
+          levels: ['error', 'warning']
+        })
+      ],
     environment:
       // TODO: https://github.com/keymanapp/shared-sites/issues/13
       ['www.keymanweb.com','keymanweb.com', 'web.keyman.com'].includes(location.host) ? 'production' :
       ['web.keyman-staging.com'].includes(location.host) ? 'staging' :
       'development',
   });
+  }
 </script>
 
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
