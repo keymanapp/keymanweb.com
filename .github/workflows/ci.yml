@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       KEYMANHOSTS_TIER: TIER_TEST
+      # Composer started complaining about running as root, but we don't care in a GHA
+      COMPOSER_ALLOW_SUPERUSER: 1
 
     steps:
     - name: Checkout
