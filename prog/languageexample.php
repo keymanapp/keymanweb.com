@@ -50,7 +50,7 @@
   if($data !== FALSE) {
     echo $data;
   } else {
-    echo "<br/>No example is available, please refer to keyboard help";
+    echo "No example is available, please refer to keyboard help";
   }
 
   echo renderHelpIcon($keyboard, $language);
