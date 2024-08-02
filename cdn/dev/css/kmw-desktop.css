@@ -126,10 +126,6 @@ header > div > img {
     border-top-left-radius: 10px;
   }
 
-  #exampleBox{
-    min-height: 25px;
-  }
-
 #example,#help {
   margin:8px 10px;
   background-color:#95C6D6;
@@ -142,14 +138,14 @@ header > div > img {
   visibility: hidden;
   width:685px;
   min-height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-top: 5px;
 }
 
 #example a{
-  float: right;
-  margin-right: 10px;
-  position: relative;
-  top: -10px;
+  padding-left: 10px;
 }
 
 textarea {

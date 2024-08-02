@@ -24,17 +24,30 @@
     $keyboard = str_replace('Keyboard_','',$keyboard);
     $string = KeymanHosts::Instance()->api_keyman_com . "/keyboard/" . rawurlencode($keyboard);
     $json = @file_get_contents($string);
-    if($json === FALSE)
+    if($json === FALSE) {
       return FALSE;
+    }
 
     $obj = @json_decode($json, true);
-    if($obj === NULL)
+    if($obj === NULL) {
       return FALSE;
+    }
 
-    if(!isset($obj['languages'][$language]['example']))
-      return FALSE;
+    if(!isset($obj['languages'][$language])) {
+      return false;
+    }
 
-    return "Example: " . DisplayExample($obj['languages'][$language]['example'], false, $language);
+    $lang = $obj['languages'][$language];
+
+    if(isset($lang['examples'])) {
+      $result = DisplayExamples($lang['examples'], $language);
+    } else if(isset($lang['example'])) {
+      $result = DisplayExample($lang['example'], false, $language);
+    } else {
+      $result = FALSE;
+    }
+
+    return $result ? ("Example: " . $result) : FALSE;
   }
 
   function DisplayExample($x, $table = false, $language = '')
@@ -46,15 +59,15 @@
     {
       $keys = KeyRenderer::renderInternal($x['keys'], $table);
       $out = $x['text'];
-      if(isset($x['note'])) $note = " ({$x['note']})"; else $note = '';
+      if(isset($x['note'])) $note = "&nbsp;({$x['note']})"; else $note = '';
 
       if($table)
         $result .= "<td class='highlightExample keymanweb-font' lang='$language'>$out</td><td>{$x['note']}</td><td class='highlightKeys'>$keys</td>";
       else
       $result .=
-        "To enter ".
+        "To enter&nbsp;".
         "<span class='highlightExample keymanweb-font' lang='$language'>$out</span>$note, ".
-        "<br/>type ".
+        "type &nbsp;".
         "<span class='highlightKeys'>$keys</span>$morehelp";
        //" to get ";
       //if(isset($x['note'])) echo " ({$x['note']})";
@@ -191,4 +204,93 @@
   }
 
   $keyRenderer = new KeyRenderer(); // Can also be used statically
-?>
+
+  //------------------------------------------------------------------------------------------
+
+  /**
+   * Render language example from kps 17.0 format examples
+   *
+   * Key format (from kmp-json-file.ts):
+   *
+   * A space-separated list of keys.
+   * - modifiers indicated with "+"
+   * - spacebar is "space"
+   * - plus key is "shift+=" or "plus" on US English (all other punctuation as per key cap).
+   * - Hardware modifiers are: "shift", "ctrl", "alt", "left-ctrl",
+   *   "right-ctrl", "left-alt", "right-alt"
+   * - Key caps should generally be their character for desktop (Latin script
+   *   case insensitive), or the actual key cap for touch
+   * - Caps Lock should be indicated with "caps-on", "caps-off"
+   *
+   * e.g. "shift+a b right-alt+c space plus z z z" represents something like: "Ab{AltGr+C} +zzz"
+   */
+  function RenderExamplesKeys($keys) {
+    $modifiers = [
+      'left-alt' => 'Left Alt',
+      'right-alt' => 'Right Alt',
+      'left-ctrl' => 'Left Ctrl',
+      'left-control' => 'Left Ctrl',
+      'right-ctrl' => 'Right Ctrl',
+      'right-control' => 'Right Ctrl',
+      'shift' => 'Shift',
+      'ctrl' => 'Ctrl',
+      'control' => 'Ctrl',
+      'alt' => 'Alt',
+      'caps-on' => 'Caps (on)',
+      'caps-off' => 'Caps (off)',
+    ];
+
+    // space separated
+    $keys = explode(' ', $keys);
+    foreach($keys as $chord) {
+      if(empty($chord)) {
+        continue;
+      }
+      $chord = explode('+', $chord);
+      $chord_keys = [];
+      foreach($chord as $key) {
+        $class='';
+        $bkey = strtolower($key);
+        if($bkey == 'space') {
+          $key = '&nbsp;'; $class=' class="space"';
+        } else if($bkey == 'plus') {
+          $key = '+';
+        } else if(array_key_exists($bkey, $modifiers)) {
+          $key = $modifiers[$bkey];
+          $class=' class="modifier"';
+        } else {
+          $key = htmlspecialchars($key);
+        }
+        array_push($chord_keys, "<kbd$class>$key</kbd>");
+      }
+      $result .= implode('+', $chord_keys) . " ";
+    }
+    return trim($result);
+  }
+
+  function DisplayExamples($examples, $language = '')
+  {
+    global $morehelp;
+    $result = '';
+
+    if(!is_array($examples) || count($examples) == 0) {
+      return FALSE;
+    }
+
+    $example = $examples[0];
+    if(empty($example['keys'])) {
+      return FALSE;
+    }
+
+    $keys = RenderExamplesKeys($example['keys']);
+    $out = htmlspecialchars($example['text']);
+    $note = isset($example['note']) ? "&nbsp;(" . htmlspecialchars($example['note']) . ")" : "";
+
+    $result .=
+      "To enter&nbsp;".
+      "<span class='highlightExample keymanweb-font' lang='$language'>$out</span>$note, ".
+      "type &nbsp;".
+      "<span class='highlightKeys'>$keys</span>$morehelp";
+
+    return $result;
+  }
