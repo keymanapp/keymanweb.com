@@ -17,7 +17,7 @@
 */
 require_once('inc/head.php');
 
-use Keyman\Site\com\keyman\ImageRandomizer;
+include('./_includes/image-randomizer.php');
 
 ?>
 <body>
@@ -129,7 +129,7 @@ use Keyman\Site\com\keyman\ImageRandomizer;
         </div>
         <div class="footer-third sil-logo">
             <br>
-            <a href="https://www.sil.org/about/"><img id="sil-logo" src="<?php include('./_includes/image-randomizer.php'); echo randomizer("img/sil-logos-2024/"); ?>" width="50%" alt='SIL' /></a>
+            <a href="https://www.sil.org/about/"><img id="sil-logo" src="<?php echo randomizer("img/sil-logos-2024/"); ?>" width="50%" alt='SIL' /></a>
             <p>Created by <a href="https://www.sil.org/about/">SIL International</a></p>
         </div>
     </div>
