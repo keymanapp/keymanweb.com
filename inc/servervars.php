@@ -32,7 +32,10 @@
     require_once __DIR__ . '/../cdn/deploy/cdn.php';
   }
 
-  // $site_protocol is used only by util.php at this time.
+  $site_suffix = KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT ?
+    ".localhost" : "";
+
+    // $site_protocol is used only by util.php at this time.
   $TestServer = (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT) || 
     (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) ? true : false;
   $site_protocol = $TestServer ? 'http://' : 'https://';
