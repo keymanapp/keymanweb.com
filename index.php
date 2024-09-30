@@ -15,9 +15,10 @@
   Notes:
   History:          11 Apr 2013 - jmd - Create
 */
-require_once('inc/head.php');
 
-include('./_includes/image-randomizer.php');
+use Keyman\Site\Common\ImageRandomizer;
+
+require_once('inc/head.php');
 
 ?>
 <body>
@@ -129,7 +130,7 @@ include('./_includes/image-randomizer.php');
         </div>
         <div class="footer-third sil-logo">
             <br>
-            <a href="https://www.sil.org/about/"><img id="sil-logo" src="<?php echo randomizer("img/sil-logos-2024/"); ?>" width="50%" alt='SIL' /></a>
+            <a href="https://www.sil.org/about/"><img id="sil-logo" src="<?php echo ImageRandomizer::randomizer(); ?>" width="50%" alt='SIL' /></a>
             <p>Created by <a href="https://www.sil.org/about/">SIL Global</a></p>
         </div>
     </div>

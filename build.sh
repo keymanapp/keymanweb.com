@@ -2,7 +2,7 @@
 ## START STANDARD SITE BUILD SCRIPT INCLUDE
 readonly THIS_SCRIPT="$(readlink -f "${BASH_SOURCE[0]}")"
 readonly BOOTSTRAP="$(dirname "$THIS_SCRIPT")/resources/bootstrap.inc.sh"
-readonly BOOTSTRAP_VERSION=v0.9
+readonly BOOTSTRAP_VERSION=v0.10
 [ -f "$BOOTSTRAP" ] && source "$BOOTSTRAP" || source <(curl -fs https://raw.githubusercontent.com/keymanapp/shared-sites/$BOOTSTRAP_VERSION/bootstrap.inc.sh)
 ## END STANDARD SITE BUILD SCRIPT INCLUDE
 
@@ -10,7 +10,7 @@ readonly BOOTSTRAP_VERSION=v0.9
 readonly KEYMANWEB_CONTAINER_NAME=web-keyman-website
 readonly KEYMANWEB_CONTAINER_DESC=web-keyman-com-app
 readonly KEYMANWEB_IMAGE_NAME=web-keyman-website
-readonly HOST_KEYMANWEB_COM=keymanweb.com.localhost
+readonly HOST_KEYMANWEB_COM=web.keyman.com.localhost
 
 source _common/keyman-local-ports.inc.sh
 source _common/docker.inc.sh
