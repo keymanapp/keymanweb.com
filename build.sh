@@ -7,8 +7,7 @@ readonly BOOTSTRAP_VERSION=v0.10
 ## END STANDARD SITE BUILD SCRIPT INCLUDE
 
 # TODO: these should probably all be moved to a common defines script too?
-readonly KEYMANWEB_CONT// $site_suffix = KeymanHosts::Instance()->Site_Suffix();
-AINER_NAME=web-keyman-website
+readonly KEYMANWEB_CONTAINER_NAME=web-keyman-website
 readonly KEYMANWEB_CONTAINER_DESC=web-keyman-com-app
 readonly KEYMANWEB_IMAGE_NAME=web-keyman-website
 readonly HOST_KEYMANWEB_COM=keymanweb.com.localhost
