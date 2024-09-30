@@ -2,12 +2,13 @@
 ## START STANDARD SITE BUILD SCRIPT INCLUDE
 readonly THIS_SCRIPT="$(readlink -f "${BASH_SOURCE[0]}")"
 readonly BOOTSTRAP="$(dirname "$THIS_SCRIPT")/resources/bootstrap.inc.sh"
-readonly BOOTSTRAP_VERSION=v0.8
+readonly BOOTSTRAP_VERSION=v0.10
 [ -f "$BOOTSTRAP" ] && source "$BOOTSTRAP" || source <(curl -fs https://raw.githubusercontent.com/keymanapp/shared-sites/$BOOTSTRAP_VERSION/bootstrap.inc.sh)
 ## END STANDARD SITE BUILD SCRIPT INCLUDE
 
 # TODO: these should probably all be moved to a common defines script too?
-readonly KEYMANWEB_CONTAINER_NAME=web-keyman-website
+readonly KEYMANWEB_CONT// $site_suffix = KeymanHosts::Instance()->Site_Suffix();
+AINER_NAME=web-keyman-website
 readonly KEYMANWEB_CONTAINER_DESC=web-keyman-com-app
 readonly KEYMANWEB_IMAGE_NAME=web-keyman-website
 readonly HOST_KEYMANWEB_COM=keymanweb.com.localhost
