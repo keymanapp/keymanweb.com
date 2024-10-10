@@ -10,7 +10,7 @@ readonly BOOTSTRAP_VERSION=v0.10
 readonly KEYMANWEB_CONTAINER_NAME=web-keyman-website
 readonly KEYMANWEB_CONTAINER_DESC=web-keyman-com-app
 readonly KEYMANWEB_IMAGE_NAME=web-keyman-website
-readonly HOST_KEYMANWEB_COM=keymanweb.com.localhost
+readonly HOST_KEYMANWEB_COM=web.keyman.com.localhost
 
 source _common/keyman-local-ports.inc.sh
 source _common/docker.inc.sh
