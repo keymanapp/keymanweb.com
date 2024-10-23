@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ ! $1 =~ "debug"]]; then
+if [[ ! $1 =~ "debug" ]]; then
     echo "---- Generating CDN ---"
     rm -rf cdn/deploy
     cd cdn
