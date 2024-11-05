@@ -126,6 +126,11 @@
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo "$url_keymanweb_res/code/bookmarklet_ui.css"; ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("js/kmw-header.js"); ?>" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">

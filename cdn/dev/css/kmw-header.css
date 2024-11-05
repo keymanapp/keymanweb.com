@@ -1,0 +1,180 @@
+
+/* 
+            Menu
+*/
+svg {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 1.5;
+    cursor:pointer;
+}
+
+#menu path {
+    fill: none;
+    stroke: #FC7200;
+    stroke-width: 5px;
+}
+
+svg + svg {
+    margin-left: 1.5rem;    
+}
+
+.icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#top, #bottom {
+    stroke-dasharray: 30, 75.39;
+    transition: all 0.6s cubic-bezier(0.6, 0.33, 0.67, 1.29);
+}
+
+svg.active #top, svg.active #bottom {
+    stroke-dasharray: 75.39;
+    stroke-dashoffset: -60;
+}
+
+svg:nth-child(2) {
+    transform: rotate(0deg);
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+svg:nth-child(2) path {
+    transition: all 0.4s ease-in-out 0.6s;
+}
+
+svg:nth-child(2).active {
+    transform: rotate(180deg);
+}
+
+.rocket #top {
+    stroke-dasharray: 30, 88;
+}
+
+#menu-list {
+    display: none;
+}
+/* 
+        Search
+*/
+
+.form {
+    position: relative;
+    width: 50%;
+}
+
+.form .left-pan {
+    position: absolute;
+    right: 17px;
+    top: 10px;
+    padding: 2px;
+    border-left: 1px solid #000000;
+}
+
+.left-pan {
+    padding-left: 7px;
+}
+
+.left-pan i {
+   padding-left: 10px;
+}
+
+.form .form-input {
+    height: 50px;
+    width: 100%;
+    text-indent: 33px;
+    border-radius: 20px;
+    text-align: left;
+    background-color: rgb(233, 228, 228);
+}
+
+.form-input:focus {
+    box-shadow: none;
+    border:none;
+}
+
+/* 
+    Keyboard Dropdown
+*/
+.dropdown {
+    width: 25%;
+    background-color: #B92034;
+    color: white;
+    margin-left: 25px;
+}
+
+.dropdown-toggle{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border: 2px solid #B92034;
+    font-weight: 600;
+}
+.dropdown-toggle:focus{
+    box-shadow: none !important;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu{
+    width: 200px;
+    border: 2px solid #B92034;
+    padding: 0rem 0;
+    transform: translate3d(0px, 50px, 0px) !important;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #ffffff;
+    background-color: #B92034;
+    padding: 12px;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 12px;
+}
+
+/* 
+        Tools
+*/
+
+input[type="range"] {
+	font-size: 1.5rem;
+	width: 100px;
+}
+
+input[type="range"] {
+	color: #69B7D2;
+	--thumb-height: 1.125em;
+	--track-height: 0.125em;
+	--track-color: rgba(186, 0, 0, 0.2);
+	--brightness-hover: 180%;
+	--brightness-down: 80%;
+	--clip-edges: 0.125em;
+}
+
+input[type="range"] {
+	position: relative;
+	background: #fff0;
+	overflow: hidden;
+}
+
+input[type="range"]:active {
+	cursor: grabbing;
+}
+
+input[type="range"]:disabled {
+	filter: grayscale(1);
+	opacity: 0.3;
+	cursor: not-allowed;
+}
+

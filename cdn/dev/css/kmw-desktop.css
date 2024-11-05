@@ -45,7 +45,7 @@ header, #content, footer {
 .box {
   -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
+}
 
 /*
 ===================
@@ -53,9 +53,12 @@ header, #content, footer {
 ===================
 */
 header {
-  margin-top:0px;
-  height: 96px;
-  }
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 30px;
+  height: 70px;
+}
 
 header > div > img {
   width: 100%;
@@ -63,19 +66,57 @@ header > div > img {
   height: 8px;
 }
 
+#headerBackground {
+  display: grid;
+  grid-template-columns: 10% 70% 20%;
+  justify-content: left;
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  margin: 0px 0px;
+  background-color: white;
+}
+
+#headerLeft {
+  display: flex;
+  flex-direction: row;
+}
+
 #headerLeft img {
   display: block; /* default (inline) display inserts an unwanted bottom border */
-  margin-top:0px;
-  margin-left:28px;
-  height:88px;
+  margin: 0px 20px;
+  height:50px;
   /*width: 660px;*/
   /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/
   }
+
+#headerMiddle {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  margin-left: 20px;
+}   
+
+#headerMiddle div {
+  margin: 15px;
+}
+
 #headerRight {
-  display: block;
-  float: right;
-  text-align: right;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+}
+
+#headerRight div {
+  margin-right: 20px;
+}
+
+#headerRight div > * {
+  margin-left: 10px;
+}
 
 #headerRight-beta {
   display: block;
@@ -87,6 +128,10 @@ header > div > img {
 
 #headerRight-link {
   padding: 0 12px 0;
+}
+
+#headerBar {
+  width: 100%;
 }
 /*
 ====================
@@ -441,6 +486,8 @@ aside  #learn {
 }
 
 .footer{
+    bottom: 0;
+    left: 0;
     float: left;
     text-align: center;
     width: 100%;

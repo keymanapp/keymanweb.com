@@ -25,69 +25,141 @@ require_once('inc/head.php');
 
 <header>
   <div id='headerBackground'>
-    <div id='headerRight'>
-      <?php if($tier != 'stable') { ?>
-      <span id='headerRight-beta'>Pre-release version</span> <a id='headerRight-link' href='?tier=stable'>Return to version <?= $kmw_builds['stable'] ?></a>
-      <?php } else if($hasBeta) { ?>
-        <span id='headerRight-beta'>New release!</span> <a id='headerRight-link' href='?tier=beta'>Try beta version <?= $kmw_builds['beta'] ?></a>
-      <?php } ?>
-    <!--<a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a>-->
+    <div id='headerLeft'>
+      <img src="<?php echo cdn("img/keymanweb-mini-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
+      <!-- Menu -->
+      <div class="icons">
+        <svg id="menu" width="40" height="40" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg" onclick="showMenuList(this)" >
+          <g transform="matrix(1,0,0,1,-389.5,-264.004)">
+            <g id="arrow_left2">
+              <g transform="matrix(1,0,0,1,0,5)"><path id="top" d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967"/></g>
+              <g transform="matrix(1,1.22465e-16,1.22465e-16,-1,0.00024296,564.935)"><path id="bottom" d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967"/></g>
+              <path id="middle" d="M390,284.967L420,284.967" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div id="menu-list">
+        <h2><a href="">sndfksf</a></h2>
+        <h2><a href="">lskndfjsd</a></h2>
+      </div>
     </div>
-    <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>" /></div>
-    <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
+    <div id="headerMiddle">
+      <!-- Search -->
+      <div class="form">
+        <input type="text" class="form-control form-input" placeholder="Search language, keyboard...">
+        <span class="left-pan"><i class="fa fa-search"></i></span>
+      </div>
+      <!-- Keyboard selection -->
+      <div class="dropdown">
+        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+          Current keyboard selection  
+        </button>
+      </div>
+    </div>
+    <div id='headerRight'>
+      <div class="tools">
+        <svg xmlns="http://www.w3.org/2000/svg" widht="40" height="40" viewBox="0 0 448 512" fill="#69B7D2"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg>
+        <input type="range" min="12" max="132" value="0" step="2" />
+        <svg xmlns="http://www.w3.org/2000/svg" widht="40" height="40" viewBox="0 0 448 512"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg>
+      </div>
+      <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_15_72)"> <rect width="24" height="24" fill="white"></rect> <circle cx="7" cy="12" r="2" stroke="#69B7D2" stroke-linejoin="round"></circle> <circle cx="17" cy="6" r="2" stroke="#69B7D2" stroke-linejoin="round"></circle> <path d="M15 7L8.5 11" stroke="#69B7D2"></path> <circle cx="17" cy="18" r="2" stroke="#69B7D2" stroke-linejoin="round"></circle> <path d="M8.5 13.5L15 17" stroke="#69B7D2"></path> </g> <defs> <clipPath id="clip0_15_72"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
+      <div class="help">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="bi bi-question-circle-fill" fill="#FC7200" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+      </svg>
+      </div>
+    </div>
   </div>
+  <div id="headerBar">
+      <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
+    </div>
 </header>
 
-<section id='content'>
-  <section id='app' class='box'>
-    <div id='KeymanWebControl' style='z-index: 10000'></div>
-    <div id='exampleBox'>
-      <p id='example'>Example: No examples available for this keyboard.</p>
-    </div>
-    <div id='messageContainer'>
-      <textarea id='message' form='actions' placeholder='Select a keyboard and start typing.'></textarea>
-    </div>
-    <div id='buttons'>
-      <div id='twitter' class='linksOff'><p>Tweet </p><span>140</span></div>
-      <div id='search' class='linksOff'><p>Search</p></div>
-      <div id="font"><span id="mobile-font-size" style="font-size:12pt">A</span><span style="font-size:20pt">A</span><p>Font Size</p></div>
-      <hr/>
-      <div id='copy' class='linksOff' data-clipboard-target="#message"><p>Copy</p></div>
-    </div>
-    <div id="font-size">
-      <span class="font-letter" id="font-small">A</span><div id="slider"></div><span class="font-letter" id="font-large">A</span>
-    </div>
-    <div id="mobile-font">
-      <div id="mobile-increase">+</div>
-      <div id="mobile-decrease">-</div>
-      <input type="hidden" id="mobile-font-size1" value="16">
-    </div>
-  </section>
-
-	<aside id='offer'>
-	  <div class='box' id='keymandesktop'>
-		  <!--<h3>Windows Version</h3>-->
-		  <p><span id='desktop-title'>Use this keyboard in any Windows app!</span>
-              <a id='keyman-desktop-download'>
-              <img src="<?php echo cdn("img/small_download.png"); ?>" alt='Download'
-              title='Download free and open source Keyman Desktop with this keyboard bundled' /></a>
-              <span id='free-open-source'>Free and open source!</span></p>
-	  </div>
-	  <div class='box' id='bookmarklet'>
-	    <h3>Browser Add-in</h3>
-	    <div class='keyman-bookmarklet'><a href='#'></a></div>
-	    <p>Drag this button to your Bookmarks toolbar to install this keyboard to your web browser! <a href='https://keyman.com/bookmarklet' target='_blank'>Learn more</a></p>
-	  </div>
-	  <div class='box' id='learn'>
-      <h3>Website Plugin</h3>
-      <p>Install the Keyman Engine for Web into your blog, CMS or website</p>
-			<div><a href='https://keyman.com/developer/keymanweb/'>Learn more</a> | <a href='https://keyman.com/developer/keymanweb'>Get the source</a></div>
-		</div>
-	</aside>
-
-</section>
-
 <!-- Footer copied from keyman.com -->
+<section>
+  <div class="text-area-container">
+    <div class="type-your-keyboard d-flex align-items-center justify-content-center">
+      <textarea class="form-control form-control-sm mb-3" rows="3" placeholder="Small textarea"></textarea>
+    </div>
+    <div class="cubes">
+      <div class="cube cube-1"></div>
+    </div>
+  </div>
+  <div class="keyboard-container">
+    <div>
+      <ul class="keys">
+        <li id="grey"><img src="<?php echo cdn("img/keymanweb-mini-logo-88.png"); ?>" width="20px"></li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>7</li>
+        <li>8</li>
+        <li>0</li>
+        <li>_</li>
+        <li> =</li>
+        <li id="yellow">🎨</li>
+      </ul>
+      <ul class="keys">
+        <li id="red">🌵</li>
+        <li id="Q">Q</li>
+        <li id="W">W</li>
+        <li id="E">E</li>
+        <li id="R">R</li>
+        <li id="T">T</li>
+        <li id="Y">Y</li>
+        <li id="U">U</li>
+        <li id="I">I</li>
+        <li id="O">O</li>
+        <li id="P">P</li>
+        <li>[</li>
+        <li>]</li>
+        <li>\</li>
+      </ul>
+      <ul class="keys">
+        <li id="blue">🧢</li>
+        <li>A</li>
+        <li>S</li>
+        <li>D</li>
+        <li>F</li>
+        <li>G</li>
+        <li>H</li>
+        <li>J</li>
+        <li>K</li>
+        <li>L</li>
+        <li>;</li>
+        <li>""</li>
+        <li id="green">🔫</li>
+      </ul>
+      <ul class="keys">
+        <li id="rebeca">🔥</li>
+        <li>Z</li>
+        <li>X</li>
+        <li>C</li>
+        <li>V</li>
+        <li>B</li>
+        <li>N</li>
+        <li>M</li>
+        <li>,</li>
+        <li>.</li>
+        <li>?</li>
+        <li id="up">🧬</li>
+      </ul>
+      <ul class="keys">
+        <li id="one">ctrl</li>
+        <li id="one">alt</li>
+        <li id="one">cmd</li>
+        <li id="two"></li>
+        <li id="one">cmd</li>
+        <li id="one">alt</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <div id="mobile-footer">
   <div id="mobile-version">KeymanWeb version <?= $VersionWithTag ?></div>
@@ -95,6 +167,7 @@ require_once('inc/head.php');
 
 <div class="footer">
     <div class="wrapper">
+        <input id='KeymanWebControl' style='z-index: 10000' type="hidden">
         <div class="footer-third" id="footer-mailchimp">
             <h2 class="footer-third-title">Keep me updated</h2>
             <!-- Begin MailChimp Signup Form -->
