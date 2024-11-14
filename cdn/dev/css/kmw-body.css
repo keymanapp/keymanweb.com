@@ -14,7 +14,7 @@ body {
     width: 80%;
     scroll-behavior: auto;
     resize: none;
-    margin-top: 120px;
+    margin-top: 95px;
 }
 
 .type-your-keyboard textarea {
@@ -35,7 +35,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px;
 }
 .keyboard-container div {
     width: 50%;

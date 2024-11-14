@@ -9,6 +9,7 @@
 html {
   overflow-y: auto;
   overflow-x: hidden;
+  font-size: 14px;
 }
 
 body {
@@ -16,7 +17,7 @@ body {
   font-family: Cabin, Arial, Helvetica, sans-serif;
   color:#2D2C2C;
   margin:0px;
-  }
+}
 
 a {
   text-decoration:none;
@@ -57,7 +58,11 @@ header {
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 30px;
-  height: 70px;
+  z-index: 1;
+}
+
+header #headerBackground {
+  padding: 10px;
 }
 
 header > div > img {
@@ -68,7 +73,7 @@ header > div > img {
 
 #headerBackground {
   display: grid;
-  grid-template-columns: 10% 70% 20%;
+  grid-template-columns: 5% 70% 25%;
   justify-content: left;
   align-items: center;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -77,17 +82,14 @@ header > div > img {
 }
 
 #headerLeft {
-  display: flex;
-  flex-direction: row;
+  margin-left: 10px;
 }
 
 #headerLeft img {
   display: block; /* default (inline) display inserts an unwanted bottom border */
-  margin: 0px 20px;
-  height:50px;
-  /*width: 660px;*/
+  height: 50px;
   /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/
-  }
+}
 
 #headerMiddle {
   display: flex;
@@ -95,27 +97,30 @@ header > div > img {
   justify-content: left;
   align-items: center;
   width: 100%;
-  margin-left: 20px;
 }   
 
 #headerMiddle div {
-  margin: 15px;
+  margin: 0px 15px;
+}
+
+#headerMiddle div ul .row{
+  margin: 0px !important;
+}
+
+#headerMiddle div ul .row .col{
+  margin: 0px !important;
 }
 
 #headerRight {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 60% 20% 10% 10%;
   justify-content: end;
   align-items: center;
   width: 100%;
 }
 
-#headerRight div {
-  margin-right: 20px;
-}
-
 #headerRight div > * {
-  margin-left: 10px;
+  margin-right: 20px;
 }
 
 #headerRight-beta {

@@ -27,60 +27,69 @@ require_once('inc/head.php');
   <div id='headerBackground'>
     <div id='headerLeft'>
       <img src="<?php echo cdn("img/keymanweb-mini-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
-      <!-- Menu -->
-      <div class="icons">
-        <svg id="menu" width="40" height="40" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg" onclick="showMenuList(this)" >
-          <g transform="matrix(1,0,0,1,-389.5,-264.004)">
-            <g id="arrow_left2">
-              <g transform="matrix(1,0,0,1,0,5)"><path id="top" d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967"/></g>
-              <g transform="matrix(1,1.22465e-16,1.22465e-16,-1,0.00024296,564.935)"><path id="bottom" d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967"/></g>
-              <path id="middle" d="M390,284.967L420,284.967" />
-            </g>
-          </g>
-        </svg>
-      </div>
-      <div id="menu-list">
-        <h2><a href="">sndfksf</a></h2>
-        <h2><a href="">lskndfjsd</a></h2>
-      </div>
     </div>
     <div id="headerMiddle">
       <!-- Search -->
       <div class="form">
-        <input type="text" class="form-control form-input" placeholder="Search language, keyboard...">
+        <input type="text" class="form-control form-input dropdown-toggle" id="keyboardSearch" data-bs-toggle="dropdown" placeholder="Search language, keyboard..." onclick="function1()">
         <span class="left-pan"><i class="fa fa-search"></i></span>
+        <ul class="dropdown-menu" id="dropdown-menu">
+          <!-- kmwHeader.js -->    
+        </ul>
       </div>
       <!-- Keyboard selection -->
       <div class="dropdown">
-        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-          Current keyboard selection  
+        <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Current keyboard selection
         </button>
+        <ul class="dropdown-menu" id="selectedKeyboard">
+          <!-- kmwHeader.js -->
+        </ul>
       </div>
     </div>
     <div id='headerRight'>
+      <!-- Tools -->
       <div class="tools">
-        <svg xmlns="http://www.w3.org/2000/svg" widht="40" height="40" viewBox="0 0 448 512" fill="#69B7D2"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg>
+        <i class="fa-regular fa-copy fa-xl" style="color: #69B7D2;"></i>
         <input type="range" min="12" max="132" value="0" step="2" />
-        <svg xmlns="http://www.w3.org/2000/svg" widht="40" height="40" viewBox="0 0 448 512"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg>
+        <i class="fa-regular fa-keyboard fa-xl" style="color: #69B7D2;"></i>
       </div>
-      <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_15_72)"> <rect width="24" height="24" fill="white"></rect> <circle cx="7" cy="12" r="2" stroke="#69B7D2" stroke-linejoin="round"></circle> <circle cx="17" cy="6" r="2" stroke="#69B7D2" stroke-linejoin="round"></circle> <path d="M15 7L8.5 11" stroke="#69B7D2"></path> <circle cx="17" cy="18" r="2" stroke="#69B7D2" stroke-linejoin="round"></circle> <path d="M8.5 13.5L15 17" stroke="#69B7D2"></path> </g> <defs> <clipPath id="clip0_15_72"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
-      <div class="help">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="bi bi-question-circle-fill" fill="#FC7200" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
-      </svg>
+      <div class="share">
+        <i class="fa-solid fa-share fa-xl" style="color: #69B7D2;"></i>
+      </div>
+      <!-- Help -->
+      <div class="dropdown help">
+        <span data-bs-toggle="dropdown">
+          <i class="fa-solid fa-circle-question fa-xl" style="color: #FC7200;"></i>
+        </span>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-book"></i> Quick Guide to KMW</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="https://keyman.com/developer/keymanweb/" target="_blank"><i class="fa-solid fa-code"></i> For Developer</a></li>
+        </ul>
+      </div>
+      <!-- Menu -->
+      <div class="dropdown menu">
+        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-bars fa-xl"style="color: #FC7200;"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="https://keyman.com/" target="_blank">Keyman.com</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="https://keyman.com/bookmarklet/" target="_blank">Bookmarklet</a></li>
+        </ul>
       </div>
     </div>
   </div>
   <div id="headerBar">
-      <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
-    </div>
+    <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
+  </div>
 </header>
 
-<!-- Footer copied from keyman.com -->
 <section>
   <div class="text-area-container">
     <div class="type-your-keyboard d-flex align-items-center justify-content-center">
-      <textarea class="form-control form-control-sm mb-3" rows="3" placeholder="Small textarea"></textarea>
+      <textarea class="form-control form-control-sm" rows="3" placeholder="Small textarea"></textarea>
     </div>
     <div class="cubes">
       <div class="cube cube-1"></div>
@@ -209,5 +218,7 @@ require_once('inc/head.php');
     </div>
 </div>
 
+<script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
+<script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
 </body>
 </html>

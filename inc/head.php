@@ -57,16 +57,8 @@
 <title>KeymanWeb.com <?php if($tier != 'stable') echo "($tier)"; ?></title>
 
 <!-- note: using CDN and not bundle for now -->
-<script
-  src="https://browser.sentry-cdn.com/7.111.0/bundle.tracing.min.js"
-  integrity="sha384-zbLcy9H6obT3ZcKjGlb5Ai7vi4G0vXMLB1UU56WRyPJWarHEDeLOkuJ3HwR/7IDd"
-  crossorigin="anonymous"
-></script>
-  <script
-  src="https://browser.sentry-cdn.com/7.111.0/captureconsole.min.js"
-  integrity="sha384-29aW5YLMCGJnTd6js4VqwRHQk4lBe44qavgMQDtiMsXya0LpJqw5UqQDVyenw+SW"
-    crossorigin="anonymous"
-></script>
+<script src="https://browser.sentry-cdn.com/7.111.0/bundle.tracing.min.js" integrity="sha384-zbLcy9H6obT3ZcKjGlb5Ai7vi4G0vXMLB1UU56WRyPJWarHEDeLOkuJ3HwR/7IDd" crossorigin="anonymous"></script>
+<script src="https://browser.sentry-cdn.com/7.111.0/captureconsole.min.js" integrity="sha384-29aW5YLMCGJnTd6js4VqwRHQk4lBe44qavgMQDtiMsXya0LpJqw5UqQDVyenw+SW" crossorigin="anonymous"></script>
 
 <script>
   // Tags all exceptions with the active KMW instance's metadata.
@@ -128,9 +120,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("js/kmw-header.js"); ?>" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-desktop.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn('src/bootstrap.min.css') ?>" crossorigin="anonymous">
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
@@ -186,6 +178,7 @@
 
   var localKeyboard, localLanguage;
 
+  // Find # in the URL and then load the keyboard?
   function loadKeyboardFromHash() {
     var locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
     if(locationHash) {
