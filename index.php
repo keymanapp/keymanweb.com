@@ -25,69 +25,150 @@ require_once('inc/head.php');
 
 <header>
   <div id='headerBackground'>
-    <div id='headerRight'>
-      <?php if($tier != 'stable') { ?>
-      <span id='headerRight-beta'>Pre-release version</span> <a id='headerRight-link' href='?tier=stable'>Return to version <?= $kmw_builds['stable'] ?></a>
-      <?php } else if($hasBeta) { ?>
-        <span id='headerRight-beta'>New release!</span> <a id='headerRight-link' href='?tier=beta'>Try beta version <?= $kmw_builds['beta'] ?></a>
-      <?php } ?>
-    <!--<a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a>-->
+    <div id='headerLeft'>
+      <img src="<?php echo cdn("img/keymanweb-mini-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
     </div>
-    <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>" /></div>
+    <div id="headerMiddle">
+      <!-- Search -->
+      <div class="form">
+        <input type="text" class="form-control form-input dropdown-toggle" id="keyboardSearch" data-bs-toggle="dropdown" placeholder="Search language, keyboard..." onclick="function1()">
+        <span class="left-pan"><i class="fa fa-search"></i></span>
+        <ul class="dropdown-menu" id="dropdown-menu">
+          <!-- kmwHeader.js -->    
+        </ul>
+      </div>
+      <!-- Keyboard selection -->
+      <div class="dropdown">
+        <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Current keyboard selection
+        </button>
+        <ul class="dropdown-menu" id="selectedKeyboard">
+          <!-- kmwHeader.js -->
+        </ul>
+      </div>
+    </div>
+    <div id='headerRight'>
+      <!-- Tools -->
+      <div class="tools">
+        <i class="fa-regular fa-copy fa-xl" style="color: #69B7D2;"></i>
+        <input type="range" min="12" max="132" value="0" step="2" />
+        <i class="fa-regular fa-keyboard fa-xl" style="color: #69B7D2;"></i>
+      </div>
+      <div class="share">
+        <i class="fa-solid fa-share fa-xl" style="color: #69B7D2;"></i>
+      </div>
+      <!-- Help -->
+      <div class="dropdown help">
+        <span data-bs-toggle="dropdown">
+          <i class="fa-solid fa-circle-question fa-xl" style="color: #FC7200;"></i>
+        </span>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-book"></i> Quick Guide to KMW</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="https://keyman.com/developer/keymanweb/" target="_blank"><i class="fa-solid fa-code"></i> For Developer</a></li>
+        </ul>
+      </div>
+      <!-- Menu -->
+      <div class="dropdown menu">
+        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-bars fa-xl"style="color: #FC7200;"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="https://keyman.com/" target="_blank">Keyman.com</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="https://keyman.com/bookmarklet/" target="_blank">Bookmarklet</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="headerBar">
     <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
   </div>
 </header>
 
-<section id='content'>
-  <section id='app' class='box'>
-    <div id='KeymanWebControl' style='z-index: 10000'></div>
-    <div id='exampleBox'>
-      <p id='example'>Example: No examples available for this keyboard.</p>
+<section>
+  <div class="text-area-container">
+    <div class="type-your-keyboard d-flex align-items-center justify-content-center">
+      <textarea class="form-control form-control-sm" rows="3" placeholder="Small textarea"></textarea>
     </div>
-    <div id='messageContainer'>
-      <textarea id='message' form='actions' placeholder='Select a keyboard and start typing.'></textarea>
+    <div class="cubes">
+      <div class="cube cube-1"></div>
     </div>
-    <div id='buttons'>
-      <div id='twitter' class='linksOff'><p>Tweet </p><span>140</span></div>
-      <div id='search' class='linksOff'><p>Search</p></div>
-      <div id="font"><span id="mobile-font-size" style="font-size:12pt">A</span><span style="font-size:20pt">A</span><p>Font Size</p></div>
-      <hr/>
-      <div id='copy' class='linksOff' data-clipboard-target="#message"><p>Copy</p></div>
+  </div>
+  <div class="keyboard-container">
+    <div>
+      <ul class="keys">
+        <li id="grey"><img src="<?php echo cdn("img/keymanweb-mini-logo-88.png"); ?>" width="20px"></li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>7</li>
+        <li>8</li>
+        <li>0</li>
+        <li>_</li>
+        <li> =</li>
+        <li id="yellow">🎨</li>
+      </ul>
+      <ul class="keys">
+        <li id="red">🌵</li>
+        <li id="Q">Q</li>
+        <li id="W">W</li>
+        <li id="E">E</li>
+        <li id="R">R</li>
+        <li id="T">T</li>
+        <li id="Y">Y</li>
+        <li id="U">U</li>
+        <li id="I">I</li>
+        <li id="O">O</li>
+        <li id="P">P</li>
+        <li>[</li>
+        <li>]</li>
+        <li>\</li>
+      </ul>
+      <ul class="keys">
+        <li id="blue">🧢</li>
+        <li>A</li>
+        <li>S</li>
+        <li>D</li>
+        <li>F</li>
+        <li>G</li>
+        <li>H</li>
+        <li>J</li>
+        <li>K</li>
+        <li>L</li>
+        <li>;</li>
+        <li>""</li>
+        <li id="green">🔫</li>
+      </ul>
+      <ul class="keys">
+        <li id="rebeca">🔥</li>
+        <li>Z</li>
+        <li>X</li>
+        <li>C</li>
+        <li>V</li>
+        <li>B</li>
+        <li>N</li>
+        <li>M</li>
+        <li>,</li>
+        <li>.</li>
+        <li>?</li>
+        <li id="up">🧬</li>
+      </ul>
+      <ul class="keys">
+        <li id="one">ctrl</li>
+        <li id="one">alt</li>
+        <li id="one">cmd</li>
+        <li id="two"></li>
+        <li id="one">cmd</li>
+        <li id="one">alt</li>
+      </ul>
     </div>
-    <div id="font-size">
-      <span class="font-letter" id="font-small">A</span><div id="slider"></div><span class="font-letter" id="font-large">A</span>
-    </div>
-    <div id="mobile-font">
-      <div id="mobile-increase">+</div>
-      <div id="mobile-decrease">-</div>
-      <input type="hidden" id="mobile-font-size1" value="16">
-    </div>
-  </section>
-
-	<aside id='offer'>
-	  <div class='box' id='keymandesktop'>
-		  <!--<h3>Windows Version</h3>-->
-		  <p><span id='desktop-title'>Use this keyboard in any Windows app!</span>
-              <a id='keyman-desktop-download'>
-              <img src="<?php echo cdn("img/small_download.png"); ?>" alt='Download'
-              title='Download free and open source Keyman Desktop with this keyboard bundled' /></a>
-              <span id='free-open-source'>Free and open source!</span></p>
-	  </div>
-	  <div class='box' id='bookmarklet'>
-	    <h3>Browser Add-in</h3>
-	    <div class='keyman-bookmarklet'><a href='#'></a></div>
-	    <p>Drag this button to your Bookmarks toolbar to install this keyboard to your web browser! <a href='https://keyman.com/bookmarklet' target='_blank'>Learn more</a></p>
-	  </div>
-	  <div class='box' id='learn'>
-      <h3>Website Plugin</h3>
-      <p>Install the Keyman Engine for Web into your blog, CMS or website</p>
-			<div><a href='https://keyman.com/developer/keymanweb/'>Learn more</a> | <a href='https://keyman.com/developer/keymanweb'>Get the source</a></div>
-		</div>
-	</aside>
-
+  </div>
 </section>
-
-<!-- Footer copied from keyman.com -->
 
 <div id="mobile-footer">
   <div id="mobile-version">KeymanWeb version <?= $VersionWithTag ?></div>
@@ -95,6 +176,7 @@ require_once('inc/head.php');
 
 <div class="footer">
     <div class="wrapper">
+        <input id='KeymanWebControl' style='z-index: 10000' type="hidden">
         <div class="footer-third" id="footer-mailchimp">
             <h2 class="footer-third-title">Keep me updated</h2>
             <!-- Begin MailChimp Signup Form -->
@@ -136,5 +218,7 @@ require_once('inc/head.php');
     </div>
 </div>
 
+<script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
+<script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
 </body>
 </html>
