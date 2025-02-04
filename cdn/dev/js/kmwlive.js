@@ -235,6 +235,11 @@ $(document).ready(function() {
     },2000);
   });
 
+  // Email subscribe form
+  $('.subscribe').click(function(){
+    $('#mc-embedded-subscribe-form').submit();
+  });
+
   //Cannot detect change of content from KMW, so use a timer instead to refresh button state
   //$('#message').bind("keypress keyup keydown change click focus blur", refreshButtons);
   window.setInterval(refreshButtons,200);
@@ -267,7 +272,14 @@ function refreshButtons() {
   var len=getKMWInputLength('message'); // returns -1 for desktop page element
 
   if(len < 0) {
-    len=$('#message').val().length;
+    // refreshButtons runs via setInterval.  It is possible for one call to persist through page reload,
+    // in which case the #message element is unavailable.
+    var message = $('#message').val();
+    if(!message) {
+      return;
+    }
+
+    len = message.length;
   }
 
   // if message length is 0, use white SM buttons

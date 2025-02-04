@@ -1,7 +1,30 @@
 /* example and key images */
 
+.highlightKeys kbd {
+  border: solid 1px #808080;
+  border-radius: 4px;
+  background: #cccccf;
+  color: black;
+  font-family: Verdana; /* web safe font which is clearer for small key caps */
+  font-weight: normal;
+  min-width: 16px;
+  display: inline-block;
+  box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
+  margin-right: 4px;
+}
+
+.highlightKeys kbd.space {
+  min-width: 64px;
+}
+
+.highlightKeys kbd.modifier {
+  margin-right: 0;
+  background: #cccccf;
+  min-width: 28px;
+}
+
 .highlightExample {color: blue; font-weight: bold; }
-.highlightKeys {color: blue; font-weight: bold;}
+.highlightKeys {color: black;}
 
 .highlightKeys .key-print { display: none }
 .highlightKeys img { margin: 0 2px 0 0; background-image: url('../demo/images/keys2.gif'); height: 15px; width: 15px; }

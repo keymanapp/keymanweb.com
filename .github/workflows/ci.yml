@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       KEYMANHOSTS_TIER: TIER_TEST
+      # Composer started complaining about running as root, but we don't care in a GHA
+      COMPOSER_ALLOW_SUPERUSER: 1
 
     steps:
     - name: Checkout
@@ -18,7 +20,7 @@ jobs:
       shell: bash
       run: |
         echo "TIER_TEST" > tier.txt
-        ./build.sh build start
+        ./build.sh configure build start
       env:
         fail-fast: true
 
@@ -40,7 +42,7 @@ jobs:
       run: |
         set +e;
         set +o pipefail;
-        npx broken-link-checker http://localhost:8057 --ordered --recursive --host-requests 50 -e --filter-level 3 | \
+        npx broken-link-checker http://localhost:8057 --ordered --recursive --requests 50 --host-requests 50 -e --filter-level 3 | \
           grep -E "BROKEN|Getting links from" | \
           grep -B 1 "BROKEN"
         exit ${PIPESTATUS[0]}
