@@ -36,12 +36,12 @@
     ".localhost" : "";
 
     // $site_protocol is used only by util.php at this time.
-  $TestServer = (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT) || 
+  $TestServer = (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT) ||
     (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) ? true : false;
   $site_protocol = $TestServer ? 'http://' : 'https://';
-    
+
   $url_keymanweb_res = KeymanHosts::Instance()->r_keymanweb_com;
-  $staticDomainRoot= KeymanHosts::Instance()->s_keyman_com;  
+  $staticDomainRoot= KeymanHosts::Instance()->s_keyman_com;
 
   $site_keymanwebhelp = KeymanHosts::Instance()->help_keyman_com;
   $site_keymanwebdemo = KeymanHosts::Instance()->keymanweb_com;
@@ -66,7 +66,7 @@
   // Uses official API for version checking, but is not optimized for
   // version-checking against multiple release tiers.
   function get_keymanweb_version($tier) {
-    $json = @file_get_contents(KeymanHosts::Instance()->api_keyman_com . "/version/web/$tier");
+    $json = @file_get_contents(KeymanHosts::Instance()->SERVER_api_keyman_com . "/version/web/$tier");
     if($json) {
       $json = json_decode($json);
     }
@@ -81,7 +81,7 @@
   }
 
   function get_keymanweb_versions() {
-    $json = @file_get_contents(KeymanHosts::Instance()->api_keyman_com . "/version/web/all");
+    $json = @file_get_contents(KeymanHosts::Instance()->SERVER_api_keyman_com . "/version/web/all");
     if($json) {
       $json = json_decode($json);
     }
