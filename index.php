@@ -48,7 +48,6 @@ require_once('inc/head.php');
       <textarea id='message' form='actions' placeholder='Select a keyboard and start typing.'></textarea>
     </div>
     <div id='buttons'>
-      <div id='twitter' class='linksOff'><p>Tweet </p><span>140</span></div>
       <div id='search' class='linksOff'><p>Search</p></div>
       <div id="font"><span id="mobile-font-size" style="font-size:12pt">A</span><span style="font-size:20pt">A</span><p>Font Size</p></div>
       <hr/>
