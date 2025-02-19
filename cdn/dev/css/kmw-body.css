@@ -1,105 +1,249 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #F6F6F6;
+    overflow: hidden;
 }
 
-.text-area-container {
+.container-flex {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.type-your-keyboard {
-    width: 80%;
-    scroll-behavior: auto;
-    resize: none;
-    margin-top: 95px;
-}
-
-.type-your-keyboard textarea {
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
-    height: 500px;
-}
-
-/* 
-        keyboard
-*/
-.keys {
-    display: flex;
-    list-style: none;
-}
-
-.keyboard-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
-.keyboard-container div {
-    width: 50%;
+
+.hidden { 
+    display: none;
 }
 
-.keyboard-container div ul li {
-    box-shadow: 0px -6px 10px rgba(255, 255, 255, 1), 0px 4px 15px rgba(0, 0, 0, 0.15);
-    transition: 0.5s;
-    height: 2.5em;
-    font-size: 1em;
-    width: 3em;
-    margin: 0.3em;
-    background-color: #f2f2f2;
-    border-radius: 0.5em;
-    line-height: 2.5em;
-    letter-spacing: 1px;
-    text-align: center;
+a {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-decoration: none !important;
 }
 
-.keyboard-container div ul li:hover {
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+/* Icons */
+.fa-keyboard, .fa-download { 
     cursor: pointer;
-    top: 3px;
 }
 
-#red {
-    background-color: #a3f7bf;
-    width: 5em;
+.fa-bars:hover {
+    cursor: ns-resize;
 }
 
-#blue {
-    background-color: #9aebed;
-    width: 6em;
+/* End of Icons */
+
+/* ================================
+    Computer and Laptop screen sizes
+================================ */
+@media screen and (min-width: 1000px) {
+    .item {
+        margin: 5px
+    }
+    /* 
+        Text area
+    */
+    .textarea-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .textarea {
+        padding: 10px;
+        margin-top: 95px;
+        resize: none;
+        width: 100%;
+        height: 45vh;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+    }
+
+    #copyTool {
+        color: #2EADD3;
+        position: absolute;
+        right: 20px;
+        top: 125px;
+        opacity: 50%;
+    }
+    #copyTool:hover {
+        cursor: pointer;
+        opacity: 100%;
+    }
+
+    #fullscreenTool {
+        color: #2EADD3;
+        position: absolute;
+        right: 20px;
+        bottom: 270px;
+        opacity: 50%;
+    }
+    #fullscreenTool:hover {
+        cursor: pointer;
+        opacity: 100%;
+    }
+
+    .show-keyboard-box {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .show-keyboard-box:hover {
+        opacity: 80%;
+    }
+
+    /* Divider */
+    .divider-container {
+        user-select: none;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 90%;
+    }
+
+    .divider-container > * {
+        margin: 10px;
+    }
+
+    .divider-container i {
+        opacity: 50%;
+    }
+
+    .divider-container i:hover {
+        color: #FC7200;
+        opacity: 100%;
+    }
+
+    /* Keyboard */
+    .keyboard-and-download {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .example-box {
+        background-color: #2EADD3;
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        border-bottom: 1px solid rgb(159, 159, 159);
+        display: grid;
+        grid-template-columns: auto 90% auto;
+    }
+
+    .example-box p {
+        margin: 10px;
+    }
+
+    .keyboard-container {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .keyboard-area {
+        user-select: none;
+        flex: 1;
+        width: 100%;
+        height: auto;
+    }
+
+    .keyboard {
+        width: 100%;
+    }
+
+    .keyboard-download-box {
+        width: 15%;
+        padding: 5px;
+        position: relative;
+        left: 100px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+    }
+
+    .keyboard-download-box p {
+        margin: 10px;
+        text-align: center;
+    }
+
+    .keyboard-download-box > * {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px;
+    }
 }
 
-#rebeca {
-    background-color: #fecd1a;
-    width: 8em;
-}
+/* ================================
+    Tablet screen size
+================================ */
 
-#green {
-    background-color: #fa86be;
-    width: 6em;
-}
+@media screen and (min-width: 600px) {
+    .item {
+        margin: 5px
+    }
+    /* 
+        Text area
+    */
+    .textarea-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
 
-#up {
-    background-color: #8594e4;
-    width: 8em;
-}
+    .textarea {
+        padding: 10px;
+        margin-top: 95px;
+        resize: none;
+        width: 100%;
+        height: 45vh;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+    }
 
-#yellow {
-    background-color: #fffcab;
-    width: 5em;
-}
+    #copyTool {
+        color: #2EADD3;
+        position: absolute;
+        right: 20px;
+        top: 125px;
+        opacity: 50%;
+    }
+    #copyTool:hover {
+        cursor: pointer;
+        opacity: 100%;
+    }
 
-#grey {
-    background-color: #898989;
-    width: 3.3em;
-}
+    #fullscreenTool {
+        color: #2EADD3;
+        position: absolute;
+        right: 20px;
+        bottom: 270px;
+        opacity: 50%;
+    }
+    #fullscreenTool:hover {
+        cursor: pointer;
+        opacity: 100%;
+    }
 
-#one {
-    background-color: #faafff;
-    width: 5em;
-}
+    .show-keyboard-box {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+    }
 
-#two {
-    width: 24.5em;  
-}
+    .show-keyboard-box:hover {
+        opacity: 80%;
+    }
+}    
