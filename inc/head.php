@@ -169,12 +169,6 @@
       }
     }
   }
-
-  // Set JS variable from twitter SESSION value
-  var twitterMessage;
-  <?php if (isset($_SESSION['twitterMessage'])){ ?>
-    twitterMessage = '<?php echo addslashes($_SESSION['twitterMessage']); ?>';
-  <?php } ?>
 </script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
@@ -200,17 +194,17 @@
   keyman.init({
     attachType:'auto',
     setActiveOnRegister: setActiveOnRegister
-  }).then(function() {
+  }).then(async function() {
     if(typeof afterInit == 'function') {
       afterInit();
     }
     if(typeof addKeyboards == 'function') {
       addKeyboards();
-    } <?php if ($site_suffix == ".localhost") {
+    } <?php if (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT || KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) {
       echo 'else {
       console.warn("-- Fallback:  not using the server\'s cached keyboard set! --");
       // Server caching may not be active in local dev instances of the server.
-      keyman.addKeyboards();
+      await keyman.addKeyboards();
     }';
     } ?>
     if(localKeyboard && localLanguage) {
