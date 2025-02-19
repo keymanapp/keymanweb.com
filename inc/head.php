@@ -57,70 +57,33 @@
 <title>KeymanWeb.com <?php if($tier != 'stable') echo "($tier)"; ?></title>
 
 <!-- note: using CDN and not bundle for now -->
+
 <script
-  src="https://browser.sentry-cdn.com/7.111.0/bundle.tracing.min.js"
-  integrity="sha384-zbLcy9H6obT3ZcKjGlb5Ai7vi4G0vXMLB1UU56WRyPJWarHEDeLOkuJ3HwR/7IDd"
+  src="https://js.sentry-cdn.com/bba22972ad6b4c2ab03a056f549cc23d.min.js"
   crossorigin="anonymous"
 ></script>
-  <script
-  src="https://browser.sentry-cdn.com/7.111.0/captureconsole.min.js"
-  integrity="sha384-29aW5YLMCGJnTd6js4VqwRHQk4lBe44qavgMQDtiMsXya0LpJqw5UqQDVyenw+SW"
-    crossorigin="anonymous"
+<script
+  src="https://browser.sentry-cdn.com/9.1.0/bundle.tracing.min.js"
+  integrity="sha384-MCeGoX8VPkitB3OcF9YprViry6xHPhBleDzXdwCqUvHJdrf7g0DjOGvrhIzpsyKp"
+  crossorigin="anonymous"
 ></script>
-
+<script
+  src="https://browser.sentry-cdn.com/9.1.0/captureconsole.min.js"
+  integrity="sha384-gkHY/HxnL+vrTN/Dn6S9siimRwqogMXpX4AetFSsf6X2LMQFsuXQGvIw7h2qWCt+"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://browser.sentry-cdn.com/9.1.0/httpclient.min.js"
+  integrity="sha384-ZsomH91NyAZy+YSYhJcpL3sSDFlkL310CJnpKNqL9KerB92RvfsH9tXRa2youKLM"
+  crossorigin="anonymous"
+></script>
 <script>
-  // Tags all exceptions with the active KMW instance's metadata.
-  // Compare against the definition in the main repo:
-  // - keymanapp/keyman/common/core/web/tools/sentry-manager/src/index.ts
-  //
-  // Currently separate in part b/c we can't guarantee 14.0+ in order to use
-  // the generalized sentry-manager module yet; we allow users to specify older
-  // versions of KMW for use.  Also in part b/c keymanweb.com itself may produce errors.
-  var prepareEvent = function(event) {
-    // Make sure the metadata-generation function actually exists... (14.0+)
-    try {
-      if(window.keyman.getDebugInfo) {
-        event.extra = event.extra || {};
-        event.extra.keymanState = window.keyman.getDebugInfo();
-        event.extra.keymanHostPlatform = 'keymanweb.com';
-      }
-    } catch (ex) { /* Swallow any errors produced here */ }
-
-    return event;
-  };
-
-<?php if($tier == 'stable') { ?>
-  var sentryRelease = "<?=$version?>";
-<?php } else { ?>
-  var sentryRelease = "<?=$version."-".$tier?>";
-<?php } ?>
-
-  // Note: not currently using js Loader as it does not seem to work correctly
-  // with integrations
-  doInitSentry();
-
-  function doInitSentry() {
-    if(!Sentry) {
-      // may be blocked by client
-      return;
-    }
-  Sentry.init({
-    beforeSend: prepareEvent,
-      dsn: "https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.us.sentry.io/5983523",
-    release: sentryRelease,
-      integrations: [
-        Sentry.captureConsoleIntegration({
-          levels: ['error', 'warning']
-        })
-      ],
-    environment:
-      // TODO: https://github.com/keymanapp/shared-sites/issues/13
-      ['www.keymanweb.com','keymanweb.com', 'web.keyman.com'].includes(location.host) ? 'production' :
-      ['web.keyman-staging.com'].includes(location.host) ? 'staging' :
-      'development',
-  });
+  const sentryEnvironment = {
+    tier: '<?=KeymanHosts::Instance()->TierName()?>',
+    release: '<?=$tier == 'stable' ? $kmwbuild : "$kmwbuild-$tier"?>',
   }
 </script>
+<script src="<?=cdn("js/sentry.js")?>"></script>
 
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
@@ -220,16 +183,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
 <script src="<?php echo "$url_keymanweb_res" ?>/code/bookmarklet_builder.js"></script>
 
-<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
-<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
-<!--
-<script src="http://localhost/keymanweb/release/unminified/web/keymanweb.js"></script>
-<script src="http://localhost/keymanweb/release/unminified/web/kmwuitoolbar.js"></script>
--->
+<script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
+<script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
 
 <script src="<?= cdn("js/jquery.zclip.js"); ?>"></script>
 <script src="<?= cdn("js/kmwlive.js"); ?>"></script>
 <script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
+
 <script>
   loadKeyboardFromHash();
   var pageLoading = true;
