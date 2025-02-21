@@ -1,247 +1,227 @@
+:root {
+  --box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  --keyman-orange: #FC7200;
+  --keyman-red: #B92034;
+  --keyman-blue: #2EADD3;
+}
+
+header > div > img {
+  width: 100%;
+  display: block;
+  height: 8px;
+}
+
+#headerBackground {
+  display: grid;
+  justify-content: left;
+  align-items: center;
+  height: 75px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: var(--box-shadow);
+}
+
+#headerLeft {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}  
+
+#headerLeft > * {
+  margin-right: 10px;
+}
+  
+#headerRight {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: end;
+  align-items: center;
+}
+
+/* 
+Language Search box
+*/
+.form {
+  position: relative;
+  width: 50%;
+}
+
+.search-icon-span {
+  position: absolute;
+  right: 17px;
+  top: 12px;
+  border-left: 1px solid black;
+}
+
+.search-icon-span i {
+  padding-left: 10px;
+}
+
+.form .form-input {
+  height: 50px;
+  width: 100%;
+  text-indent: 10px;
+  border-radius: 15px;
+  text-align: left;
+  background-color: rgb(233, 228, 228);
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border:none;
+}
+
+/* Search Dropdown list */
+  
+ul.dropdown-menu {
+  padding: 10px;
+  margin: 0;;
+}
+
+.dropdown-submenu .dropdown-menu li.dropdown-item{
+  width: 100%;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  margin-top: -6px;
+  border-radius: 0.25rem;
+  width: fit-content;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: inline;
+}
+
+#headerLeft .dropdown-menu .top-row .setting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 10px !important;
+}
+
+#headerLeft .dropdown-menu .top-row .setting .col:last-child {
+  position: relative;
+  left: 150px;
+}
+
+/* Selected Keyboard Menu */
+#keyboardSelectionDropdown {
+  width: fit-content !important;
+  overflow: hidden;
+}
+
+#keyboardSelectionDropdown > * {
+  width: 100%;
+}
+
+#keyboardSelectionList {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+#keyboardSelectionList ul {
+  width: 369px;
+}
+
+.language-name {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  align-items: center;
+}
+
+.language-name i {
+  opacity: 100%;
+  float: right;
+  color: var(--keyman-red);
+}
+
+.language {
+  margin: 10px;
+}
+
+.language ul {
+  list-style: none;
+}
+
+#removeLanguage {
+  cursor: pointer;
+}
+
+.keyboard-list i {
+  float: right;
+  opacity: 50%;
+}
+
 /* ================================
-    Computer and Laptop screen sizes
+    Computer, Laptop, some Tablet screen sizes
 ================================ */ 
-@media screen and (min-width: 1000px) {
-    header {
-      position: fixed;
-      margin-left: auto;
-      margin-right: auto;
-      padding-bottom: 30px;
-      z-index: 1;
-    }
-  
-    header > div > img {
-      width: 100%;
-      display: block;
-      height: 8px;
-    }
-  
-    header #headerBackground {
-      padding: 10px;
-    }
-  
-    #headerBackground {
-      display: grid;
-      grid-template-columns: 5% 85% 10%;
-      justify-content: left;
-      align-items: center;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-      margin: 0px 0px;
-      background-color: white;
-    }
-  
-    #headerLeft {
-      margin-left: 10px;
-    }
-  
-    #headerLeft img {
-      display: block;
-      height: 50px;
-    }
-  
-    #headerMiddle {
-      display: flex;
-      flex-direction: row;
-      justify-content: left;
-      align-items: center;
-      width: 70%;
-      margin: 0px 10px;
-    }  
-  
-    #headerMiddle > div {
-      margin-right: 10px;
-    }
-  
-    #headerRight {
-      display: grid;
-      grid-template-columns: 50% 50%;
-      justify-items: end;
-      align-items: center;
-      width: 100%;
-    }
-  
-    /* 
-        Language Search Menu
-    */
-  
-    .form {
-      position: relative;
-      width: 50%;
-    }
-  
-    .form .left-pan {
-      position: absolute;
-      right: 17px;
-      top: 12px;
-      padding: 2px;
-      border-left: 1px solid #000000;
-    }
-  
-    .left-pan {
-      padding-left: 7px;
-    }
-  
-    .left-pan i {
-      padding-left: 10px;
-    }
-  
-    .form .form-input {
-      height: 50px;
-      width: 100%;
-      text-indent: 15px;
-      border-radius: 15px;
-      text-align: left;
-      background-color: rgb(233, 228, 228);
-    }
-  
-    .form-input:focus {
-      box-shadow: none;
-      border:none;
-    }
-    /* Search Dropdown list */
-  
-    ul.dropdown-menu {
-      padding: 10px;
-      margin: 0;
-    }
-  
-    .dropdown-submenu .dropdown-menu li.dropdown-item{
-      width: 100%;
-    }
-  
-    .dropdown-submenu {
-      position: relative;
-    }
-  
-    .dropdown-submenu .dropdown-menu {
-      margin-top: -6px;
-      border-radius: 0.25rem;
-      width: fit-content;
-    }
-  
-    .dropdown-submenu:hover > .dropdown-menu {
-      display: inline;
-    }
-  
-    #headerMiddle .dropdown-menu .top-row .setting {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 10px !important;
-    }
-
-    #headerMiddle .dropdown-menu .top-row .setting .col:last-child {
-      position: relative;
-      left: 150px;
-    }
-
-    /* Selected Keyboard Menu */
-    #keyboardSelectionDropdown {
-      width: fit-content !important;
-      overflow: hidden;
-    }
-
-    #keyboardSelectionDropdown > * {
-      width: 100%;
-    }
-
-    #keyboardSelectionList {
-      display: grid;
-      grid-template-columns: 50% 50%;
-    }
-
-    #keyboardSelectionList ul {
-      width: 369px;
-    }
-
-    .language-name {
-      display: grid;
-      grid-template-columns: 95% 5%;
-      align-items: center;
-    }
-
-    .language-name i {
-      opacity: 100%;
-      float: right;
-      color: #B92034;
-    }
-
-    .language {
-      margin: 10px;
-    }
-
-    .language ul {
-      list-style: none;
-    }
-
-    #removeLanguage {
-      cursor: pointer;
-    }
-
-    .keyboard-list i {
-      float: right;
-      opacity: 50%;
-    }
-  }
-  
-
-@media screen and (min-width: 600px) {
-  header {
-    position: fixed;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 30px;
-    z-index: 1;
-  }
-
-  header > div > img {
-    width: 100%;
-    display: block;
-    height: 8px;
-  }
-
-  header #headerBackground {
-    padding: 10px;
-  }
-
+@media screen and (min-width: 1045px) {
   #headerBackground {
-    display: grid;
-    grid-template-columns: 5% 85% 10%;
-    justify-content: left;
-    align-items: center;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    margin: 0px 0px;
-    background-color: white;
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Expanding the search box  */ 
+@media screen and (940px <= width <= 1045px) {
+  #headerBackground {
+    grid-template-columns: 3fr 1fr;
+  }
+
+  /* 
+  Language Search box
+  */
+  .form {
+    position: relative;
+    width: 70%;
+  }
+}
+
+/* ================================
+    Most Tablet to Phone sizes
+================================ */ 
+
+@media screen and (max-width: 940px) {
+  #headerBackground {
+    grid-template-columns: 1fr 1fr;
   }
 
   #headerLeft {
-    margin-left: 10px;
+    align-items: center;
+    justify-content: left;
+    align-items: center;
   }
 
   #headerLeft img {
-    display: block;
-    height: 50px;
+    display: none;
   }
 
-  #headerMiddle {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-    width: 70%;
-    margin: 0px 10px;
-  }  
-
-  #headerMiddle > div {
-    margin-right: 10px;
+  /* 
+  Language Search box
+  */
+  .form {
+    position: relative;
+    width: inherit;
   }
 
-  #headerRight {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    justify-items: end;
-    align-items: center;
-    width: 100%;
+  .search-icon-span {
+    position: static;
+    border: none;
+  }
+  
+  .search-icon-span i {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+  }
+  
+  .form .form-input {
+    display: none;
   }
 }

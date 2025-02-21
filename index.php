@@ -7,14 +7,13 @@ require_once('inc/head.php');
 
 <header>
   <div id='headerBackground'>
-    <div id='headerLeft'>
+    <div id="headerLeft">
+    <!-- Logo -->
       <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
-    </div>
-    <div id="headerMiddle">
       <!-- Language Search -->
       <div class="form">
         <input type="text" class="form-control form-input dropdown-toggle" data-bs-toggle="dropdown" placeholder="Search language, keyboard..." onclick="languageSearch()">
-        <span class="left-pan"><i class="fa fa-search"></i></span>
+        <span class="search-icon-span" id="searchIcon"><i class="fa fa-search"></i></span>
         <ul class="dropdown-menu" style="width:100%" id="languageSearchDropdown">
           <div class="top-row">
             <div class="setting">
@@ -57,7 +56,7 @@ require_once('inc/head.php');
     <div id='headerRight'>
       <!-- Tools -->
       <div class="tools">
-        <input type="range" min="12" max="132" value="0" step="2" />
+        <!-- <input type="range" min="12" max="132" value="0" step="2" /> -->
       </div>
       <!-- Menu -->
       <div class="dropdown menu">
@@ -93,19 +92,20 @@ require_once('inc/head.php');
   <div class="item divider-container" id="Divider">
     <i class="fa-solid fa-keyboard fa-xl" id="hideKeyboard"></i>
     <i class="fa-solid fa-bars fa-xl"></i>
-    <a id="keyman-desktop-download" href="https://keyman.com/keyboards/kreative_superipa">
-      <i class="fa-solid fa-download fa-xl"></i>
-    </a>
+    <i class="fa-solid fa-download fa-xl" id="keyboardDownload">
+      <a id="keyman-desktop-download" href="https://keyman.com/keyboards/kreative_superipa"></a>
+    </i>
   </div>
   <div class="item keyboard-and-download">
-    <div class="item" style="width: 15%"></div>
+    <div class="item spacing-purpose" style="width: 15%"></div>
     <div class="item keyboard-container">
       <div class="example-box" id="exampleBox">
         <i class="close-example fa-solid fa-minus"></i>
         <p id="example">No example is available for this keyboard.</p>
       </div>
       <div class="keyboard-area">
-        <img class="keyboard" src="<?php echo cdn('img/keyboard.png') ?>" alt="">
+        <img class="desktop-keyboard" src="<?php echo cdn('img/desktop-keyboard.png') ?>" alt="">
+        <img class="phone-keyboard" src="<?php echo cdn('img/phone-keyboard.png') ?>" alt="">
       </div>
     </div>
     <div class="keyboard-download-box" id="\">
