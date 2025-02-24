@@ -92,8 +92,6 @@
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
-  var demoDomain="<?php echo $site_keymanwebdemo; ?>";
-  var KeymanWeb_StaticRoot = "<?php echo $staticDomainRoot; ?>";
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
   var site_keyman_com="<?php echo KeymanHosts::Instance()->keyman_com ?>";
 
