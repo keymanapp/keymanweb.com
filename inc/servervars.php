@@ -32,26 +32,16 @@
     require_once __DIR__ . '/../cdn/deploy/cdn.php';
   }
 
-  $site_suffix = KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT ?
-    ".localhost" : "";
-
-    // $site_protocol is used only by util.php at this time.
-  $TestServer = (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT) ||
-    (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) ? true : false;
-  $site_protocol = $TestServer ? 'http://' : 'https://';
-
   $url_keymanweb_res = KeymanHosts::Instance()->r_keymanweb_com;
   $staticDomainRoot= KeymanHosts::Instance()->s_keyman_com;
 
-  $site_keymanwebhelp = KeymanHosts::Instance()->help_keyman_com;
-  $site_keymanwebdemo = KeymanHosts::Instance()->keymanweb_com;
-  $site_keyman        = KeymanHosts::Instance()->keyman_com;
-
-  $staticDomain= $staticDomainRoot . "/kmw/engine";
 
   function cdn($file) {
-    global $cdn, $staticDomain, $TestServer;
-    $use_cdn = !$TestServer || (isset($_REQUEST['cdn']) && $_REQUEST['cdn'] == 'force');
+    global $cdn;
+    $use_cdn =
+      KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_PRODUCTION ||
+      KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_STAGING ||
+      (isset($_REQUEST['cdn']) && $_REQUEST['cdn'] == 'force');
     if($use_cdn && $cdn && array_key_exists('/'.$file, $cdn)) {
       return "/cdn/deploy{$cdn['/'.$file]}";
     }
