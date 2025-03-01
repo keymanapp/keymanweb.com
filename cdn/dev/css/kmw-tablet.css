@@ -151,24 +151,6 @@ header > div > img {
   margin-left: 41px;
 }
 
-#facebook.links, #facebook{
-  background-image:url('../img/btn_fb_small.png');
-
-}
-
-#facebook.linksOff{
-  background-image:url('../img/btn_fb_small_white.png');
-}
-
-#twitter.links, #twitter{
-  background-image:url('../img/btn_tw_small.png');
-
-}
-
-#twitter.linksOff{
-  background-image:url('../img/btn_tw_small_white.png');
-}
-
 #search.links, #search{
   background-image:url('../img/btn_google_small.png');
 
@@ -204,13 +186,6 @@ div.linksOff * {
   color: gray;
   -webkit-user-select:none;
   }
-
-#tweetcount, #twitter span {
-  color: #666;
-  font: bold 0.8em Helvetica, Verdana, Arial, sans-serif;
-  text-shadow: 0 1px 1px white;
-  }
-
 
 /* Aside Elements */
 
@@ -257,24 +232,6 @@ nav a {
   font-weight:bold;
   font-size:10.7px;
   }
-
-#facebookPost {
-  position: fixed;
-  width: 640px;
-  height: 400px;
-  left: 50%;
-  margin-left: -320px;
-  top: 200px;
-  background: white;
-}
-
-#facebookPost iframe {
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  width: 632px;
-  height: 392px;
-}
 
 .messageBox {
   box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
@@ -395,15 +352,6 @@ nav a {
   border-radius: 3px;
 }
 
-#twitter span {
-  font-weight: normal;
-  padding-right: 2px;
-}
-
-#twitter span.long {
-  color: red;
-}
-
 /* Elements modified for tablet */
 #headerBackground {
   width: 100%;
@@ -510,7 +458,6 @@ nav a {
     width: 130px;
     height: 40px;
     }
-  #twitter { margin-left: 10px; margin-right: 10px;}
 
   #font{
     position: relative;

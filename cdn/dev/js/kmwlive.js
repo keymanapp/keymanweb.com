@@ -50,11 +50,11 @@ $(document).ready(function() {
 
   font.addEventListener('touchstart', function(event) {
     $('#mobile-font').show();
-    $('#twitter,#search').css('visibility','hidden');
+    $('#search').css('visibility','hidden');
     var r = setTimeout(function(){
       $('#mobile-font').hide();
       setTimeout(function(){
-	      $('#twitter,#search').css('visibility','visible');
+	      $('#search').css('visibility','visible');
       },1000);
     },3000);
     var size = Number($('#mobile-font-size1').val());
@@ -68,7 +68,7 @@ $(document).ready(function() {
       r = setTimeout(function(){
         $('#mobile-font').hide();
         setTimeout(function(){
-          $('#twitter,#search').css('visibility','visible');
+          $('#search').css('visibility','visible');
         },600);
       },2000);
     });
@@ -82,7 +82,7 @@ $(document).ready(function() {
       r = setTimeout(function(){
         $('#mobile-font').hide();
         setTimeout(function(){
-          $('#twitter,#search').css('visibility','visible');
+          $('#search').css('visibility','visible');
         },600);
       },2000);
     });
@@ -106,9 +106,6 @@ $(document).ready(function() {
 	  alert("Don't click this: drag it to your Bookmarks toolbar.  Then you can click the '" + $(this).text() + "' bookmark on any web page to access your web keyboard on that page!")
     return false;
   });
-
-  /* Keep a static copy of message length */
-  window.lastMessageLength=-1;
 
   // Detect desktop browser height and modify css
   function updateSize(){
@@ -172,32 +169,8 @@ $(document).ready(function() {
     {
       showError(module, error, redirectHome);
     }
-    else if(result == 'success' && module == 'twitter')
-    {
-      showTwitterSuccess(data, redirectHome);
-    }
     return;
   }
-
-  // Check for twitter message from first time app auth
-  if (twitterMessage) {
-    $('#message').val(twitterMessage);
-  }
-
-  $('#twitter').click(function(event){
-    event.preventDefault();
-    if($('#twitter').attr('disabled') == 'disabled') return;
-    var box = showProgress('Posting your message to your Twitter stream');
-    $.getJSON('/lib/twitter-ajax.php', {message: $('#message').val()},
-      function(data)
-      {
-        box.remove();
-        $('.messageBox').focus();
-        if(data['result'] == 'success') showTwitterSuccess(data['data'], focusMessage);
-        else if(data['result'] == 'login') location.href = data['login'];
-        else showError('twitter', data['error'], focusMessage);
-      });
-  });
 
   $('#search').click(function(event){
     event.preventDefault();
@@ -290,17 +263,6 @@ function refreshButtons() {
     $('#buttons').children('div').attr('class','links');
     $('#buttons div').removeAttr('disabled');
   }
-
-  if(len != lastMessageLength) {
-    lastMessageLength = len;
-
-    $('#twitter span').text((140 - len).toString()).toggleClass('long', len > 140);
-    $('#twitter span').toggle(len > 0);
-
-    if(len > 140) {
-      $('#twitter').attr('disabled', 'disabled');
-    }
-  }
 }
 
 function getKMWInputElement(id){
@@ -383,37 +345,6 @@ function focusMessage()
 {
   $('#desktopMessage').focus();
 }
-
-function showFacebookSuccess(data, callback)
-{
-  if(data)
-  {
-    showSuccess('facebook', "<p>Your message was successfully posted to your Facebook wall.</p><p><a href='http://www.facebook.com/"+data+"' target='_blank'>View your message on Facebook</a></p>", callback);
-  }
-  else
-    showSuccess('facebook', 'Your message was successfully posted to your Facebook wall', callback);
-}
-
-function showTwitterSuccess(data, callback)
-{
-  if(data && data.match(/^.*\/status\/\d+$/))
-  {
-    showSuccess('twitter', "<p>Your message was successfully posted to your Twitter stream.</p><p><a href='http://www.twitter.com/"+data+"' target='_blank'>View your tweet</a></p>", callback);
-  }
-  else
-    showSuccess('twitter', 'Your message was successfully posted to your Twitter stream', callback);
-}
-
-function getTextLength(s)
-{
-  var urls = twttr.txt.extractUrls(s);
-  var len = s.length;
-  for(var i = 0; i < urls.length; i++)
-    len = len - urls[i].length + Math.min(urls[i].length, 20);
-
-  return len;
-}
-
 
 /* Keyboard Changed - IE font switching and language example */
 
