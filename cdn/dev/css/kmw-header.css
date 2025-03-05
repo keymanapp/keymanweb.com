@@ -5,13 +5,18 @@
   --keyman-blue: #2EADD3;
 }
 
+* {
+  letter-spacing: .05rem;
+  font-weight: 400;
+}
+
 header > div > img {
   width: 100%;
   display: block;
   height: 8px;
 }
 
-#headerBackground {
+.background-header {
   display: grid;
   justify-content: left;
   align-items: center;
@@ -21,22 +26,46 @@ header > div > img {
   box-shadow: var(--box-shadow);
 }
 
-#headerLeft {
+.left-header {
   display: flex;
   flex-direction: row;
   justify-content: left;
   align-items: center;
 }  
 
-#headerLeft > * {
+.left-header > * {
   margin-right: 10px;
 }
   
-#headerRight {
+.right-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   justify-items: end;
   align-items: center;
+}
+
+#burgerMenu ul {
+  width: 200px;
+  background-color: transparent;
+  border: none;
+}
+
+#burgerMenu button i:hover {
+  cursor: pointer;
+}
+
+#burgerMenu ul li a {
+  padding: 10px 10px !important;
+  margin-bottom: 10px !important;
+  text-align: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow);
+}
+
+#burgerMenu ul li a:hover {
+  background-color: var(--keyman-orange);
+  color: white;
 }
 
 /* 
@@ -72,8 +101,51 @@ Language Search box
   border:none;
 }
 
+#languageSearchDropdown {
+  max-height: 600px;
+  overflow: auto;
+}
+
 /* Search Dropdown list */
-  
+#languageSearchList > * {
+  margin-bottom: 5px;
+}
+
+.card-wrap {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;;
+  padding: 10px;
+  border-radius: 10px;
+  letter-spacing: .05rem;
+  overflow: hidden;
+}
+
+.card-wrap h6 {
+  opacity: 75%;
+  font-size: 12px;
+  margin: 0 0 0.35rem;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-header h4 {
+  font-weight: 400;
+  font-size: large;
+}
+
+.card-header p {
+  margin: 0;
+  position: relative;
+  float: right;
+  font-weight: 200;
+  font-size: medium;
+}
+
 ul.dropdown-menu {
   padding: 10px;
   margin: 0;;
@@ -97,7 +169,7 @@ ul.dropdown-menu {
   display: inline;
 }
 
-#headerLeft .dropdown-menu .top-row .setting {
+.left-header .dropdown-menu .top-row .setting {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -105,7 +177,7 @@ ul.dropdown-menu {
   margin: 10px 10px !important;
 }
 
-#headerLeft .dropdown-menu .top-row .setting .col:last-child {
+.left-header .dropdown-menu .top-row .setting .col:last-child {
   position: relative;
   left: 150px;
 }
@@ -120,9 +192,35 @@ ul.dropdown-menu {
   width: 100%;
 }
 
+.last-row-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
+}
+
+.last-row-selection > * {
+  opacity: 50%;
+  margin: 2px;
+  padding: 5px;
+}
+
+.last-row-selection p {
+  background-color: black;
+  color: gray;
+  width: fit-content;
+  margin: 1px;
+  cursor: pointer;
+}
+
+.last-row-selection p:hover {
+  opacity: 100%;
+  color: white;
+}
+
 #keyboardSelectionList {
   display: grid;
-  grid-template-columns: 50% 50%;
 }
 
 #keyboardSelectionList ul {
@@ -162,23 +260,15 @@ ul.dropdown-menu {
     Computer, Laptop, some Tablet screen sizes
 ================================ */ 
 @media screen and (min-width: 1045px) {
-  #headerBackground {
+  .background-header {
     grid-template-columns: 2fr 1fr;
   }
 }
 
 /* Expanding the search box  */ 
 @media screen and (940px <= width <= 1045px) {
-  #headerBackground {
-    grid-template-columns: 3fr 1fr;
-  }
-
-  /* 
-  Language Search box
-  */
-  .form {
-    position: relative;
-    width: 70%;
+  .background-header {
+    grid-template-columns: 4fr 1fr;
   }
 }
 
@@ -187,41 +277,40 @@ ul.dropdown-menu {
 ================================ */ 
 
 @media screen and (max-width: 940px) {
-  #headerBackground {
-    grid-template-columns: 1fr 1fr;
+  .background-header {
+    grid-template-columns: 4fr 1fr;
   }
 
-  #headerLeft {
+  .left-header {
     align-items: center;
     justify-content: left;
     align-items: center;
   }
 
-  #headerLeft img {
+  .left-header img {
     display: none;
   }
 
   /* 
   Language Search box
   */
+
   .form {
-    position: relative;
-    width: inherit;
+    width: 70%;
   }
 
-  .search-icon-span {
-    position: static;
-    border: none;
+  .form input::placeholder {
+    content: "Search";
   }
-  
-  .search-icon-span i {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: gray;
-    color: white;
+
+}
+
+@media screen and (max-width: 565px) {
+  #languageSearchDropdown {
+    width: 300px !important;
   }
-  
-  .form .form-input {
-    display: none;
+
+  #keyboardSelectionDropdown {
+    width: 300px !important;
   }
 }

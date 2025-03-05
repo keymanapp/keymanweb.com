@@ -2,15 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Define the divider, text area and keyboard
     const divider = document.getElementById('Divider')
     const resizer = divider.querySelector('.fa-bars')
-    let prevElement = divider.previousElementSibling.querySelector('.textarea');
+    let prevElement = divider.previousElementSibling.querySelector('.text-area');
     let nextElement = divider.nextElementSibling;
     let isResizing = false;
     
     // Define the heights of text area, keyboard, and the vertical screen
     let prevElementHeight = 0;
     let prevElementWidth = 0;
-    let nextElementHeight = 0;
-    let nextElementWidth = 0;
     let verticalViewport = 0;
 
     const mouseDownHandler = (e) => {
@@ -21,8 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get the Y coordinate of mouse click & Text Area + Keyboard heights
         prevElementHeight = prevElement.getBoundingClientRect().height;
         prevElementWidth = prevElement.getBoundingClientRect().width;
-        nextElementHeight = nextElement.getBoundingClientRect().height;
-        nextElementWidth = nextElement.getBoundingClientRect().width;
         verticalViewport = e.clientY;
 
         document.addEventListener('mousemove', mouseMoveHandler)
@@ -67,13 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (newPrevHeight >= maxPrevHeight) {
             fullScreenSize()
         } else if (newPrevHeight < maxPrevHeight) {
-            divider.style.display = "flex"
+            divider.style.display = "grid"
             nextElement.style.display = "flex"
         }
     }
     
-    let showKeyboardContainer = document.querySelector(".show-keyboard-box")
-    let showKeyboardButton = document.querySelector(".show-keyboard")
+    let showKeyboardContainer = document.querySelector("#showKeyboardBox")
+    let showKeyboardButton = document.getElementById("showKeyboard")
 
     function fullScreenSize() {
         prevElement.style.height = "85vh"
@@ -107,9 +103,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function defaultSize() {
         prevElement.style.height= "38vh"
-        divider.style.display = "flex"
+        divider.style.display = "grid"
         nextElement.style.display = "flex"
         showKeyboardContainer.classList.add('hidden')      
+    }
+
+    const closeExampleBtn = document.querySelector('#closeExample')
+    const exampleBox = document.querySelector('.example-box')
+    closeExampleBtn.onclick = () => {
+        exampleBox.classList.add('hidden')
+        openExampleBtn.classList.remove('hidden')
+    }
+    const openExampleBtn = document.querySelector('#openExample')
+    openExampleBtn.onclick = () => {
+        exampleBox.classList.remove('hidden')
+        openExampleBtn.classList.add('hidden')
+    }
+
+    const downloadKeyboardBtn = document.querySelector('#mobileDownloadIcon')
+    console.log(downloadKeyboardBtn)
+    window.onresize = () => visibleDownloadKeyboard()
+
+    function visibleDownloadKeyboard() {
+        const width = screen.width
+        console.log(width)
+        if (width <= 940) {
+            downloadKeyboardBtn.classList.remove('hidden')
+        } else {
+            downloadKeyboardBtn.classList.add('hidden')
+        }
     }
 
     const hideKeyboardBtn = document.getElementById('hideKeyboard')

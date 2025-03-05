@@ -92,42 +92,46 @@ const numOfLangPara = document.createElement('p')
 let selectedLanguagesList = []
 const keyboardSelectionButton = document.getElementById('keyboardSelectionButton')
 
+let numTotalPage = 5;
+
 function languageSearch() {
     const languageSearchList = document.getElementById('languageSearchList');
     languageSearchList.innerHTML = ''; // Clear existing items
 
-    // Create <div class="row">
-    let rowDiv = document.createElement('div')
-    rowDiv.classList.add('row'); 
-    // Insert `<div class="col"><li class="dropdown-submenu">Language`
-    languages.forEach((lang, index) => {
-        if (index % 4 == 0 && index != 0) {
-            languageSearchList.appendChild(rowDiv)
-            rowDiv = document.createElement('div')
-            rowDiv.classList.add('row')
-        }
-        const colDiv = document.createElement('div')
-        colDiv.classList.add('col');
-
-        const liDropdownSubMenu = document.createElement('li')
-        liDropdownSubMenu.classList.add('dropdown-submenu')
-        liDropdownSubMenu.textContent = lang.language
-
+    languages.forEach((lang) => {
         let languageFoundInList = selectedLanguagesList.some(selected => selected.language === lang.language)
-
+        
+        let cardWrap = document.createElement('div')
+        cardWrap.classList.add('card-wrap'); 
+        cardWrap.onclick = () => populateSelectedKeyboard(lang.language)
         if (languageFoundInList) {
-            liDropdownSubMenu.classList.add('disabled')
-            liDropdownSubMenu.style.color = 'gray'
-            liDropdownSubMenu.style.pointerEvents = 'none';
+            cardWrap.classList.add('disabled')
+            cardWrap.style.color = 'gray'
+            cardWrap.style.pointerEvents = 'none';
         } else {
-            liDropdownSubMenu.addEventListener('click', function () {
-                populateSelectedKeyboard(lang.language)
-            })
+            cardWrap.onclick = () => populateSelectedKeyboard(lang.language)
         }
-        colDiv.appendChild(liDropdownSubMenu)
-        rowDiv.appendChild(colDiv);
+        let cardHeader = document.createElement('div')
+        cardHeader.classList.add('card-header')
+        let languageHeader = document.createElement('h4')
+        languageHeader.textContent = `${lang.language}`
+        let languageScript = document.createElement('p')
+        languageScript.textContent = 'script'
+
+        cardHeader.appendChild(languageHeader)
+        cardHeader.appendChild(languageScript)
+
+        let languageKeyboard = document.createElement('h6')
+        languageKeyboard.textContent = "Keyboard: Number of keyboard"
+        let languageDesc = document.createElement('h6')
+        languageDesc.textContent = "The language description?"
+
+        cardWrap.appendChild(cardHeader)
+        cardWrap.appendChild(languageKeyboard)
+        cardWrap.appendChild(languageDesc)
+
+        languageSearchList.appendChild(cardWrap)
     })
-    languageSearchList.appendChild(rowDiv)
 }
 
 function populateSelectedKeyboard(language = null) {
@@ -147,11 +151,9 @@ function populateSelectedKeyboard(language = null) {
     if (selectedLanguagesList.length) {
         keyboardSelectionButton.classList.remove('btn-secondary')
         keyboardSelectionButton.classList.add('btn-danger')
-        keyboardSelectionButton.textContent = "Languages and their keyboards selection" 
     } else {
         keyboardSelectionButton.classList.remove('btn-danger')
         keyboardSelectionButton.classList.add('btn-secondary')
-        keyboardSelectionButton.textContent = "" 
         keyboardSelectionList.textContent = "Open Search to get your keyboard"
     }
 
@@ -203,8 +205,10 @@ function populateSelectedKeyboard(language = null) {
     })
 }
 
+let languageAmount
+
 function countLanguage(amountOfLanguage) {
-    let languageAmount = amountOfLanguage.length
+    languageAmount = amountOfLanguage.length
     let topRowOfSelection = document.getElementById('keyboardSelectionDropdown').querySelector('.top-row')
     topRowOfSelection.innerHTML = ''
     
@@ -215,14 +219,4 @@ function countLanguage(amountOfLanguage) {
 function removeLanguage(language) {
     selectedLanguagesList = selectedLanguagesList.filter(lang => lang.language !== language)
     populateSelectedKeyboard()
-}
-
-function getKeyboardInfo(keyboard) {
-
-}
-
-function selectKeyboardToType(keyboard) {
-    selectedDropdownList.textContent = `${keyboard}` 
-    const textAreaHint = document.getElementById('textArea')
-    textAreaHint.placeholder = `The ${keyboard} is selected. Start typing...`
 }

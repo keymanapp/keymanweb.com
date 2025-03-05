@@ -11,10 +11,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .hidden { 
-    display: none;
+    display: none !important;
 }
 
 a {
@@ -25,8 +26,12 @@ a {
 
 /* Icons */
 
-.fa-keyboard, .fa-download { 
+.fa-keyboard, .fa-download, .fa-w { 
     cursor: pointer;
+}
+
+i:hover {
+    transition: all 0.3s ease;
 }
 
 .fa-bars:hover {
@@ -48,11 +53,11 @@ a {
     width: 100%;
 }
 
-.textarea {
+.text-area {
     padding: 10px;
     resize: none;
     width: 100%;
-    height: 45vh;
+    height: 30vh;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
 }
 
@@ -81,30 +86,18 @@ a {
     opacity: 100%;
 }
 
-.show-keyboard-box {
+#showKeyboardBox {
     width: 100%;
     text-align: center;
     position: absolute;
     bottom: 0;
 }
 
-.show-keyboard-box:hover {
+#showKeyboardBox:hover {
     opacity: 80%;
 }
 
 /* Divider */
-.divider-container {
-    user-select: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 40%;
-}
-
-.divider-container > * {
-    margin: 10px;
-}
-
 .divider-container i {
     opacity: 50%;
 }
@@ -112,6 +105,73 @@ a {
 .divider-container i:hover {
     color: var(--keyman-orange);
     opacity: 100%;
+}
+
+.left-divider {
+    grid-area: left;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    align-items: center;
+    width: 15%;
+}
+
+.font-size-desktop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.font-size-desktop > * {
+    margin-left: 10px;
+}
+
+.font-large {
+    font-size: 25px;
+}
+
+
+input[type="range"] {
+    width: 100px;
+    background-color: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 3px;
+    background: rgb(107, 107, 107);
+    border-radius: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    position: relative;
+    bottom: 6px;
+    background-size: 50%;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+    cursor: grab;
+}
+
+.middle-divider {
+    grid-area: middle;
+    justify-self: center;
+}
+
+.right-divider {
+    grid-area: right;
+    display: flex;
+    flex-direction: row;
+    justify-self: right;
+    align-items: center;
+}
+
+.right-divider > * {
+    margin-left: 10px;
+}
+
+.font-size-mobile {
+    display: none;
 }
 
 /* Keyboard */
@@ -135,6 +195,10 @@ a {
 
 .example-box p {
     margin: 10px;
+}
+
+#closeExample {
+    cursor: pointer;
 }
 
 .keyboard-container {
@@ -188,8 +252,21 @@ a {
     Computer and Laptop screen sizes
 ================================ */
 @media screen and (min-width: 940px) {
-    .item {
+    .item, .section-items {
         margin: 5px
+    }
+    
+    /* Divider */
+    .divider-container {
+        user-select: none;
+        display: grid;
+        grid-template-columns: repeat(5, 20%);
+        grid-template-rows: 100%;
+        align-items: center;
+        grid-template-areas: 
+        ". left middle right ."
+        ;
+        width: 100%;
     }
 }
 
@@ -200,6 +277,14 @@ a {
 @media screen and (max-width: 940px) {
     /* Divider */
     .divider-container {
+        user-select: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 100%;
+        align-items: center;
+        grid-template-areas: 
+        "left middle right"
+        ;
         width: 100%;
         padding: 10px;
         border-radius: 5px;
@@ -233,9 +318,32 @@ a {
 /* ================================
     Smallest Phone sizes
 ================================ */ 
+@media screen and (width < 565px) {
+    .font-size-desktop {
+        display: none;
+    }
 
-@media screen and (max-width: 380px) {
+    .font-size-mobile {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-radius: 24px;
+        opacity: 50%;
+    }
+
+    .font-size-mobile button {
+        border: 0;
+        background-color: #fff;
+        border-style: none;
+    }
+
+    .font-size-mobile > *{
+        margin: 0 5px;
+    }
+}
+
+@media screen and (max-width: 400px) {
     .example-box p {
-        font-size: 12px;
+        font-size: 10px;
     }
 }
