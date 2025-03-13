@@ -18,12 +18,11 @@
 
   require_once __DIR__ . '/../vendor/autoload.php';
   require_once __DIR__ . '/../_includes/autoload.php';
-  require_once __DIR__ . '/../_common/KeymanSentry.php';
 
   use \Keyman\Site\Common\KeymanHosts;
+  use \Keyman\Site\com\keyman\web\WebKeymanComSentry;
 
-  const SENTRY_DSN = 'https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.sentry.io/5983523';
-  \Keyman\Site\Common\KeymanSentry::init(SENTRY_DSN);
+  WebKeymanComSentry::init();
 
   // latest known version of KeymanWeb
   const FALLBACK_KMW_VERSION = '16.0.143';
