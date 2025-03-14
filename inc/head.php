@@ -3,7 +3,7 @@
   require_once('servervars.php');
 
 use Keyman\Site\com\keyman\web\WebKeymanComSentry;
-  use \Keyman\Site\Common\KeymanHosts;
+use \Keyman\Site\Common\KeymanHosts;
 
   $kmw_tiers = array('alpha', 'beta', 'stable');
   $kmw_builds = get_keymanweb_versions();
@@ -152,7 +152,6 @@ use Keyman\Site\com\keyman\web\WebKeymanComSentry;
 <script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
 
-<script src="<?= cdn("js/jquery.zclip.js"); ?>"></script>
 <script src="<?= cdn("js/kmwlive.js"); ?>"></script>
 <script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
 

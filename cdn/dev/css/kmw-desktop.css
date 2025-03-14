@@ -291,22 +291,6 @@ form {
   display:inline;
   }
 
-#zclip-ZeroClipboardMovie_1  {
-  background: none !important;
-  width: 122px !important;
-  height: 28px !important;
-  border: none !important;
-}
-
-#zclip-ZeroClipboardMovie_1.linksOff{
-  display: none;
-}
-
-#ZeroClipboardMovie_1{
-  margin-left: -3px;
-  margin-top: -9px;
-}
-
 div.links {
   cursor:pointer;
   }
