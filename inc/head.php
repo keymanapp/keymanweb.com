@@ -2,6 +2,7 @@
   session_start();
   require_once('servervars.php');
 
+  use Keyman\Site\com\keyman\web\WebKeymanComSentry;
   use \Keyman\Site\Common\KeymanHosts;
 
   $kmw_tiers = array('alpha', 'beta', 'stable');
@@ -56,34 +57,7 @@
 
 <title>KeymanWeb.com <?php if($tier != 'stable') echo "($tier)"; ?></title>
 
-<!-- note: using CDN and not bundle for now -->
-
-<script
-  src="https://js.sentry-cdn.com/bba22972ad6b4c2ab03a056f549cc23d.min.js"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://browser.sentry-cdn.com/9.1.0/bundle.tracing.min.js"
-  integrity="sha384-MCeGoX8VPkitB3OcF9YprViry6xHPhBleDzXdwCqUvHJdrf7g0DjOGvrhIzpsyKp"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://browser.sentry-cdn.com/9.1.0/captureconsole.min.js"
-  integrity="sha384-gkHY/HxnL+vrTN/Dn6S9siimRwqogMXpX4AetFSsf6X2LMQFsuXQGvIw7h2qWCt+"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://browser.sentry-cdn.com/9.1.0/httpclient.min.js"
-  integrity="sha384-ZsomH91NyAZy+YSYhJcpL3sSDFlkL310CJnpKNqL9KerB92RvfsH9tXRa2youKLM"
-  crossorigin="anonymous"
-></script>
-<script>
-  const sentryEnvironment = {
-    tier: '<?=KeymanHosts::Instance()->TierName()?>',
-    release: '<?=$tier == 'stable' ? $kmwbuild : "$kmwbuild-$tier"?>',
-  }
-</script>
-<script src="<?=cdn("js/sentry.js")?>"></script>
+<?= WebKeymanComSentry::GetBrowserHTML($kmwbuild) ?>
 
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />

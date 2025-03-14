@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Keyman\Site\com\keymanweb\tests;
+namespace Keyman\Site\com\keyman\web\tests;
 
 use PHPUnit\Framework\TestCase;
 
