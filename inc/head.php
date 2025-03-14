@@ -2,8 +2,8 @@
   session_start();
   require_once('servervars.php');
 
-use Keyman\Site\com\keyman\web\WebKeymanComSentry;
-use \Keyman\Site\Common\KeymanHosts;
+  use Keyman\Site\com\keyman\web\WebKeymanComSentry;
+  use \Keyman\Site\Common\KeymanHosts;
 
   $kmw_tiers = array('alpha', 'beta', 'stable');
   $kmw_builds = get_keymanweb_versions();
