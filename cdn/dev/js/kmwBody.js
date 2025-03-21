@@ -42,14 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get the dynamic heights of both elements
         let newPrevHeight = prevElementHeight + val;
         let newNextWidth = (x / prevElementWidth) * 150;
-        console.log("New Next Width", newNextWidth)
 
         // Define minimum and maximum heights
         const minPrevHeight = 150; 
         const maxPrevHeight = window.innerHeight * 0.6;
         const minNextWidth = 50;
         const maxNextWidth = 80;
-        console.log("Max Next Width: ", maxNextWidth)
 
         // Ensure the heights do need exceed the define heights
         newPrevHeight = Math.max(minPrevHeight, Math.min(newPrevHeight, maxPrevHeight));
@@ -121,12 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const downloadKeyboardBtn = document.querySelector('#mobileDownloadIcon')
-    console.log(downloadKeyboardBtn)
     window.onresize = () => visibleDownloadKeyboard()
 
     function visibleDownloadKeyboard() {
         const width = screen.width
-        console.log(width)
         if (width <= 940) {
             downloadKeyboardBtn.classList.remove('hidden')
         } else {

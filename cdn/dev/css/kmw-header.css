@@ -10,6 +10,10 @@
   font-weight: 400;
 }
 
+hr {
+  margin: 0;
+}
+
 header > div > img {
   width: 100%;
   display: block;
@@ -36,7 +40,7 @@ header > div > img {
 .left-header > * {
   margin-right: 10px;
 }
-  
+
 .right-header {
   display: grid;
   justify-items: end;
@@ -109,6 +113,11 @@ Language Search box
 /* Search Dropdown list */
 #languageSearchList > * {
   margin-bottom: 5px;
+}
+
+#languageSearchList > div:hover {
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
 }
 
 .card-wrap {
@@ -184,14 +193,76 @@ ul.dropdown-menu {
 
 /* Selected Keyboard Menu */
 #keyboardSelectionDropdown {
-  width: fit-content !important;
+  width: 400px !important;
   overflow: hidden;
 }
 
-#keyboardSelectionDropdown > * {
+#keyboardSelectionList {
+  display: grid;
   width: 100%;
 }
 
+#keyboardSelectionList ul {
+  width: 100%;
+}
+
+#keyboardSelectionList p {
+  text-align: center;
+}
+
+.language-name {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  align-items: center;
+}
+
+.language-name i {
+  float: right;
+  color: var(--keyman-red);
+  opacity: 50%;
+  justify-self: center;
+}
+
+.language-name i:hover {
+  border-radius: 5px;
+  border: 1px solid var(--keyman-red);
+  opacity: 100%;
+  padding: 5px;
+}
+
+.language {
+  margin: 10px;
+}
+
+.language ul {
+  list-style: none;
+}
+
+#removeLanguage {
+  cursor: pointer;
+}
+
+.keyboard-list ul > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keyboard-list i {
+  opacity: 50%;
+}
+
+.keyboard-list ul > li:hover {
+  cursor: pointer;
+  color: var(--keyman-red);
+  list-style: disc;
+}
+
+.keyboard-list ul li > i:hover {
+  opacity: 100%;
+}
+
+/* Keyboard Tab */
 .last-row-selection {
   display: flex;
   flex-direction: row;
@@ -207,53 +278,18 @@ ul.dropdown-menu {
 }
 
 .last-row-selection p {
-  background-color: black;
-  color: gray;
-  width: fit-content;
-  margin: 1px;
-  cursor: pointer;
-}
-
-.last-row-selection p:hover {
-  opacity: 100%;
+  background-color: var(--keyman-red);
   color: white;
-}
-
-#keyboardSelectionList {
-  display: grid;
-}
-
-#keyboardSelectionList ul {
-  width: 369px;
-}
-
-.language-name {
-  display: grid;
-  grid-template-columns: 95% 5%;
-  align-items: center;
-}
-
-.language-name i {
-  opacity: 100%;
-  float: right;
-  color: var(--keyman-red);
-}
-
-.language {
-  margin: 10px;
-}
-
-.language ul {
-  list-style: none;
-}
-
-#removeLanguage {
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: fit-content;
+  margin: 0 5px;
+  padding: 5px;
   cursor: pointer;
 }
 
-.keyboard-list i {
-  float: right;
-  opacity: 50%;
+.language-tab:hover {
+  box-shadow: var(--keyman-red) 0px 0px 0px 2px, var(--keyman-red) 0px 4px 6px -1px, var(--keyman-red) 0px 1px 0px inset;
 }
 
 /* ================================
@@ -302,7 +338,6 @@ ul.dropdown-menu {
   .form input::placeholder {
     content: "Search";
   }
-
 }
 
 @media screen and (max-width: 565px) {
@@ -311,6 +346,39 @@ ul.dropdown-menu {
   }
 
   #keyboardSelectionDropdown {
-    width: 300px !important;
+    max-width: 300px !important;
+  }
+}
+
+/* Animation */
+
+.keyboardTab-animation {
+  animation: keyboardTab 1s;
+}
+.keyboardSelection-animation {
+  animation: keyboardSelection 1s ease-in;
+}
+
+@keyframes keyboardSelection {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+      transform: translateY(-3px);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes keyboardTab {
+  from {
+    opacity: 50%;
+  }
+  to {
+    opacity: 100%;
   }
 }

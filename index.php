@@ -29,24 +29,19 @@ require_once('inc/head.php');
       </div>
       <!-- Keyboard selection -->
       <div class="dropdown">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="keyboardSelectionButton"></button>
+        <button type="button" class="btn btn-secondary abc dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown" id="keyboardSelectionButton"></button>
         <ul class="dropdown-menu" style="width:100%" id="keyboardSelectionDropdown">
-          <div class="top-row top-row-selection">
+          <!-- <div class="top-row top-row-selection"> -->
             <!-- kmwHeader.js --> 
-             <p>0/5 languages</p>
-          </div>
-          <hr>
+             <!-- <p>0/5 languages</p>
+          </div> -->
           <div class="middle-row middle-row-selection" id="keyboardSelectionList">
             <!-- kmwHeader.js --> 
-            Open Search to get your keyboard
+            <p>Open Search to get your keyboard</p>
           </div> 
           <hr>
-          <div class="last-row last-row-selection">
-            <p class="language-tab" id="Khmer">khr</p>
-            <p class="language-tab" id="French">fr</p>
-            <p class="language-tab" id="German">gm</p>
-            <p class="language-tab" id="Finnish">fi</p>
-            <p class="language-tab" id="Rotokas">roo</p>
+          <div class="last-row last-row-selection" id="keyboardTab">
+            <!-- kmwHeader.js --> 
           </div>
         </ul>
       </div>
