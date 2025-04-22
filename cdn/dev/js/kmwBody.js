@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define the divider, text area and keyboard
     const divider = document.getElementById('Divider')
-    const resizer = divider.querySelector('.fa-bars')
+    const resizer = divider.querySelector('.fa-arrows-up-down')
     let prevElement = divider.previousElementSibling.querySelector('.text-area');
     let nextElement = divider.nextElementSibling;
     let isResizing = false;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const mouseDownHandler = (e) => {
         e.preventDefault();
-        resizer.style.cursor = 'ns-resize'
+        resizer.style.cursor = 'grabbing'
         isResizing = true
 
         // Get the Y coordinate of mouse click & Text Area + Keyboard heights
@@ -45,15 +45,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Define minimum and maximum heights
         const minPrevHeight = 150; 
-        const maxPrevHeight = window.innerHeight * 0.6;
+        const maxPrevHeight = window.innerHeight * 0.8;
         const minNextWidth = 50;
         const maxNextWidth = 80;
 
         // Ensure the heights do need exceed the define heights
         newPrevHeight = Math.max(minPrevHeight, Math.min(newPrevHeight, maxPrevHeight));
         newNextWidth = Math.max(minNextWidth, Math.min(newNextWidth, maxNextWidth));
-
-        const keyboardContainer = nextElement.querySelector('.keyboard-container')
 
         // Update the heights of Prev and Next Elements
         prevElement.style.height = `${newPrevHeight}px`
@@ -65,73 +63,68 @@ document.addEventListener('DOMContentLoaded', function() {
             nextElement.style.display = "flex"
         }
     }
-    
-    let showKeyboardContainer = document.querySelector("#showKeyboardBox")
-    let showKeyboardButton = document.getElementById("showKeyboard")
 
-    function fullScreenSize() {
-        prevElement.style.height = "85vh"
-        divider.style.display = "none"
-        nextElement.style.display = "none"
+    /* Hide-Show Keyboard */
+    const hideKeyboardBtn = document.querySelector('#hideKeyboard')
 
-        let scrollPosition = window.scrollY + window.innerHeight
-        let pageHeight = document.documentElement.scrollHeight
-
-        if (scrollPosition >= pageHeight - 10) {
-            showKeyboardPopupBtn()
-        } else {
-            showKeyboardContainer.classList.add('hidden')
-        }
-        showKeyboardButton.addEventListener('click', () => {
-            defaultSize()
-        })
-    }
-
-    function showKeyboardPopupBtn() {
-        showKeyboardContainer.classList.remove('hidden')
-        showKeyboardContainer.style.height = "50px"
-        showKeyboardButton.style.opacity = "0%"
-        showKeyboardContainer.addEventListener('mouseover', function() {
-            showKeyboardButton.style.opacity = "80%"
-        })
-        showKeyboardContainer.addEventListener('mouseleave', function() {
-            showKeyboardButton.style.opacity = "0%"
-        })
-    }
+    let isTextAreaFullHeight = true
+    const fullHeightTextArea = window.innerHeight * 0.9
+    const defaultHeightTextArea = window.innerHeight * 0.3
 
     function defaultSize() {
-        prevElement.style.height= "38vh"
-        divider.style.display = "grid"
-        nextElement.style.display = "flex"
-        showKeyboardContainer.classList.add('hidden')      
+        prevElement.style.height= `${defaultHeightTextArea}px`
+        isTextAreaFullHeight = true     
     }
 
-    const closeExampleBtn = document.querySelector('#closeExample')
-    const exampleBox = document.querySelector('.example-box')
-    closeExampleBtn.onclick = () => {
-        exampleBox.classList.add('hidden')
-        openExampleBtn.classList.remove('hidden')
-    }
-    const openExampleBtn = document.querySelector('#openExample')
-    openExampleBtn.onclick = () => {
-        exampleBox.classList.remove('hidden')
-        openExampleBtn.classList.add('hidden')
+    function fullScreenSize() {
+        prevElement.style.height = `${fullHeightTextArea}px`
+        isTextAreaFullHeight = false
     }
 
-    const downloadKeyboardBtn = document.querySelector('#mobileDownloadIcon')
-    window.onresize = () => visibleDownloadKeyboard()
-
-    function visibleDownloadKeyboard() {
-        const width = screen.width
-        if (width <= 940) {
-            downloadKeyboardBtn.classList.remove('hidden')
+    hideKeyboardBtn.addEventListener('click', () => {
+        if (!isTextAreaFullHeight) {
+            defaultSize()
         } else {
-            downloadKeyboardBtn.classList.add('hidden')
+            fullScreenSize()
         }
-    }
+    })
 
-    const hideKeyboardBtn = document.getElementById('hideKeyboard')
-    hideKeyboardBtn.onclick = () => fullScreenSize()
+    const copyBtn = document.querySelector('#copyTool')
+    const textArea = document.querySelector('#textArea')
+    copyBtn.addEventListener('click', async function() {
+        try {
+            
+        let textToCopy = textArea.value.trim()
 
+        if(!textToCopy) {
+            copyBtn.classList.replace('fa-copy', 'fa-xmark')
+            copyBtn.textContent = ' No characters to copy'
+            setTimeout(() => {
+                copyBtn.classList.replace('fa-xmark', 'fa-copy')
+                copyBtn.textContent = ''
+            }, 3000)
+            return;
+        }
+
+        await navigator.clipboard.writeText(textToCopy)
+
+        copyBtn.classList.replace('fa-copy', 'fa-check');
+        
+        setTimeout(() => {
+            copyBtn.classList.replace('fa-check', 'fa-copy');
+        }, 1000);
+
+        } catch (error) {
+            console.error('Failed to copy: ', error)
+        }
+    })
+
+    const fontSliderBtn = document.querySelector('#fontSizeRange')
+    const fontSizeIndicator = document.querySelector('#fontSizeIndicator')
+    fontSliderBtn.addEventListener('input', function() {
+        textArea.style.fontSize = `${this.value}px`
+        fontSizeIndicator.textContent = `${this.value}px`
+    })
+    defaultSize()
     resizer.addEventListener('mousedown', mouseDownHandler)
 })

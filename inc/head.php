@@ -212,8 +212,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
 <script src="<?php echo "$url_keymanweb_res" ?>/code/bookmarklet_builder.js"></script>
 
-<!-- <script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
-<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>  -->
+<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
+<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script> 
 <!--
 <script src="http://localhost/keymanweb/release/unminified/web/keymanweb.js"></script>
 <script src="http://localhost/keymanweb/release/unminified/web/kmwuitoolbar.js"></script>
@@ -248,7 +248,7 @@
     if(localKeyboard && localLanguage) {
       keyman.setActiveKeyboard(localKeyboard, localLanguage);
     }
-    document.getElementById('message').focus();
+    document.getElementById('textArea').focus();
   });
 
   pageLoading = false;
