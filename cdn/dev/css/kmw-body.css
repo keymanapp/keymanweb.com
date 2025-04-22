@@ -38,8 +38,8 @@ i:hover {
     transition: all 0.3s ease;
 }
 
-.fa-arrows-up-down:hover {
-    cursor: grab;
+.fa-bars:hover {
+    cursor: ns-resize;
 }
 
 /* End of Icons */
@@ -61,12 +61,8 @@ i:hover {
     padding: 10px;
     resize: none;
     width: 100%;
-    /* height: 30vh; */
+    height: 30vh;
     box-shadow: var(--textarea-box);
-}
-
-#textArea {
-    font-size: 16px;
 }
 
 #copyTool {
@@ -201,6 +197,8 @@ input[type="range"]::-webkit-slider-thumb {
     text-align: center;
     padding: 5px;
     border-bottom: 1px solid rgb(159, 159, 159);
+    display: grid;
+    grid-template-columns: auto 90% auto;
 }
 
 .example-box p {
