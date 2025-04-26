@@ -1,3 +1,3 @@
-# Disallow all bots since we don't need anything idexed on the staging site
+# Disallow all bots since we don't need anything indexed on the staging site
 User-agent: *
 Disallow: /
