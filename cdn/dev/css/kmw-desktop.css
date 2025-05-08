@@ -269,24 +269,6 @@ form {
   margin-left: 41px;
 }
 
-#facebook{
-  background-image:url('../img/btn_fb_small.png');
-
-}
-
-#facebook.linksOff{
-  background-image:url('../img/btn_fb_small_white.png');
-}
-
-#twitter{
-  background-image:url('../img/btn_tw_small.png');
-
-}
-
-#twitter.linksOff{
-  background-image:url('../img/btn_tw_small_white.png');
-}
-
 #search{
   background-image:url('../img/btn_google_small.png');
 
@@ -359,22 +341,6 @@ form {
   display:inline;
   }
 
-#zclip-ZeroClipboardMovie_1  {
-  background: none !important;
-  width: 122px !important;
-  height: 28px !important;
-  border: none !important;
-}
-
-#zclip-ZeroClipboardMovie_1.linksOff{
-  display: none;
-}
-
-#ZeroClipboardMovie_1{
-  margin-left: -3px;
-  margin-top: -9px;
-}
-
 div.links {
   cursor:pointer;
   }
@@ -388,13 +354,6 @@ div.linksOff * {
   color: gray;
   -moz-user-select:none;
   }
-
-#tweetcount, #twitter span {
-  color: #666;
-  font: bold 0.8em Helvetica, Verdana, Arial, sans-serif;
-  text-shadow: 0 1px 1px white;
-  }
-
 
 hr {
   margin: 6px 4px 6px 4px;
@@ -425,47 +384,6 @@ aside  #learn {
   font-size:13px;
   text-align:center;
   }
-
-#socialshare > .fb-like {
-  margin: 10px;
-  width: 77px;
-  height: 21px;
-  display: inline-block;
-  position: relative;
-}
-
-#socialshare #fb-share {
-  font-size: 11px;
-  font-family: Tahoma;
-  border: solid 1px #dddddd;
-  padding: 2px 6px 1px 24px;
-  display: inline-block;
-  margin: 10px 0 15px 0;
-  color: black;
-  vertical-align: top;
-  position: relative;
-  border-radius: 3px;
-  background: #EEEEEE url('../img/facebook-16.png') 1px 1px no-repeat;
-}
-
-#socialshare {
-  background: #eeeeff;
-}
-
-#socialshare h3 {
-  background: #F0EFEF;
-}
-
-#socialshare > #twitter-share {
-  margin: 0 0 0 10px;
-  padding: 0 0 6px 0;
-  height: 24px;
-  font-size: 11px;
-}
-
-#socialshare > #twitter-share a {
-  color: white;
-}
 
 #keymandesktop, #bookmarklet{
   display: none;
@@ -655,15 +573,6 @@ aside  #learn {
   text-decoration: underline;
 }
 
-
-#facebook, #twitter, #blog, #gplus{
-	opacity: 1;
-}
-
-#facebook:hover, #twitter:hover, #blog:hover, #gplus:hover{
-	opacity: 0.5;
-}
-
 .sil-logo {
   text-align: center;
   margin-top: 20px;
@@ -806,15 +715,6 @@ nav a {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 3px;
-}
-
-#twitter span {
-  font-weight: normal;
-  padding-right: 2px;
-}
-
-#twitter span.long {
-  color: red;
 }
 
 #footer-logo{
