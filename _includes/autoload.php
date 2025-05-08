@@ -1,6 +1,6 @@
 <?php
   spl_autoload_register(function ($class_name) {
-    if(preg_match('/^Keyman\\\\Site\\\\com\\\\keymanweb\\\\(.+)/', $class_name, $matches)) {
+    if(preg_match('/^Keyman\\\\Site\\\\com\\\\keyman\\\\web\\\\(.+)/', $class_name, $matches)) {
       // Fix namespace pathing for Linux
       $filename = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $matches[1]);
       $success = @include(__DIR__ . "/2020/{$filename}.php");

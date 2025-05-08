@@ -2,6 +2,7 @@
   session_start();
   require_once('servervars.php');
 
+  use Keyman\Site\com\keyman\web\WebKeymanComSentry;
   use \Keyman\Site\Common\KeymanHosts;
 
   $kmw_tiers = array('alpha', 'beta', 'stable');
@@ -56,71 +57,7 @@
 
 <title>KeymanWeb.com <?php if($tier != 'stable') echo "($tier)"; ?></title>
 
-<!-- note: using CDN and not bundle for now -->
-<script
-  src="https://browser.sentry-cdn.com/7.111.0/bundle.tracing.min.js"
-  integrity="sha384-zbLcy9H6obT3ZcKjGlb5Ai7vi4G0vXMLB1UU56WRyPJWarHEDeLOkuJ3HwR/7IDd"
-  crossorigin="anonymous"
-></script>
-  <script
-  src="https://browser.sentry-cdn.com/7.111.0/captureconsole.min.js"
-  integrity="sha384-29aW5YLMCGJnTd6js4VqwRHQk4lBe44qavgMQDtiMsXya0LpJqw5UqQDVyenw+SW"
-    crossorigin="anonymous"
-></script>
-
-<script>
-  // Tags all exceptions with the active KMW instance's metadata.
-  // Compare against the definition in the main repo:
-  // - keymanapp/keyman/common/core/web/tools/sentry-manager/src/index.ts
-  //
-  // Currently separate in part b/c we can't guarantee 14.0+ in order to use
-  // the generalized sentry-manager module yet; we allow users to specify older
-  // versions of KMW for use.  Also in part b/c keymanweb.com itself may produce errors.
-  var prepareEvent = function(event) {
-    // Make sure the metadata-generation function actually exists... (14.0+)
-    try {
-      if(window.keyman.getDebugInfo) {
-        event.extra = event.extra || {};
-        event.extra.keymanState = window.keyman.getDebugInfo();
-        event.extra.keymanHostPlatform = 'keymanweb.com';
-      }
-    } catch (ex) { /* Swallow any errors produced here */ }
-
-    return event;
-  };
-
-<?php if($tier == 'stable') { ?>
-  var sentryRelease = "<?=$version?>";
-<?php } else { ?>
-  var sentryRelease = "<?=$version."-".$tier?>";
-<?php } ?>
-
-  // Note: not currently using js Loader as it does not seem to work correctly
-  // with integrations
-  doInitSentry();
-
-  function doInitSentry() {
-    if(!Sentry) {
-      // may be blocked by client
-      return;
-    }
-  Sentry.init({
-    beforeSend: prepareEvent,
-      dsn: "https://11f513ea178d438e8f12836de7baa87d@o1005580.ingest.us.sentry.io/5983523",
-    release: sentryRelease,
-      integrations: [
-        Sentry.captureConsoleIntegration({
-          levels: ['error', 'warning']
-        })
-      ],
-    environment:
-      // TODO: https://github.com/keymanapp/shared-sites/issues/13
-      ['www.keymanweb.com','keymanweb.com', 'web.keyman.com'].includes(location.host) ? 'production' :
-      ['web.keyman-staging.com'].includes(location.host) ? 'staging' :
-      'development',
-  });
-  }
-</script>
+<?= WebKeymanComSentry::GetBrowserHTML($kmwbuild) ?>
 
 <link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
@@ -129,8 +66,6 @@
 <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
-  var demoDomain="<?php echo $site_keymanwebdemo; ?>";
-  var KeymanWeb_StaticRoot = "<?php echo $staticDomainRoot; ?>";
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
   var site_keyman_com="<?php echo KeymanHosts::Instance()->keyman_com ?>";
 
@@ -206,12 +141,6 @@
       }
     }
   }
-
-  // Set JS variable from twitter SESSION value
-  var twitterMessage;
-  <?php if (isset($_SESSION['twitterMessage'])){ ?>
-    twitterMessage = '<?php echo addslashes($_SESSION['twitterMessage']); ?>';
-  <?php } ?>
 </script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
@@ -220,16 +149,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
 <script src="<?php echo "$url_keymanweb_res" ?>/code/bookmarklet_builder.js"></script>
 
-<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
-<script src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
-<!--
-<script src="http://localhost/keymanweb/release/unminified/web/keymanweb.js"></script>
-<script src="http://localhost/keymanweb/release/unminified/web/kmwuitoolbar.js"></script>
--->
+<script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
+<script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
 
-<script src="<?= cdn("js/jquery.zclip.js"); ?>"></script>
 <script src="<?= cdn("js/kmwlive.js"); ?>"></script>
 <script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
+
 <script>
   loadKeyboardFromHash();
   var pageLoading = true;
@@ -240,17 +165,17 @@
   keyman.init({
     attachType:'auto',
     setActiveOnRegister: setActiveOnRegister
-  }).then(function() {
+  }).then(async function() {
     if(typeof afterInit == 'function') {
       afterInit();
     }
     if(typeof addKeyboards == 'function') {
       addKeyboards();
-    } <?php if ($site_suffix == ".localhost") {
+    } <?php if (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT || KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) {
       echo 'else {
       console.warn("-- Fallback:  not using the server\'s cached keyboard set! --");
       // Server caching may not be active in local dev instances of the server.
-      keyman.addKeyboards();
+      await keyman.addKeyboards();
     }';
     } ?>
     if(localKeyboard && localLanguage) {
