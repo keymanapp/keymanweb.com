@@ -63,8 +63,92 @@ use Keyman\Site\Common\ImageRandomizer;
             <span class="font-large item">A</span>
           </div>
           <div class="hide-keyboard">
+        </div>
+      </div>
+      <div class='right-header'>
+        <!-- Tools: Font side slider + Hide/Show keyboard -->
+        <div class="tool-container">
+          <div class="font-size-container item">
+            <span class="font-small item">A</span>
+            <input id="fontSizeRange" type="range" name="" value="16" min="12" max="132" step="2"></input>
+            <span class="font-large item">A</span>
+          </div>
+          <div class="hide-keyboard">
             <i class="fa-solid fa-keyboard" id="hideKeyboard"></i>
           </div>
+        </div>
+        <!-- Dropdown Menu -->
+        <div class="dropdown" id="burgerMenu">
+          <button class="btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+            <ul class="dropdown-menu">
+              <div class="dropdown-grid-container">
+                <li class="dropdown-item">
+                  <a href="" target="_blank" id="kbHelpdocLink">
+                    <i class="fa-solid fa-question"></i>Keyboard Help
+                    <p>Access the keyboard help documentation for key strokes, description, and information of <span id="kbSpan">the selected keyboard</span>.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a href="https://keyman.com/developer/keymanweb/" target="_blank">
+                    <i class="fa-solid fa-code"></i>Website Plugin
+                    <p>KeymanWeb can be added to your website with just a few lines of code.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://keyman.com/" target="_blank">
+                    <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>"></img>Keyman
+                    <p>Visit Keyman . Keyman is completely free to use on all devices!</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://help.keyman.com/" target="_blank">
+                    <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>"></img>KeymanHelp
+                    <p>Get help on Keyman Products, all keyboard documentation and development area.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://keyman.com/bookmarklet/" target="_blank">
+                    <i class="fa-solid fa-book-bookmark"></i>Bookmarklet
+                    <p>The KeymanWeb bookmarklet allows you to use a KeymanWeb keyboard on nearly any web page just by clicking the KeymanWeb bookmark.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://software.sil.org/language-software-privacy-policy/" target="_blank">
+                  <i class="fa-solid fa-shield-halved"></i>Privacy policy
+                  <p>Summer Institute of Linguistics, Inc. (dba SIL International) produces and publishes apps in many languages of the world.</p>
+                  </a>
+                </li>
+              </div>
+                <div class="kmw-socials">
+                  <h5>Keep in touch</h5>
+                  <div class="kmw-socials-icons">
+                    <a href="https://facebook.com/KeymanApp" data-icon="">Facebook</a>
+                    <a href="https://twitter.com/keyman" data-icon="">X (formerly Twitter)</a>
+                    <a href="https://community.software.sil.org/c/keyman" data-icon=" ">Keyman Community</a>
+                    <a href="https://typo.social/@keyman" data-icon=" ">mastodon</a>
+                    <a href="https://www.youtube.com/@KeymanApp" data-icon=" ">YouTube</a>
+                    <a href="https://blog.keyman.com/" data-icon="">Keyman Blog</a>
+                    <a href="https://github.com/keymanapp" data-icon="">GitHub</a>
+                  </div>
+                </div>
+                <div class="sil-logo">
+                  <img id="sil-logo" src="<?php echo ImageRandomizer::randomizer(); ?>" width="30%" alt='SIL'/>
+                  <p>Created by SIL Global</p>
+                </div>
+                <div class="kmw-version">
+                  <p>KeymanWeb version <?= $VersionWithTag ?></p>
+                </div>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Bar below the header -->
+    <div class="header-bar">
+      <img src="<?php echo cdn('img/headerbar.png') ?>" alt="" />
+    </div>
+  </header>
         </div>
         <!-- Dropdown Menu -->
         <div class="dropdown" id="burgerMenu">
@@ -169,6 +253,7 @@ use Keyman\Site\Common\ImageRandomizer;
 <script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
 <script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
 <script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
+
 </body>
 </html>
 
