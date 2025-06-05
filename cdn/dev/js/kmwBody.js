@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define the divider, text area and keyboard
     const divider = document.getElementById('Divider')
-    const resizer = divider.querySelector('.fa-arrows-up-down')
+    const resizer = divider.querySelector('#resizeGrip')
     let prevElement = divider.previousElementSibling.querySelector('.text-area');
     let nextElement = divider.nextElementSibling;
     let isResizing = false;
@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('mousemove', mouseMoveHandler)
         document.addEventListener('mouseup', mouseUpHandler)
     }
-
     const mouseUpHandler = () => {
         resizer.style.removeProperty('cursor')
         isResizing = false
@@ -88,17 +87,63 @@ document.addEventListener('DOMContentLoaded', function() {
             fullScreenSize()
         }
     })
+    window.onresize = updateSize
+    // Detect desktop browser height and modify css
+    function updateSize() {
+        // Set OSK size/position
+        p = new Object();
 
+        var height = $(window).height();
+        var width = $(window).width();
+        var appPos = $('#textAndKeyboardSection').position();
+        var appLeft = appPos.left;
+
+        // We can't proceed any further if KMW hasn't loaded yet.
+        // No point handling resizes until that's occurred.
+        if(!getKeymanWeb() || !getKeymanWeb().osk) {
+            return;
+        }
+
+        // Adjust the message box height only if a desktop browser
+        if(!getKeymanWeb().util.isTouchDevice())
+        {
+            if (height <= 768) {
+                $('#textArea').css('height', '209px');
+                p['height'] = 264;
+            }
+
+            if(height > 768) {
+                $('#textArea').css('height', '260px');
+                if (height < 820) {
+                    p['height'] = 246;
+                }
+                else if(height < 860) {
+                    p['height'] = 246;
+                }
+                else{
+                    p['height'] = 264;
+                }
+            }
+        }
+
+        p['top'] = $('#textAndKeyboardSection').offset().top + $('#textAndKeyboardSection').outerHeight() + 8;
+        p['left'] = appLeft + 15;
+        p['width'] = 710;
+
+        // Update keyboard position and size
+        getKeymanWeb().osk.setRect(p);
+    }
+
+    // Copy tool
     const copyBtn = document.querySelector('#copyTool')
     const textArea = document.querySelector('#textArea')
     copyBtn.addEventListener('click', async function() {
         try {
-            
         let textToCopy = textArea.value.trim()
 
         if(!textToCopy) {
             copyBtn.classList.replace('fa-copy', 'fa-xmark')
-            copyBtn.textContent = ' No characters to copy'
+            // copyBtn.textContent = ' No characters to copy'
             setTimeout(() => {
                 copyBtn.classList.replace('fa-xmark', 'fa-copy')
                 copyBtn.textContent = ''
@@ -120,10 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     const fontSliderBtn = document.querySelector('#fontSizeRange')
-    const fontSizeIndicator = document.querySelector('#fontSizeIndicator')
     fontSliderBtn.addEventListener('input', function() {
         textArea.style.fontSize = `${this.value}px`
-        fontSizeIndicator.textContent = `${this.value}px`
     })
     defaultSize()
     resizer.addEventListener('mousedown', mouseDownHandler)

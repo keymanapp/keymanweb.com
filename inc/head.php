@@ -61,10 +61,10 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="../osk/index.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn('src/bootstrap.min.css') ?>" crossorigin="anonymous">
-<link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
-
+<!-- <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'> -->
 <script type="text/javascript">
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
   var site_keyman_com="<?php echo KeymanHosts::Instance()->keyman_com ?>";
@@ -118,7 +118,7 @@
 
   // Find # in the URL and then load the keyboard?
   function loadKeyboardFromHash() {
-    var locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
+    var locationHash = location.hash.match(/^#(.+),(.+)$/i);
     if(locationHash) {
       localKeyboard = locationHash[2];
       localLanguage = locationHash[1];
@@ -143,7 +143,6 @@
     }
   }
 </script>
-
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
@@ -152,11 +151,10 @@
 <script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
 
-<script src="<?= cdn("js/kmwlive.js"); ?>"></script>
 <script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
 
-<script>
-  loadKeyboardFromHash();
+<!-- <script>
+  // loadKeyboardFromHash();
   var pageLoading = true;
 
   // We finally made it properly boolean in 17.0 as part of https://github.com/keymanapp/keyman/pull/8560.
@@ -166,10 +164,10 @@
     attachType:'auto',
     setActiveOnRegister: setActiveOnRegister
   }).then(async function() {
-    if(typeof afterInit == 'function') {
+    if(typeof afterInit == 'function') {  // Need this
       afterInit();
     }
-    if(typeof addKeyboards == 'function') {
+    if(typeof addKeyboards == 'function') { // Need this
       addKeyboards();
     } <?php if (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT || KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) {
       echo 'else {
@@ -178,17 +176,19 @@
       await keyman.addKeyboards();
     }';
     } ?>
-    if(localKeyboard && localLanguage) {
-      keyman.setActiveKeyboard(localKeyboard, localLanguage);
+    if (typeof getActiveLanguage == 'function') {
+      getActiveLanguage()
     }
-    document.getElementById('textArea').focus();
+    if(localKeyboard && localLanguage) {
+        keyman.setActiveKeyboard(localKeyboard, localLanguage);
+      }
   });
 
   pageLoading = false;
 
   (function() {
     var css = {
-      "desktop" : "<?php echo cdn("css/kmw-desktop.css"); ?>",
+      "desktop" : "<?php echo cdn("css/kmw-header.css"); ?>",
       "tablet" : "<?php echo cdn("css/kmw-tablet.css"); ?>",
       "mobile" : "<?php echo cdn("css/kmw-mobile.css"); ?>"
     };
@@ -197,7 +197,7 @@
     tablets=['iPad','Tablet PC'],
     phones=['iPhone','Opera Mobi','OPR/'];
 
-    //if('ontouchstart' in window || navigator.msMaxTouchPoints)
+    if('ontouchstart' in window || navigator.msMaxTouchPoints)
     if(keyman.util.isTouchDevice()) {  // Rely on KeymanWeb's touch detection.
       // General rule to distinguish between phones and tablets
       ff=(Math.min(screen.width,screen.height) > 720) ? 'tablet' : 'mobile';
@@ -215,7 +215,7 @@
       }
     }
 
-    //Expose the form factor for other use
+    // Expose the form factor for other use
     window.deviceFormFactor=ff;
 
     // Append the selected stylesheet to the document
@@ -224,7 +224,11 @@
     lk.href=file;
     lk.type='text/css';
     document.getElementsByTagName('head')[0].appendChild(lk);
-  })();
-</script>
+  }
+  )();
+</script> -->
+
+<!-- <script src="../osk/commands.js"></script> -->
+<!-- <script type="module" src="../osk/setup.mjs"></script> -->
 
 </head>
