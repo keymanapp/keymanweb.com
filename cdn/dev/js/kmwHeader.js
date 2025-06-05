@@ -436,7 +436,6 @@ function generateKbUI(selectedKbList) {
     
     keyboardSelectionButton.classList.remove('btn-secondary')
     keyboardSelectionButton.classList.add('btn-keyman-orange')
-    keyboardSelectionButton.classList.add('btn-keyman-orange')
 
     selectedKbList.forEach(data => {
         // Language Parent tags

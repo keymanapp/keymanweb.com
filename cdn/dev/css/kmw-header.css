@@ -37,10 +37,6 @@ header > div > img {
         Search
         Keyboard dropdown
 */
-/* Left side of Header:
-        Search
-        Keyboard dropdown
-*/
 
 .left-header {
   display: flex;
@@ -387,7 +383,6 @@ Language Search box
 }
 
 .middle-header i, .right-header i {
-.middle-header i, .right-header i {
   font-size: 24px;
   opacity: 50%;
 }
@@ -397,11 +392,6 @@ Language Search box
   cursor: pointer;
   color: var(--keyman-red);
 }
-
-/* Right side of the header:
-      Tools
-      Hamburger menu
-*/
 
 /* Right side of the header:
       Tools
@@ -423,12 +413,8 @@ Language Search box
 }
 
 /* Font size slider + Hide/show keyboard */
-/* Font size slider + Hide/show keyboard */
 .tool-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   flex-direction: row;
   justify-content: center;
   align-items: center;
