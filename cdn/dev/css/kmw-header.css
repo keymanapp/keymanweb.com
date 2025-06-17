@@ -48,7 +48,7 @@ Language Search box
 */
 .form {
   position: relative;
-  width: 500px;
+  width: 550px;
   margin-right: 10px;
 }
 
@@ -111,7 +111,7 @@ Language Search box
 }
 
 /* Map and Most download */
-.left-header .dropdown-menu .top-row .setting {
+.left-header .dropdown-menu .top-row #worldMap {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -119,8 +119,60 @@ Language Search box
   margin: 10px 10px !important;
 }
 
-.setting span {
+#worldMap span {
   opacity: 50%;
+}
+
+#worldMap span:hover {
+  opacity: 100%;
+  cursor: pointer;
+}
+
+#KeymanWebControl #kmw_controls
+{
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  height: 35px;
+  padding: 5px;
+}
+
+#KeymanWebControl .kmw_button,
+#keymanWebControl .kmw_button_disabled, 
+#KeymanWebControl .kmw_button_selected
+{
+  width: fit-content !important;
+  background: none !important;
+  height: 0 !important;
+}
+
+#KeymanWebControl #kmw_controls_start, 
+#KeymanWebControl #kmw_btn_osk, 
+.kmw_bar, #kmw_controls_end {
+  display: none;
+}
+
+#KeymanWebControl .kmw_language {
+  padding: 3px;
+}
+
+#kmw_control_keyboards {
+  width: fit-content;
+}
+
+#kmw_selector_regions {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.kmw_selector_region {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  height: 600px;
 }
 
 /* Search Dropdown cards */
@@ -139,6 +191,29 @@ Language Search box
   border-radius: 10px;
   letter-spacing: .05rem;
   overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.card-wrap.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  position: relative;
+}
+
+.card-wrap.disabled .kb-icon-plus {
+  pointer-events: auto;
+  opacity: 1;
+  position: absolute;
+  right: 15px;
+  z-index: 1;
+}
+
+.kb-icon-plus {
+  transition: 0.5s ease;
+}
+
+.kb-icon-plus.animate {
+  color: green;
 }
 
 .keyboard-id {
@@ -206,17 +281,6 @@ Language Search box
   font-weight: 200;
   font-size: medium;
   color:  var(--keyman-red);
-}
-
-@keyframes fly-in {
-  from {
-    transform: translateY(0%); 
-    opacity: 1;
-  }
-  to {
-    transform: translateY(200%);
-    opacity: 0;
-  }
 }
 
 /* Pagination */

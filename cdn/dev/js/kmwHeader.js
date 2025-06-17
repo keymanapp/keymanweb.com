@@ -92,16 +92,7 @@ function handleSearch(value = "") {
 
 function resetSearch() {
     paginationCtrl.style.display = 'none'
-    kbSearchCard.innerHTML = `
-    <div class="search-instruction">
-        <h5>Instruction</h5>
-        <ol class="search-instruction-list">
-            <li>Search for any Keyman keyboard</li>
-            <li>Once the keyboard you are looking for appears, click on it will enable and store it in the keyboard selection (arrow icon next to search)</li>
-            <li>You can switch between keyboards and start typing.</li>
-        </ol>
-    </div>
-    `
+    displayTopDownloads()
 }
 
 function updateSearchIcon(value) {
@@ -119,43 +110,42 @@ function debounceSearch(query, page) {
     }
 }
 
-/* Display top downloads with search Instruction 
-    ON PAUSED
-*/
+/* Display top downloads with search Instruction */
+const defaultInstruction = `
+<div class="search-instruction">
+    <h5>Instruction</h5>
+    <ol class="search-instruction-list">
+        <li>Search for any Keyman keyboard</li>
+        <li>Once the keyboard you are looking for appears, click on it will enable and store it in the keyboard selection (arrow icon next to search)</li>
+        <li>You can switch between keyboards and start typing.</li>
+    </ol>
+</div>`
 async function displayTopDownloads() {
-    kbSearchCard.innerHTML = `<div>Loading...</div>`
+    kbSearchCard.innerHTML = `<p>Loading...</p>`
     try {
-        let response = await fetch(`https://api.keyman.com/cloud/4.0/languages?p=${currentPage}`)
+        let response = await fetch(`https://api.keyman.com/search/2.0?q=p:popular`)
         if (!response.ok) {
             throw new Error(`API request failed with status ${response.status}`)
         }
 
         let data = await response.json()
-        console.log(data)
-        let dataLanguages = data.languages.languages
 
-        if (!dataLanguages || !Array.isArray(dataLanguages)) {
+        let mostDownloadkb = data.keyboards
+
+        if (!mostDownloadkb || !Array.isArray(mostDownloadkb)) {
             throw new Error(`Invalid API response structure`)
         }
-
-        if (data.context) {
-            currentPage = data.context.pageNumber || 1
-            totalPage = data.context.totalPage || 1
-        } else {
-            totalPage = Math.ceil(dataLanguages.length / itemPerPage) 
-        }
-        updatePaginationCtrl()
-        displaySearch(dataLanguages, dataLanguages.length)
+        displaySearch(mostDownloadkb)
+        paginationCtrl.style.display = 'none'
     } 
     catch(error) {
-        console.error(`Error fetching languages ${error}`)
-        kbSearchCard.innerHTML = `<div>No languages are found.</div>`
+        console.error(`Error fetching ${error}`)
+        kbSearchCard.innerHTML = `<div>No keyboards are found.</div>`
         paginationCtrl.style.display = 'none'
     }
 }
 
 /* Get query and return search */
-let dataKbForRemoval
 async function searchKeyboard(query = null, page) {
     kbSearchCard.innerHTML = `<div>Searching ${query}...</div>`
     kbSearchCard.style.display = 'block'
@@ -187,14 +177,37 @@ async function searchKeyboard(query = null, page) {
     displaySearch(keyboardData, totalFound, query)
 }
 
+/* PAUSED */
+const historyKbSelection = (() => {
+    const maxItem = 3
+    let history = []
+
+    return {
+        add(kbItem) {
+            history = history.filter(item => item.id != kbItem.id)
+            history.unshift(kbItem)
+            if (history.length > maxItem) history.pop()
+        },
+        getHistory() {
+            return [...history]
+        },
+        clear() {
+            history = []
+        }
+    }
+})
+
 /* Display items return from search */
 let selectedKbList = []
 let selectedKbData = []
-function displaySearch(data, total = 0, query) {
+let dataKbForRemoval
+const keyboardSelectionButton = document.getElementById('keyboardSelectionButton')
+
+function displaySearch(data, total = 0, query = '') {
     kbSearchCard.innerHTML = '';
 
     if (!data || data.length == 0) {
-        kbSearchCard.innerHTML = '<div class="loading">No language found.</div>'
+        kbSearchCard.innerHTML = '<span class="loading">No keyboards are found.</span>'
         paginationCtrl.style.display = 'none'
         return
     }
@@ -270,6 +283,7 @@ function displaySearch(data, total = 0, query) {
         kbIconPTag.textContent = "+"
         kbIconPTag.style.fontSize = '20px'
         kbIconPTag.style.cursor = 'pointer'
+        kbIconPTag.classList.add('kb-icon-plus')
 
         const kbIdPTag = document.createElement('p')
         kbIdPTag.classList.add('keyboard-id')
@@ -340,44 +354,83 @@ function displaySearch(data, total = 0, query) {
         cardWrap.appendChild(kbIdPTag)
         cardWrap.appendChild(kbDescHeading)
         cardWrap.appendChild(kbSpecs)
+        // kbSearchCard.appendChild(defaultInstruction)
         kbSearchCard.appendChild(cardWrap)
 
+        if (kbFoundInList) {
+            kbIconPTag.textContent = '✓'
+            kbIconPTag.classList.add('animate')
+            cardWrap.classList.add('disabled')
+
+            setTimeout(() => {
+                kbIconPTag.textContent = '-'
+                kbIconPTag.classList.remove('animate')
+            }, 600)
+        }
         // Choose keyboard to selection
-        kbIconPTag.onclick = () => {
-            selectedKbData.push({
-                "id": kb.id,
-                "name": kb.name,
-                "version": kb.version,
-                "helpLink": kb.helpLink,
-                "platformSupport": kb.platformSupport,
-                "totalDownloads": kb.match.totalDownloads,
+        kbIconPTag.onclick = (e) => {
+            e.preventDefault()
+            let isSelected = selectedKbList.some(selected => selected.id == kb.id)
+            // Disable keyboard card in search
+            if (isSelected) {
+                removeKeyboard(kb.id)
+            } else {
+                addKeyboard(kb)
+                console.log(kb)
+                populateSelectedKeyboard(kb)
+            }
+            
+            selectedKbList.forEach(data => {
+                let kbName = data.id
+                let langCode = data.script
+                
+                changeKeyboard(kbName, langCode)
             })
-            populateSelectedKeyboard(kb) 
+            // console.log("Recent:", historyKbSelection.getHistory());
             displaySearch(data, total, query)
         }
-        
-        // Disable keyboard card in search
-        if (kbFoundInList) {
-            cardWrap.classList.add('disabled')
-            cardWrap.style.pointerEvents = 'none'
-            cardWrap.style.opacity = "50%"
-        } 
         dataKbForRemoval = selectedKbData
     })
     paginationCtrl.style.display = 'flex';
 }
 
+const downloadBtn = document.getElementById('kbDownloadPage')
+const textArea = document.getElementById('textArea')
+async function changeKeyboard(kbdname, languageCode) {
+    console.log("kbdname: ", kbdname, " + ", "languageCode: ", languageCode)
+    if(kbdname == '') {
+        if (textArea) textArea.placeholder = 'Select a keyboard and start typing'
+    }
+    location.replace('#' + languageCode + ',Keyboard_' + kbdname);
+
+    var kbd = keyman.getKeyboard(kbdname, languageCode); // Good
+    await keyman.setActiveKeyboard(kbdname, languageCode) // Good
+    console.log("kbd: ", kbd)
+
+    if(kbd) {
+        textArea.placeholder = 'The ' + kbd.InternalName + ' keyboard is selected. Start typing...'
+    }
+    
+    const kbSpan = document.querySelector('#kbSpan')
+    const kbHelpDocATag = document.querySelector('#kbHelpdocLink')
+    textArea.placeholder = `The ${kbdname} keyboard is selected. Please start typing...`
+    kbSpan.innerHTML = `${kbdname}`
+    // kbHelpDocATag.href = `${kbdHelpLink}`
+
+    if(typeof(KeyboardChange_EmbedFonts) != 'undefined') KeyboardChange_EmbedFonts(kbdname);
+}
+
 /* Platform Support */
 function platformSupport(data) {
     const platformMap = {
-            android: "Android",
-            desktopWeb: "Web",
-            ios: "iPhone and iPad",
-            linux: "Linux",
-            macos: "macOS",
-            mobileWeb: "Mobile web",
-            windows: "Windows"
-        }
+        android: "Android",
+        desktopWeb: "Web",
+        ios: "iPhone and iPad",
+        linux: "Linux",
+        macos: "macOS",
+        mobileWeb: "Mobile web",
+        windows: "Windows"
+    }
     let platformSpan = Object.entries(data)
         .filter(([_, supportLevel]) => supportLevel == 'full')
         .map(([platform]) => `<span class="platform-${platform.toLowerCase()}" title="${platformMap[platform]}">${platformMap[platform]}</span>`).join('')      
@@ -404,23 +457,33 @@ function populateSelectedKeyboard(language = null) {
     generateKbUI(selectedKbList)
 }
 
-/* Compare and remove keyboard 
-        ON PAUSED
-*/
-function removeKeyboard(kbId) {
+/* Add keyboard for kb search and selection UI */
+function addKeyboard(kb) {
+    const kbInfo = {
+        "id": kb.id,
+        "name": kb.name,
+        "script": kb.match.tag,
+        "version": kb.version,
+        "helpLink": kb.helpLink,
+        "platformSupport": kb.platformSupport,
+        "totalDownloads": kb.match.totalDownloads,
+    }
+    // historyKbSelection.add(kbInfo)
+    selectedKbData.push(kbInfo)
+    selectedKbList.push(kbInfo)
+}
+
+/* Compare and remove keyboard */
+function removeKeyboard(kbId, data) {
     if(kbId) {
         selectedKbList = selectedKbList.filter(kb => kb.id !== kbId)
+        selectedKbData = selectedKbData.filter(kb => kb.id !== kbId)
     }
-    // populateSelectedKeyboard(selectedKbList)
-    // console.log(dataKbForRemoval)
-    displaySearch(selectedKbList)
 }
 
 /* Generate Language's keyboards 
         ON PAUSED
 */
-const keyboardSelectionButton = document.getElementById('keyboardSelectionButton')
-
 function generateKbUI(selectedKbList) {
     const keyboardSelection = document.getElementById("keyboardSelection")
     keyboardSelection.innerHTML = ''
@@ -517,6 +580,9 @@ function generateKbUI(selectedKbList) {
     })
 }
 
+/*
+    Behavior of the Selected Keyboard
+*/
 const kbSelection = document.querySelector('#keyboardSelection')
 keyboardSelectionButton.addEventListener('mouseenter', () => {
     kbSelection.style.width = "100%"
@@ -527,3 +593,65 @@ keyboardSelectionButton.addEventListener('click', () => {
 kbSelection.addEventListener('mouseleave', () => {
     kbSelection.style.width = "0px"
 })
+
+/*
+    Toggle between World Map and Search
+*/
+const worldMapBtn = document.querySelector('#worldMap')
+const kmwControls = document.querySelector('#KeymanWebControl')
+const langSearchDropdown = document.querySelector('#languageSearchDropdown')
+const caretRightIcon = keyboardSelectionButton.querySelector('.fa-caret-right')
+
+let mapIsOpen
+worldMapBtn.onclick = () => {
+    toggleMapAndKb()
+}
+
+function toggleMapAndKb() {
+    if (mapIsOpen == true) {
+        openSearch()
+    } else {
+        openMap()
+        returnToSearchBtn()
+    }
+}
+
+function openMap() {
+    mapIsOpen = true
+    searchBtn.style.display = "none"
+
+    kmwControls.classList.remove('hidden')
+    kmwControls.style.display = "block"
+    langSearchDropdown.classList.add('hidden')
+
+    searchBoxForm.innerHTML = ''
+    searchBoxForm.appendChild(kmwControls)
+}
+
+function openSearch() {
+    mapIsOpen = false
+    searchBtn.style.display = "block"
+
+    kmwControls.classList.add('hidden')
+    kmwControls.style.display = "none"
+    langSearchDropdown.classList.remove('hidden')
+
+    searchBoxForm.innerHTML = ''
+    searchBoxForm.appendChild(searchBtn)
+    searchBoxForm.appendChild(langSearchDropdown)
+}
+
+function returnToSearchBtn() {
+    caretRightIcon.classList.remove('fa-caret-right')
+    caretRightIcon.classList.add('fa-magnifying-glass')
+    keyboardSelectionButton.style.backgroundColor = "var(--keyman-orange)"
+    keyboardSelectionButton.style.border = '0px'
+    keyboardSelection.style.display = "none"
+    keyboardSelectionButton.onclick = () => {
+        caretRightIcon.classList.remove('fa-magnifying-glass')
+        caretRightIcon.classList.add('fa-caret-right')
+        keyboardSelectionButton.style.backgroundColor = ""
+        keyboardSelection.style.display = "block"
+        openSearch()
+    }
+}

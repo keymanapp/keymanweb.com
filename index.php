@@ -18,8 +18,8 @@ use Keyman\Site\Common\ImageRandomizer;
           </span>
           <ul class="dropdown-menu" id="languageSearchDropdown">
             <div class="top-row top-row-search">
-              <div class="setting">
-                <span><i class="fa fa-map" id="worldMap"></i> World Map</span>
+              <div id="worldMap">
+                <span><i class="fa fa-map"></i> World Map</span>
               </div>
             </div>
             <hr>
@@ -33,8 +33,8 @@ use Keyman\Site\Common\ImageRandomizer;
               <span id="pageInfo">1</span>
               <button class="btn" id="nextPage" disabled>></button>
             </div>
+          <div id="KeymanWebControl" class="hidden"></div>
           </ul>
-          <div id="KeymanWebControl" class="dropdown-menu hidden"></div>
         </div>
         <!-- Keyboard Dropdown selection -->
         <button type="button" class="btn btn-secondary" id="keyboardSelectionButton">
@@ -165,10 +165,11 @@ use Keyman\Site\Common\ImageRandomizer;
     </div>
   </section>
 
-<script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
-<script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
-<script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
-<script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
-</body>
+  <script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
+  <script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
+  <script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
+  <script src="<?php echo cdn('js/kmwControls.js') ?>"></script>
+  <script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
+  </body>
 </html>
 
