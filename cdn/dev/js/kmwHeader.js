@@ -86,13 +86,12 @@ function handleSearch(value = "") {
         resetSearch()
         return
     }
-
     debounceSearch(currentQuery, currentPage)
 }
 
 function resetSearch() {
     paginationCtrl.style.display = 'none'
-    displayTopDownloads()
+    defaultSearch()
 }
 
 function updateSearchIcon(value) {
@@ -111,16 +110,7 @@ function debounceSearch(query, page) {
 }
 
 /* Display top downloads with search Instruction */
-const defaultInstruction = `
-<div class="search-instruction">
-    <h5>Instruction</h5>
-    <ol class="search-instruction-list">
-        <li>Search for any Keyman keyboard</li>
-        <li>Once the keyboard you are looking for appears, click on it will enable and store it in the keyboard selection (arrow icon next to search)</li>
-        <li>You can switch between keyboards and start typing.</li>
-    </ol>
-</div>`
-async function displayTopDownloads() {
+async function defaultSearch() {
     kbSearchCard.innerHTML = `<p>Loading...</p>`
     try {
         let response = await fetch(`https://api.keyman.com/search/2.0?q=p:popular`)
@@ -136,7 +126,6 @@ async function displayTopDownloads() {
             throw new Error(`Invalid API response structure`)
         }
         displaySearch(mostDownloadkb)
-        paginationCtrl.style.display = 'none'
     } 
     catch(error) {
         console.error(`Error fetching ${error}`)
@@ -149,7 +138,7 @@ async function displayTopDownloads() {
 async function searchKeyboard(query = null, page) {
     kbSearchCard.innerHTML = `<div>Searching ${query}...</div>`
     kbSearchCard.style.display = 'block'
-
+    
     let response = await fetch(`https://api.keyman.com/search/2.0?q=${encodeURIComponent(query)}&p=${page}`)
     if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`)
@@ -177,6 +166,121 @@ async function searchKeyboard(query = null, page) {
     displaySearch(keyboardData, totalFound, query)
 }
 
+function searchKbCardUI(kb, marked = '', selectedKbList = '') {
+    // For checking if the keyboard exists in selected Kbs
+    let kbFoundInList = selectedKbList.some(selected => selected.id == kb.id)
+    
+    // Keyboard card container
+    let cardWrap = document.createElement('div')
+    cardWrap.classList.add('card-wrap')
+    cardWrap.setAttribute('id', 'keyboardCardWrap')
+    
+    // Keyboard header container
+    let cardHeader = document.createElement('div')
+    cardHeader.classList.add('card-header')
+
+    const {matchFound, matchField, matchValue} = highlightSearchContext(kb, marked)
+
+    const kbNameHeading = matchFound ? showMarkedContext(kb, matchField, matchValue) 
+    : (() => {
+        const heading = document.createElement('h4')
+        heading.innerHTML = kb.name
+        return heading
+    })
+    
+    // Keyboard Plus (+) icon
+    const kbIconPTag = document.createElement('p')
+    kbIconPTag.textContent = "+"
+    kbIconPTag.style.fontSize = '20px'
+    kbIconPTag.style.cursor = 'pointer'
+    kbIconPTag.classList.add('kb-icon-plus')
+
+    // Keyboard ID
+    const kbIdPTag = document.createElement('p')
+    kbIdPTag.classList.add('keyboard-id')
+    kbIdPTag.textContent = kb.id
+
+    // Keyboard Description
+    const kbDescHeading = truncateDesc(kb, matchField, marked)
+
+    // Keyboard monthly downloads and platform support
+    const kbSpecs = document.createElement('div')
+    kbSpecs.classList.add('keyboard-specs')
+
+    const kbDownloadHeading = document.createElement('h6')
+    kbDownloadHeading.textContent = `${kb.match.downloads} monthly downloads`
+    kbDownloadHeading.classList.add('monthly-download')
+
+    const kbPlatformSupport = document.createElement('div')
+    kbPlatformSupport.classList.add('platform')
+    kbPlatformSupport.innerHTML = platformSupport(kb.platformSupport)
+
+    // Append children
+    cardHeader.appendChild(kbNameHeading)
+    cardHeader.appendChild(kbIconPTag)
+
+    kbSpecs.appendChild(kbDownloadHeading)
+    kbSpecs.appendChild(kbPlatformSupport)
+
+    cardWrap.appendChild(cardHeader)
+    cardWrap.appendChild(kbIdPTag)
+    cardWrap.appendChild(kbDescHeading)
+    cardWrap.appendChild(kbSpecs)
+
+    // Choose keyboard to selection
+    kbIconPTag.onclick = () => addKbToSelectionMenu(kbIconPTag, cardWrap, kb)
+    // console.log("Recent:", historyKbSelection.getHistory());
+
+    return cardWrap
+}
+
+function addKbToSelectionMenu(kbIconPTag, cardWrap, kb) {
+    
+    let isSelected = selectedKbList.some(selected => selected.id == kb.id)
+    // Disable keyboard card in search
+    if (isSelected) {
+        removeKbSelected(kb.id)
+        kbIconPTag.textContent = '+'
+        cardWrap.classList.remove('disabled')
+    } else {
+        addKbToSelection(kb)
+        populateSelectedKeyboard(kb)
+        triggerKbCount(selectedKbList)
+        kbIconPTag.textContent = '✓'
+        kbIconPTag.classList.add('kb-icon-plus-animate')
+        cardWrap.classList.add('disabled')
+    
+        setTimeout(() => {
+            kbIconPTag.textContent = '-'
+            kbIconPTag.classList.remove('kb-icon-plus-animate')
+        }, 800)
+    }
+}
+
+/* Add keyboard for kb search and selection UI */
+function addKbToSelection(kb) {
+    const kbInfo = {
+        "id": kb.id,
+        "name": kb.name,
+        "script": kb.match.tag,
+        "version": kb.version,
+        "helpLink": kb.helpLink,
+        "platformSupport": kb.platformSupport,
+        "totalDownloads": kb.match.totalDownloads,
+    }
+    // historyKbSelection.add(kbInfo)
+    selectedKbData.push(kbInfo)
+    selectedKbList.push(kbInfo)
+}
+
+/* Compare and remove keyboard */
+function removeKbSelected(kbId, data) {
+    if(kbId) {
+        selectedKbList = selectedKbList.filter(kb => kb.id !== kbId)
+        selectedKbData = selectedKbData.filter(kb => kb.id !== kbId)
+    }
+}
+
 /* PAUSED */
 const historyKbSelection = (() => {
     const maxItem = 3
@@ -196,6 +300,115 @@ const historyKbSelection = (() => {
         }
     }
 })
+
+function getMarkedContext(query) {
+    let escapedTerm = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    return new RegExp(escapedTerm, 'i')
+}
+
+// Find a match between Search Context and Language, Keyboard name, Description
+function highlightSearchContext(kb, marked) {
+    let matchFound = false
+    let matchField = ""
+    let matchValue = ""
+
+    // Get and find language that matches the search
+    for (lang in kb.languages) {
+        let langData = kb.languages[lang]
+        for (key in langData) {
+            const value = langData[key]
+            if (typeof value == "string" && marked.test(value)) {
+                matchFound = true
+                matchValue = value.replace(marked, '<mark>$&</mark>')
+                matchField = "language"
+                break
+            }
+        }
+    }
+
+    // Find a match for keyboard name if language is not a match
+    if (!matchFound && marked.test(kb.name)) {
+        matchFound = true
+        matchValue = kb.name.replace(marked, '<mark>$&</mark>')
+        matchField = "keyboard"
+    }
+
+    // Find a match for keyboard description if name is not a match
+    if (!matchFound && marked.test(kb.description)) {
+        matchFound = true
+        matchField = "description"
+    }
+
+    return {matchField, matchValue, matchFound}
+}
+
+// Display Highlighted Search Context
+function showMarkedContext(kb, matchField, matchValue) {
+    const kbNameHeading = document.createElement('h4')
+    // Display matched language
+    const langNameSpan = document.createElement('span')
+    langNameSpan.style.fontSize = "14px"
+    if (matchField == "language") {
+        langNameSpan.innerHTML = matchField == "language" ? ` (${matchValue} language)` : ""
+    }
+
+    // Display matched keyboard
+    if (matchField == "keyboard") {
+        kbNameHeading.innerHTML = matchValue
+    } else {
+        kbNameHeading.innerHTML =  kb.name
+    }
+    kbNameHeading.appendChild(langNameSpan)
+
+    return kbNameHeading
+}
+
+// Truncated Keyboard Description
+function truncateDesc(kb, matchField, marked) {
+    const kbDescHeading = document.createElement('h6')
+    kbDescHeading.classList.add("keyboard-description")
+    const word_limits = 90
+
+    let temp = document.createElement('div')
+    temp.innerHTML = kb.description
+
+    let fullDesc = kb.description
+    let plainText = temp.textContent
+    let shortText = ""
+
+    let isTruncated = false
+
+    if (plainText.length >= word_limits) {
+        shortText = plainText.slice(0, word_limits) + "..."
+        kbDescHeading.innerHTML = shortText
+        isTruncated = true  
+    } else {
+        kbDescHeading.innerHTML = fullDesc
+        isTruncated = false
+    }
+
+    if (isTruncated) {
+        const toggleBtn = document.createElement('a')
+        toggleBtn.href = "#"
+        toggleBtn.style.marginLeft = "6px"
+        toggleBtn.textContent = "Show more"
+
+        toggleBtn.addEventListener('click', e => {
+            e.preventDefault()
+            const isExpanded = toggleBtn.textContent == "Show more"
+            kbDescHeading.innerHTML = !isExpanded ? shortText.replace(marked, '<mark>$&</mark>') : fullDesc
+            if (matchField == 'description') {
+                kbDescHeading.innerHTML = isExpanded ? fullDesc.replace(marked, '<mark>$&</mark>') : shortText
+            }
+            kbDescHeading.style.color = isExpanded ? 'black' : 'gray'
+            toggleBtn.textContent = isExpanded ? "Show less" : "Show more"
+            kbDescHeading.appendChild(toggleBtn)
+        })
+        kbDescHeading.appendChild(toggleBtn)
+    }
+    
+    return kbDescHeading
+}
 
 /* Display items return from search */
 let selectedKbList = []
@@ -218,178 +431,23 @@ function displaySearch(data, total = 0, query = '') {
     }
     
     // Getting searched Word ready for highlight
-    let escapedTerm = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    let marked = new RegExp(escapedTerm, 'i')
+    const marked = getMarkedContext(query)
 
-    // Loop through the keyboard data
+    const searchInstruction = document.querySelector('.search-instruction')
+    const kbHrTitle = document.querySelector('.keyboard-title')
+    if (!query) {
+        searchInstruction.classList.remove("hidden")
+        kbHrTitle.textContent = "Most Downloads"
+    } else {
+        searchInstruction.classList.add("hidden")
+        kbHrTitle.textContent = ""
+    }
+
     data.forEach(kb => {
-        let matchFound = false
-        let matchField = ""
-        let matchValue = ""
-
-        // For checking if the keyboard exists
-        let kbFoundInList = selectedKbList.some(selected => selected.id == kb.id)
+        const card = searchKbCardUI(kb, marked, selectedKbList)
+        kbSearchCard.appendChild(card)
         
-        let cardWrap = document.createElement('div')
-        cardWrap.classList.add('card-wrap')
-        cardWrap.setAttribute('id', 'keyboardCardWrap')
-        
-        let cardHeader = document.createElement('div')
-        cardHeader.classList.add('card-header')
-
-        let kbNameHeading = document.createElement('h4')
-        
-        // Get language that matches the search term
-        for (lang in kb.languages) {
-            let langData = kb.languages[lang]
-            for (key in langData) {
-                const value = langData[key]
-                if (typeof value == "string" && marked.test(value)) {
-                    matchFound = true
-                    matchValue = value.replace(marked, '<mark>$&</mark>')
-                    matchField = "language"
-                    break
-                }
-            }
-        }
-
-        // Find a match
-        if (!matchFound && marked.test(kb.name)) {
-            matchFound = true
-            matchValue = kb.name.replace(marked, '<mark>$&</mark>')
-            matchField = "keyboard"
-        }
-
-        if (!matchFound && marked.test(kb.description)) {
-            matchFound = true
-            matchField = "description"
-        }
-
-        // Display matched language
-        const langNameSpan = document.createElement('span')
-        langNameSpan.style.fontSize = "14px"
-        if (matchField == "language") {
-            langNameSpan.innerHTML = matchField == "language" ? ` (${matchValue} language)` : ""
-        }
-
-        // Display matched keyboard
-        if (matchField == "keyboard") {
-            kbNameHeading.innerHTML = matchValue
-        } else {
-            kbNameHeading.innerHTML =  kb.name
-        }
-        
-        const kbIconPTag = document.createElement('p')
-        kbIconPTag.textContent = "+"
-        kbIconPTag.style.fontSize = '20px'
-        kbIconPTag.style.cursor = 'pointer'
-        kbIconPTag.classList.add('kb-icon-plus')
-
-        const kbIdPTag = document.createElement('p')
-        kbIdPTag.classList.add('keyboard-id')
-        kbIdPTag.textContent = kb.id
-
-        kbNameHeading.appendChild(langNameSpan)
-        cardHeader.appendChild(kbNameHeading)
-        cardHeader.appendChild(kbIconPTag)
-
-        // Keyboard Description
-        const kbDescHeading = document.createElement('h6')
-        kbDescHeading.classList.add("keyboard-description")
-        const word_limits = 90
-
-        let temp = document.createElement('div')
-        temp.innerHTML = kb.description
-
-        let fullDesc = kb.description
-        let plainText = temp.textContent
-        let shortText = ""
-
-        let isTruncated = false
-
-        if (plainText.length >= word_limits) {
-            shortText = plainText.slice(0, word_limits) + "..."
-            kbDescHeading.innerHTML = shortText
-            isTruncated = true  
-        } else {
-            kbDescHeading.innerHTML = fullDesc
-            isTruncated = false
-        }
-
-        if (isTruncated) {
-            const toggleBtn = document.createElement('a')
-            toggleBtn.href = "#"
-            toggleBtn.style.marginLeft = "6px"
-            toggleBtn.textContent = "Show more"
-
-            toggleBtn.addEventListener('click', e => {
-                e.preventDefault()
-                const isExpanded = toggleBtn.textContent == "Show more"
-                kbDescHeading.innerHTML = !isExpanded ? shortText.replace(marked, '<mark>$&</mark>') : fullDesc
-                if (matchField == 'description') {
-                    kbDescHeading.innerHTML = isExpanded ? fullDesc.replace(marked, '<mark>$&</mark>') : shortText
-                }
-                kbDescHeading.style.color = isExpanded ? 'black' : 'gray'
-                toggleBtn.textContent = isExpanded ? "Show less" : "Show more"
-                kbDescHeading.appendChild(toggleBtn)
-            })
-            kbDescHeading.appendChild(toggleBtn)
-        }
-
-        const kbSpecs = document.createElement('div')
-        kbSpecs.classList.add('keyboard-specs')
-
-        const kbDownloadHeading = document.createElement('h6')
-        kbDownloadHeading.textContent = `${kb.match.downloads} monthly downloads`
-        kbDownloadHeading.classList.add('monthly-download')
-
-        const kbPlatformSupport = document.createElement('div')
-        kbPlatformSupport.classList.add('platform')
-        kbPlatformSupport.innerHTML = platformSupport(kb.platformSupport)
-
-        kbSpecs.appendChild(kbDownloadHeading)
-        kbSpecs.appendChild(kbPlatformSupport)
-
-        cardWrap.appendChild(cardHeader)
-        cardWrap.appendChild(kbIdPTag)
-        cardWrap.appendChild(kbDescHeading)
-        cardWrap.appendChild(kbSpecs)
-        // kbSearchCard.appendChild(defaultInstruction)
-        kbSearchCard.appendChild(cardWrap)
-
-        if (kbFoundInList) {
-            kbIconPTag.textContent = '✓'
-            kbIconPTag.classList.add('animate')
-            cardWrap.classList.add('disabled')
-
-            setTimeout(() => {
-                kbIconPTag.textContent = '-'
-                kbIconPTag.classList.remove('animate')
-            }, 600)
-        }
-        // Choose keyboard to selection
-        kbIconPTag.onclick = (e) => {
-            e.preventDefault()
-            let isSelected = selectedKbList.some(selected => selected.id == kb.id)
-            // Disable keyboard card in search
-            if (isSelected) {
-                removeKeyboard(kb.id)
-            } else {
-                addKeyboard(kb)
-                console.log(kb)
-                populateSelectedKeyboard(kb)
-            }
-            
-            selectedKbList.forEach(data => {
-                let kbName = data.id
-                let langCode = data.script
-                
-                changeKeyboard(kbName, langCode)
-            })
-            // console.log("Recent:", historyKbSelection.getHistory());
-            displaySearch(data, total, query)
-        }
-        dataKbForRemoval = selectedKbData
+        // dataKbForRemoval = selectedKbData
     })
     paginationCtrl.style.display = 'flex';
 }
@@ -397,6 +455,13 @@ function displaySearch(data, total = 0, query = '') {
 const downloadBtn = document.getElementById('kbDownloadPage')
 const textArea = document.getElementById('textArea')
 async function changeKeyboard(kbdname, languageCode) {
+    
+    // selectedKbList.forEach(data => {
+    //     let kbName = data.id
+    //     let langCode = data.script
+        
+    //     changeKeyboard(kbName, langCode)
+    // })
     console.log("kbdname: ", kbdname, " + ", "languageCode: ", languageCode)
     if(kbdname == '') {
         if (textArea) textArea.placeholder = 'Select a keyboard and start typing'
@@ -438,7 +503,7 @@ function platformSupport(data) {
     return platformSpan
 }
 
-/* Selected Keyboard Selection */
+/* Selected Keyboard List */
 function populateSelectedKeyboard(language = null) {
     if(selectedKbList.length > 4) {
         alert("The maximum keyboard selection is 5")
@@ -453,37 +518,10 @@ function populateSelectedKeyboard(language = null) {
             }) 
         } 
     }
-    // Create the Language List
     generateKbUI(selectedKbList)
 }
 
-/* Add keyboard for kb search and selection UI */
-function addKeyboard(kb) {
-    const kbInfo = {
-        "id": kb.id,
-        "name": kb.name,
-        "script": kb.match.tag,
-        "version": kb.version,
-        "helpLink": kb.helpLink,
-        "platformSupport": kb.platformSupport,
-        "totalDownloads": kb.match.totalDownloads,
-    }
-    // historyKbSelection.add(kbInfo)
-    selectedKbData.push(kbInfo)
-    selectedKbList.push(kbInfo)
-}
-
-/* Compare and remove keyboard */
-function removeKeyboard(kbId, data) {
-    if(kbId) {
-        selectedKbList = selectedKbList.filter(kb => kb.id !== kbId)
-        selectedKbData = selectedKbData.filter(kb => kb.id !== kbId)
-    }
-}
-
-/* Generate Language's keyboards 
-        ON PAUSED
-*/
+/* A UI for keyboard selection menu */
 function generateKbUI(selectedKbList) {
     const keyboardSelection = document.getElementById("keyboardSelection")
     keyboardSelection.innerHTML = ''
@@ -491,97 +529,112 @@ function generateKbUI(selectedKbList) {
     if (!selectedKbList.length) {
         keyboardSelectionButton.classList.remove('btn-keyman-orange')
         keyboardSelectionButton.classList.add('btn-secondary')
-        const noKbPTag = document.createElement('p')
-        noKbPTag.textContent = "Open Search to get your keyboard"
-        keyboardSelection.appendChild(noKbPTag)
+        keyboardSelection.textContent = "Open Search to get your keyboard"
         return
     }
     
     keyboardSelectionButton.classList.remove('btn-secondary')
     keyboardSelectionButton.classList.add('btn-keyman-orange')
-
     selectedKbList.forEach(data => {
-        // Language Parent tags
         const kbDiv = document.createElement('div')
         kbDiv.classList.add("kb-item")
         kbDiv.setAttribute('id', `${data.id}`)
+        kbDiv.textContent = data.name
         
         const item = selectedKbData.find(kb => kb.id == data.id)
-        // console.log(selectedKbData)
         if (!item) return;
         
-        kbDiv.textContent = data.keyboard
-        const kbDetails = document.createElement('div')
-        kbDetails.setAttribute('id', 'keyboardDetails')
-        kbDetails.classList.add('hidden')
-        kbDetails.innerHTML = `
-        <ul class="keyboard-content" id="keyboardContent">
-            <li>
-                <i class="fa-solid fa-question" id="helpDocKeyboard"></i>
-                <i class="fa-solid fa-download" id="downloadKeyboard"></i>
-                <i class="fa-solid fa-minus" id="removeKeyboard"></i>
-            </li>
-            <li class="keyboard-version">
-                <div class="row">
-                    <div class="col">Version</div>
-                    <div class="col">${item.version || "N/A"}</div>
-                </div>
-            </li>
-            <li class="keyboard-helplink">
-                <div class="row">
-                    <div class="col">Keyboard document</div>
-                    <div class="col"><a href="${item.helpLink}">${item.name} help</a></div>
-                </div>
-            </li>
-            <li class="keyboard-total-download">
-                <div class="row">
-                    <div class="col">Total downloads</div>
-                    <div class="col">${item.totalDownloads || 0}</div>
-                </div>
-            </li>
-            <li class="keyboard-platforms">
-                <div class="row">
-                    <div class="col">Supported Platforms</div>
-                    <div class="col platform">
-                        ${platformSupport(item.platformSupport) || 'No platforms supported'}
-                    </div>
-                </div>
-            </li>
-        </ul>
-        `
-        // kbDiv.addEventListener('mouseenter', () => {
-        //     kbDiv.style.cursor = "pointer"
-        //     openKbDetails()
-        // })
+        const kbDetails = displayKbDetails(item)
         
-        kbDiv.addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            if (!data.id || !data || !item.helpLink) {
-                console.error("Missing Data or Item")
-            }
-
-            let kbName = `Keyboard_${data.id}`
-            let keyboards = keyman.getKeyboards();
-            let keyboard = keyboards.find(keyboard => keyboard.InternalName == kbName)
-
-            // console.log("All keyboards: ", keyboards)
-            // console.log("My keyboard: " + keyboard)
-            if(keyboard) {
-                languageCode = keyboard.LanguageCode
-                changeKeyboard(data.id, languageCode, item.helpLink)
-            } else {
-                console.warn("Keyboard not found: ", kbName)
-            }
-            
-        })
         kbDiv.appendChild(kbDetails)
         keyboardSelection.appendChild(kbDiv)
+        kbDiv.onclick = () => enableKbToType()
+        kbDiv.onmouseenter = () => displayKbDetails()
+    })
+}
+
+function triggerKbCount(selectedKbList) {
+    const kbSelectedLength = selectedKbList.length
+    const keyboardCount = document.querySelector('#kbCount')
+    if (kbSelectedLength > 0) {
+        keyboardCount.classList.remove('fa-caret-right')
+    }
+    keyboardCount.textContent = `${kbSelectedLength}`
+}
+
+function displayKbDetails(item) {
+    const kbDetails = document.createElement('div')
+    kbDetails.setAttribute('id', 'keyboardDetails')
+    kbDetails.classList.add('hidden')
+    kbDetails.innerHTML = `
+    <ul class="keyboard-content" id="keyboardContent">
+        <li>
+            <i class="fa-solid fa-question" id="helpDocKeyboard"></i>
+            <i class="fa-solid fa-download" id="downloadKeyboard"></i>
+            <i class="fa-solid fa-minus" id="removeKeyboard"></i>
+        </li>
+        <li class="keyboard-version">
+            <div class="row">
+                <div class="col">Version</div>
+                <div class="col">${item.version || "N/A"}</div>
+            </div>
+        </li>
+        <li class="keyboard-helplink">
+            <div class="row">
+                <div class="col">Keyboard document</div>
+                <div class="col"><a href="${item.helpLink}">${item.name} help</a></div>
+            </div>
+        </li>
+        <li class="keyboard-total-download">
+            <div class="row">
+                <div class="col">Total downloads</div>
+                <div class="col">${item.totalDownloads || 0}</div>
+            </div>
+        </li>
+        <li class="keyboard-platforms">
+            <div class="row">
+                <div class="col">Supported Platforms</div>
+                <div class="col platform">
+                    ${platformSupport(item.platformSupport) || 'No platforms supported'}
+                </div>
+            </div>
+        </li>
+    </ul>
+    `
+    return kbDetails
+}
+
+function enableKbToType() {
+    // kbDiv.addEventListener('mouseenter', () => {
+    //     kbDiv.style.cursor = "pointer"
+    //     openKbDetails()
+    // })
+    
+    kbDiv.addEventListener('click', async (e) => {
+        e.preventDefault()
+
+        if (!data.id || !data || !item.helpLink) {
+            console.error("Missing Data or Item")
+        }
+
+        let kbName = `Keyboard_${data.id}`
+        let keyboards = keyman.getKeyboards();
+        let keyboard = keyboards.find(keyboard => keyboard.InternalName == kbName)
+
+        // console.log("All keyboards: ", keyboards)
+        // console.log("My keyboard: " + keyboard)
+        if(keyboard) {
+            languageCode = keyboard.LanguageCode
+            changeKeyboard(data.id, languageCode, item.helpLink)
+        } else {
+            console.warn("Keyboard not found: ", kbName)
+        }
+        
     })
 }
 
 /*
-    Behavior of the Selected Keyboard
+    Behavior of the Selected Keyboard menu
 */
 const kbSelection = document.querySelector('#keyboardSelection')
 keyboardSelectionButton.addEventListener('mouseenter', () => {
@@ -601,6 +654,7 @@ const worldMapBtn = document.querySelector('#worldMap')
 const kmwControls = document.querySelector('#KeymanWebControl')
 const langSearchDropdown = document.querySelector('#languageSearchDropdown')
 const caretRightIcon = keyboardSelectionButton.querySelector('.fa-caret-right')
+const infoIcon = document.querySelector('#infoIcon')
 
 let mapIsOpen
 worldMapBtn.onclick = () => {
@@ -618,7 +672,6 @@ function toggleMapAndKb() {
 
 function openMap() {
     mapIsOpen = true
-    searchBtn.style.display = "none"
 
     kmwControls.classList.remove('hidden')
     kmwControls.style.display = "block"
@@ -630,14 +683,15 @@ function openMap() {
 
 function openSearch() {
     mapIsOpen = false
-    searchBtn.style.display = "block"
 
     kmwControls.classList.add('hidden')
     kmwControls.style.display = "none"
     langSearchDropdown.classList.remove('hidden')
+    infoIcon.classList.remove('hidden')
 
     searchBoxForm.innerHTML = ''
     searchBoxForm.appendChild(searchBtn)
+    searchBoxForm.appendChild(infoIcon)
     searchBoxForm.appendChild(langSearchDropdown)
 }
 

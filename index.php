@@ -21,10 +21,26 @@ use Keyman\Site\Common\ImageRandomizer;
               <div id="worldMap">
                 <span><i class="fa fa-map"></i> World Map</span>
               </div>
+              <div class="search-instruction">
+                <hr id="hrForInstruction">
+                <div class="instruction-title">
+                  <p>Instruction</p>
+                </div>
+                <div class="search-instruction-list">
+                  <ol>
+                    <li>Search for any Keyman keyboard</li>
+                    <li>Click on "+" to enable and store it in the keyboard selection menu</li>
+                    <li>Switch between keyboards and start typing.</li>
+                  </ol>
+                </div>
+              </div>
             </div>
-            <hr>
-            <div class="middle-row middle-row-search" id="kbSearchCardUI">
-              <!-- kmwHeader.js --> 
+            <div class="middle-row middle-row-search" >
+              <hr id="hrForKeyboard">
+              <p class="keyboard-title"></p>
+              <div id="kbSearchCardUI">
+                <!-- kmwHeader.js --> 
+              </div>
             </div>
             <div class="bottom-row bottom-row-search" id="paginationControls">
               <!-- kmwHeader.js --> 
@@ -38,10 +54,11 @@ use Keyman\Site\Common\ImageRandomizer;
         </div>
         <!-- Keyboard Dropdown selection -->
         <button type="button" class="btn btn-secondary" id="keyboardSelectionButton">
-          <i class="fa-solid fa-caret-right fa-xs"></i>
+          <i class="fa-solid fa-caret-right fa-xs" id="kbCount"></i>
         </button>
         <div class="scroll-wrapper-keyboard-tab">
           <div class="keyboard-tab" id="keyboardSelection">
+            Open Search to get your keyboard
             <!-- kmwHeader.js -->
           </div>
         </div>
