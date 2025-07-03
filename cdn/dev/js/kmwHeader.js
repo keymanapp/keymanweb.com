@@ -7,6 +7,10 @@ function getKeymanWeb() {
     return window.keyman;
 }
 
+/* Global Variables */
+let selectedKbList = []
+let dataKbForRemoval
+
 /* Search Box */
 const searchBoxForm = document.querySelector('.form')
 searchBoxForm.addEventListener('click', function(e) {
@@ -109,6 +113,10 @@ function debounceSearch(query, page) {
     }
 }
 
+/*      == Section ==
+            Search 
+*/
+
 /* Display top downloads with search Instruction */
 async function defaultSearch() {
     kbSearchCard.innerHTML = `<p>Loading...</p>`
@@ -166,10 +174,44 @@ async function searchKeyboard(query = null, page) {
     displaySearch(keyboardData, totalFound, query)
 }
 
-function searchKbCardUI(kb, marked = '', selectedKbList = '') {
-    // For checking if the keyboard exists in selected Kbs
-    let kbFoundInList = selectedKbList.some(selected => selected.id == kb.id)
+/* Display items return from search */
+function displaySearch(data, total = 0, query = '') { 
+    kbSearchCard.innerHTML = '';
+
+    if (!data || data.length == 0) {
+        kbSearchCard.innerHTML = '<span class="loading">No keyboards are found.</span>'
+        paginationCtrl.style.display = 'none'
+        return
+    }
+
+    if (total) {
+        searchResultCount.innerHTML = `${total} results`
+        searchResultCount.classList.remove('hidden')
+    }
     
+    // Getting searched Word ready for highlight
+    const marked = getMarkedContext(query)
+
+    const searchInstruction = document.querySelector('.search-instruction')
+    const kbHrTitle = document.querySelector('.keyboard-title')
+    if (!query) {
+        searchInstruction.classList.remove("hidden")
+        kbHrTitle.textContent = "Most Downloads"
+    } else {
+        searchInstruction.classList.add("hidden")
+        kbHrTitle.textContent = ""
+    }
+    data.forEach(kb => {
+        const card = searchKbCardUI(kb, marked, selectedKbList, data)
+        kbSearchCard.appendChild(card)
+        // dataKbForRemoval = selectedKbList
+    })
+    paginationCtrl.style.display = 'flex';
+}
+
+// UI Search card
+function searchKbCardUI(kb, marked = '', data) {
+    const kbFoundInList = selectedKbList.some(selected => selected.id == kb.id)
     // Keyboard card container
     let cardWrap = document.createElement('div')
     cardWrap.classList.add('card-wrap')
@@ -190,11 +232,12 @@ function searchKbCardUI(kb, marked = '', selectedKbList = '') {
     
     // Keyboard Plus (+) icon
     const kbIconPTag = document.createElement('p')
-    kbIconPTag.textContent = "+"
+    kbIconPTag.textContent = kbFoundInList ? "-" : "+"
     kbIconPTag.style.fontSize = '20px'
     kbIconPTag.style.cursor = 'pointer'
     kbIconPTag.classList.add('kb-icon-plus')
 
+    checkKbCardUI(kbIconPTag, cardWrap, kb)
     // Keyboard ID
     const kbIdPTag = document.createElement('p')
     kbIdPTag.classList.add('keyboard-id')
@@ -228,79 +271,24 @@ function searchKbCardUI(kb, marked = '', selectedKbList = '') {
     cardWrap.appendChild(kbSpecs)
 
     // Choose keyboard to selection
-    kbIconPTag.onclick = () => addKbToSelectionMenu(kbIconPTag, cardWrap, kb)
+    kbIconPTag.onclick = () => {addKbToSelectionMenu(kbIconPTag, cardWrap, kb, data)}
     // console.log("Recent:", historyKbSelection.getHistory());
 
     return cardWrap
 }
 
-function addKbToSelectionMenu(kbIconPTag, cardWrap, kb) {
-    
-    let isSelected = selectedKbList.some(selected => selected.id == kb.id)
-    // Disable keyboard card in search
-    if (isSelected) {
-        removeKbSelected(kb.id)
-        kbIconPTag.textContent = '+'
-        cardWrap.classList.remove('disabled')
-    } else {
-        addKbToSelection(kb)
-        populateSelectedKeyboard(kb)
-        triggerKbCount(selectedKbList)
-        kbIconPTag.textContent = '✓'
-        kbIconPTag.classList.add('kb-icon-plus-animate')
+// Disable or Enable search card
+function checkKbCardUI(kbIconPTag, cardWrap, kb) {
+    // For checking if the keyboard exists in selected Kbs
+    let kbFoundInList = selectedKbList.some(selected => selected.id == kb.id)
+    if (kbFoundInList) {
         cardWrap.classList.add('disabled')
-    
-        setTimeout(() => {
-            kbIconPTag.textContent = '-'
-            kbIconPTag.classList.remove('kb-icon-plus-animate')
-        }, 800)
+    } else {
+        cardWrap.classList.remove('disabled')
     }
 }
 
-/* Add keyboard for kb search and selection UI */
-function addKbToSelection(kb) {
-    const kbInfo = {
-        "id": kb.id,
-        "name": kb.name,
-        "script": kb.match.tag,
-        "version": kb.version,
-        "helpLink": kb.helpLink,
-        "platformSupport": kb.platformSupport,
-        "totalDownloads": kb.match.totalDownloads,
-    }
-    // historyKbSelection.add(kbInfo)
-    selectedKbData.push(kbInfo)
-    selectedKbList.push(kbInfo)
-}
-
-/* Compare and remove keyboard */
-function removeKbSelected(kbId, data) {
-    if(kbId) {
-        selectedKbList = selectedKbList.filter(kb => kb.id !== kbId)
-        selectedKbData = selectedKbData.filter(kb => kb.id !== kbId)
-    }
-}
-
-/* PAUSED */
-const historyKbSelection = (() => {
-    const maxItem = 3
-    let history = []
-
-    return {
-        add(kbItem) {
-            history = history.filter(item => item.id != kbItem.id)
-            history.unshift(kbItem)
-            if (history.length > maxItem) history.pop()
-        },
-        getHistory() {
-            return [...history]
-        },
-        clear() {
-            history = []
-        }
-    }
-})
-
+// Highlight word searched
 function getMarkedContext(query) {
     let escapedTerm = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
     return new RegExp(escapedTerm, 'i')
@@ -319,11 +307,12 @@ function highlightSearchContext(kb, marked) {
             const value = langData[key]
             if (typeof value == "string" && marked.test(value)) {
                 matchFound = true
-                matchValue = value.replace(marked, '<mark>$&</mark>')
+                matchValue = value.replace(marked, (m) => m ? `<mark>${m}</mark>` : m)
                 matchField = "language"
                 break
             }
         }
+        if (matchFound) break
     }
 
     // Find a match for keyboard name if language is not a match
@@ -345,6 +334,12 @@ function highlightSearchContext(kb, marked) {
 // Display Highlighted Search Context
 function showMarkedContext(kb, matchField, matchValue) {
     const kbNameHeading = document.createElement('h4')
+
+    const kbHelpLink = document.createElement('a')
+    kbHelpLink.href = `https://help.keyman.com/keyboard/${kb.id}`
+    kbHelpLink.target = '_blank'
+    kbHelpLink.rel = 'noopener noreferrer'
+
     // Display matched language
     const langNameSpan = document.createElement('span')
     langNameSpan.style.fontSize = "14px"
@@ -354,10 +349,11 @@ function showMarkedContext(kb, matchField, matchValue) {
 
     // Display matched keyboard
     if (matchField == "keyboard") {
-        kbNameHeading.innerHTML = matchValue
+        kbHelpLink.innerHTML = matchValue
     } else {
-        kbNameHeading.innerHTML =  kb.name
+        kbHelpLink.textContent =  kb.name
     }
+    kbNameHeading.appendChild(kbHelpLink)
     kbNameHeading.appendChild(langNameSpan)
 
     return kbNameHeading
@@ -410,48 +406,412 @@ function truncateDesc(kb, matchField, marked) {
     return kbDescHeading
 }
 
-/* Display items return from search */
-let selectedKbList = []
-let selectedKbData = []
-let dataKbForRemoval
-const keyboardSelectionButton = document.getElementById('keyboardSelectionButton')
+/*      
+        == End of Search Section ==       
+*/
 
-function displaySearch(data, total = 0, query = '') {
-    kbSearchCard.innerHTML = '';
+// Platform Support
+function platformSupport(data) {
+    const platformMap = {
+        android: "Android",
+        desktopWeb: "Web",
+        ios: "iPhone and iPad",
+        linux: "Linux",
+        macos: "macOS",
+        mobileWeb: "Mobile web",
+        windows: "Windows"
+    }
+    let platformSpan = Object.entries(data)
+        .filter(([_, supportLevel]) => supportLevel == 'full')
+        .map(([platform]) => `<span class="platform-${platform.toLowerCase()}" title="${platformMap[platform]}">${platformMap[platform]}</span>`).join('')      
+        
+    return platformSpan
+}
 
-    if (!data || data.length == 0) {
-        kbSearchCard.innerHTML = '<span class="loading">No keyboards are found.</span>'
-        paginationCtrl.style.display = 'none'
+/*      == Section ==
+    Keyboard Selection Menu 
+*/
+function addKbToSelectionMenu(kbIconPTag, cardWrap, kb, data) {
+    const keyboardSelectionButton = document.getElementById('keyboardSelectionButton') 
+    let isSelected = selectedKbList.some(selected => selected.id == kb.id)
+    addDataKb(data)
+    // Remove keyboard
+    if (isSelected) {
+        removeKbSelected(kb.id)
+        kbIconPTag.textContent = '+'
+        generateKbUI(selectedKbList)
+        checkKbCardUI(kbIconPTag, cardWrap, kb)
+        
+        return
+    }
+    if(selectedKbList.length < 5) {
+        addKbToSelection(kb)
+        generateKbUI(selectedKbList)
+        kbIconPTag.textContent = '✓'
+        kbIconPTag.classList.add('kb-icon-plus-animate')
+
+        setTimeout(() => {
+            kbIconPTag.textContent = '-'
+            kbIconPTag.classList.remove('kb-icon-plus-animate')
+            keyboardSelectionButton.classList.remove('btn-secondary')
+            keyboardSelectionButton.classList.add('btn-keyman-orange')
+        }, 800)
+        
+        checkKbCardUI(kbIconPTag, cardWrap, kb)
+        return
+    }
+    confirmAndAddKb(kbIconPTag, kb, () => {
+        addKbToSelection(kb)
+        generateKbUI(selectedKbList)
+        
+        kbIconPTag.textContent = '✓'
+        kbIconPTag.classList.add('kb-icon-plus-animate')
+
+        setTimeout(() => {
+            kbIconPTag.textContent = '-'
+            kbIconPTag.classList.remove('kb-icon-plus-animate')
+            keyboardSelectionButton.classList.remove('btn-secondary')
+            keyboardSelectionButton.classList.add('btn-keyman-orange')
+        }, 800)
+        checkKbCardUI(kbIconPTag, cardWrap, kb)
+    })
+
+}
+
+// Add keyboard for kb search and selection UI
+function addKbToSelection(kb) {
+    const kbInfo = {
+        "id": kb.id,
+        "name": kb.name,
+        "version": kb.version,
+        "helpLink": kb.helpLink,
+        "platformSupport": kb.platformSupport,
+        "totalDownloads": kb.match.totalDownloads,
+        "sourcePath": kb.sourcePath,
+        "supportedLanguage": kb.languages,
+        "lastUpdated": kb.lastModifiedDate
+    }
+    console.log(kb)
+    // historyKbSelection.add(kbInfo)
+    selectedKbList.push(kbInfo)
+}
+
+// UI for keyboard selection menu
+function generateKbUI(selectedKbList) {
+    const keyboardSelection = document.getElementById("keyboardSelection")
+    keyboardSelection.innerHTML = ''
+
+    if(selectedKbList.length < 1) {
+        triggerKbCount(selectedKbList)
+        resetKbSelectionMenu()
         return
     }
 
-    if (total) {
-        searchResultCount.innerHTML = `${total} results`
-        searchResultCount.classList.remove('hidden')
-    }
-    
-    // Getting searched Word ready for highlight
-    const marked = getMarkedContext(query)
+    const kbDivHeader = document.createElement('div')
+    kbDivHeader.textContent = "Keyboard Selection menu"
+    kbDivHeader.classList.add('kb-item-header')
+    keyboardSelection.appendChild(kbDivHeader)
 
-    const searchInstruction = document.querySelector('.search-instruction')
-    const kbHrTitle = document.querySelector('.keyboard-title')
-    if (!query) {
-        searchInstruction.classList.remove("hidden")
-        kbHrTitle.textContent = "Most Downloads"
-    } else {
-        searchInstruction.classList.add("hidden")
-        kbHrTitle.textContent = ""
-    }
-
-    data.forEach(kb => {
-        const card = searchKbCardUI(kb, marked, selectedKbList)
-        kbSearchCard.appendChild(card)
+    selectedKbList.forEach(data => {
+        const kbDiv = document.createElement('div')
+        kbDiv.classList.add("kb-item")
+        kbDiv.setAttribute('id', `${data.id}`)
         
-        // dataKbForRemoval = selectedKbData
+        const kbName = document.createElement('span')
+        kbName.textContent = data.name
+
+        const kbConfigList = document.createElement('ul')
+        kbConfigList.classList.add('keyboard-configs')
+        kbConfigList.innerHTML = `
+            <li>
+                <i class="fa-solid fa-info" 
+                title="Keyboard info" 
+                data-action="info" 
+                data-id="${data.id}"></i>
+            </li>
+            <li>
+                <i class="fa-solid fa-question" 
+                title="Keyboard help documentation" 
+                data-action="help" 
+                data-helplink="${data.helpLink}"></i>
+            </li>
+            <li>
+                <i class="fa-solid fa-download" 
+                title="Download keyboard" 
+                data-action="download" 
+                data-id="${data.id}"></i>
+            </li>
+            <li>
+                <i class="fa-solid fa-minus" 
+                title="Remove keyboard" 
+                data-action="remove" 
+                data-id="${data.id}"></i>
+            </li>
+            `
+        
+        const kbDetails = displayKbDetails(data)
+        
+        kbDiv.appendChild(kbName)
+        kbDiv.appendChild(kbConfigList)
+        kbDiv.appendChild(kbDetails)
+        keyboardSelection.appendChild(kbDiv)
+
+        kbConfigList.addEventListener('click', (e) => {
+            const target = e.target
+            if (target.tagName == 'I' && target.dataset.action) {
+                const action = target.dataset.action
+                const id = target.dataset.id
+                const helpLink = target.dataset.helplink
+                kbConfigMenu(action, id, helpLink)
+            }
+        })
     })
-    paginationCtrl.style.display = 'flex';
+    triggerKbCount(selectedKbList)
 }
 
+// Keyboard count for Keyboard selection menu
+function triggerKbCount(selectedKbList) {
+    const kbSelectedLength = selectedKbList.length
+    const keyboardSelectionButton = document.querySelector('#keyboardSelectionButton') 
+    const keyboardCount = document.querySelector('#kbCount')
+    
+    if (kbSelectedLength >= 1) {
+        keyboardCount.classList.remove('fa-caret-right')
+        keyboardCount.textContent = `${kbSelectedLength}`
+        keyboardSelectionButton.classList.add('btn-keyman-orange')
+        keyboardSelectionButton.classList.remove('btn-secondary')
+    } else {
+        keyboardCount.classList.add('fa-caret-right')
+        keyboardCount.textContent = ''
+        keyboardSelectionButton.classList.remove('btn-keyman-orange')
+        keyboardSelectionButton.classList.add('btn-secondary')
+    }
+}
+
+// Keyboard count default for Keyboard selection menu
+function resetKbSelectionMenu() {
+    const keyboardSelection = document.querySelector("#keyboardSelection")
+    keyboardSelection.innerHTML = ''
+    const pTag = document.createElement('p')
+    pTag.textContent = "Open Search to get your keyboard"
+    keyboardSelection.appendChild(pTag)
+}
+
+// Compare and remove keyboard
+function removeKbSelected(kbId) {
+    if(kbId) {
+        selectedKbList = selectedKbList.filter(kb => kb.id !== kbId)
+    }
+    generateKbUI(selectedKbList)
+}
+
+// Check 6th keyboard
+function confirmAndAddKb(kbIconPTag, kb, onConfirmAdd) {
+    const warningDialogUI = limitKbSelectionUI(() => {
+        selectedKbList.shift()
+        onConfirmAdd()
+        generateKbUI(selectedKbList)
+    })
+    
+    document.body.appendChild(warningDialogUI)
+}
+
+// UI for Keyboard Selected Limitation
+function limitKbSelectionUI(onAccept) {
+    const dialogDiv = document.createElement('div')
+    dialogDiv.classList.add('warning-container')
+
+    const dialogContentDiv = document.createElement('div')
+    dialogContentDiv.classList.add('warning-content')
+
+    const dialogCancel = document.createElement('button')
+    dialogCancel.classList.add('warning-cancel-btn')
+    dialogCancel.setAttribute('id', 'cancelWarningBtn')
+    dialogCancel.textContent = '✖'
+    dialogCancel.onclick = () => {
+        dialogDiv.remove()
+        generateKbUI(selectedKbList)
+    }
+
+    const dialogImgTag = document.createElement('img')
+    dialogImgTag.classList.add('warning-keyman-image')
+    dialogImgTag.src = `/cdn/dev/img/keymanweb-mini-logo-88.png`
+    dialogImgTag.alt = "Keyman Logo"
+
+    const firstKeyboard = selectedKbList[0].name
+
+    const dialogPTag = document.createElement('p')
+    dialogPTag.classList.add('warning-text')
+    dialogPTag.innerHTML = `The keyboards selected exceeds the limitation of <b>5 keyboards</b>. Click <i>'Allow'</i> to remove the <br/> ${firstKeyboard} keyboard.`
+    
+    const dialogUlTag = document.createElement('ol')
+    dialogUlTag.textContent = "Your keyboards selection:"
+    selectedKbList.forEach((kb, index) => {
+        const dialogLiTag = document.createElement('li')
+        if (index == 0) {
+            const markKeyboard = document.createElement('mark')
+            markKeyboard.textContent = kb.name
+            dialogLiTag.appendChild(markKeyboard)
+        } else {
+            dialogLiTag.textContent = kb.name
+        }
+        dialogUlTag.appendChild(dialogLiTag)
+        
+    })
+
+    const dialogAccept = document.createElement('button')
+    dialogAccept.classList.add('warning-accept-btn')
+    dialogAccept.setAttribute('id', 'acceptWarningBtn')
+    dialogAccept.textContent = "Allow"
+    dialogAccept.onclick = () => {
+        dialogDiv.remove()
+        onAccept()
+    }
+
+    dialogContentDiv.appendChild(dialogCancel)
+    dialogContentDiv.appendChild(dialogImgTag)
+    dialogContentDiv.appendChild(dialogPTag)
+    dialogContentDiv.appendChild(dialogUlTag)
+    dialogContentDiv.appendChild(dialogAccept)
+
+    dialogDiv.appendChild(dialogContentDiv)
+
+    return dialogDiv
+}
+
+let selectedKbData = []
+function addDataKb(data) {
+    // console.log(data)
+    const kbInfo = {
+        "platformSupport": data.platformSupport,
+        // "monthlyDownloads": data.match.downloads,
+        "sourceFile": data.sourcePath,
+    }
+    selectedKbData.push(kbInfo)
+}
+
+// Keyboard selection menu's tools: help, download, and remove
+function kbConfigMenu(action, id, helplink) {
+    if (action == "help") {
+        window.open(helplink, '_blank')
+    }
+
+    if (action == "download") {
+        const downloadUrl = `https://keyman.com/keyboards/install/${id}`
+        window.open(downloadUrl, '_blank')
+    }
+
+    if (action == "remove") {
+        removeKbSelected(id)
+        generateKbUI(selectedKbList)
+        triggerKbCount(selectedKbList)
+    }
+
+    if (action == "info") {
+        const kbDetails = document.querySelector(`#keyboard-${id}-details`)
+        
+        kbDetails.addEventListener('mouseleave', () => {
+            kbDetails.classList.add('hidden')
+        })
+        kbDetails.classList.remove('hidden')
+    }
+}
+
+// Keyboard details for Keyboard selection menu
+function displayKbDetails(data) {
+    const item = selectedKbList.find(kb => kb.id == data.id)
+    if (!item) return;
+
+    const kbDetails = document.createElement('div')
+    kbDetails.classList.add('keyboard-details')
+    kbDetails.setAttribute('id', `keyboard-${data.id}-details`)
+    kbDetails.classList.add('animate__animated', 'animate__fadeIn')
+    kbDetails.classList.add('hidden')
+
+    const kbDetailsHead = document.createElement('div')
+    kbDetailsHead.textContent = 'Keyboard Details'
+    kbDetailsHead.classList.add('kb-item-header')
+    
+    const kbDetailsContent = document.createElement('div')
+    kbDetailsContent.classList.add('keyboard-content-wrapper')
+    kbDetailsContent.innerHTML = `
+    <ul class="keyboard-content" id="keyboardContent">
+        <li class="keyboard-name">
+            <div class="row">
+                <div class="col">Name</div>
+                <div class="col">${item.name || "N/A"}</div>
+            </div>
+        </li>
+        <li class="keyboard-details-id">
+            <div class="row">
+                <div class="col">Keyboard ID</div>
+                <div class="col">${item.id || "N/A"}</div>
+            </div>
+        </li>
+        <li class="keyboard-version">
+            <div class="row">
+                <div class="col">Version</div>
+                <div class="col">${item.version || "N/A"}</div>
+            </div>
+        </li>
+        <li class="keyboard-total-download">
+            <div class="row">
+                <div class="col">Total downloads</div>
+                <div class="col">${item.totalDownloads || 0}</div>
+            </div>
+        </li>
+        <li class="keyboard-source-path">
+            <div class="row">
+                <div class="col">Source Path</div>
+                <div class="col"><a href="https://github.com/keymanapp/keyboards/tree/master/${item.sourcePath}" target="_blank">${item.sourcePath || "N/A"}</a></div>
+            </div>
+        </li>
+        <li class="keyboard-platforms">
+            <div class="row">
+                <div class="col">Supported Platforms</div>
+                <div class="col platform">
+                    ${platformSupport(item.platformSupport) || 'No platforms supported'}
+                </div>
+            </div>
+        </li>
+        <li class="keyboard-last-updated">
+            <div class="row">
+                <div class="col">Last Updated</div>
+                <div class="col">${getOnlyDates(item.lastUpdated) || 0}</div>
+            </div>
+        </li>
+    </ul>
+    `
+    kbDetails.appendChild(kbDetailsHead)
+    kbDetails.appendChild(kbDetailsContent)
+    
+    return kbDetails
+}
+
+// Get only the YYYY-mm-dd format
+function getOnlyDates(dateData) {
+    const finalDateData = dateData.match(/^\d{4}-\d{2}-\d{2}/)
+    return finalDateData
+}
+
+// Validate URLs
+function validateURL(string) {
+    try {
+        const newUrl = new URL(string)
+        if (newUrl.protocol === 'https:') {
+            return newUrl
+        } else {
+            return false
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
+/*      
+        == End of Keyboard Selection menu Section ==       
+*/
+
+// Change and type keyboard
 const downloadBtn = document.getElementById('kbDownloadPage')
 const textArea = document.getElementById('textArea')
 async function changeKeyboard(kbdname, languageCode) {
@@ -485,125 +845,6 @@ async function changeKeyboard(kbdname, languageCode) {
     if(typeof(KeyboardChange_EmbedFonts) != 'undefined') KeyboardChange_EmbedFonts(kbdname);
 }
 
-/* Platform Support */
-function platformSupport(data) {
-    const platformMap = {
-        android: "Android",
-        desktopWeb: "Web",
-        ios: "iPhone and iPad",
-        linux: "Linux",
-        macos: "macOS",
-        mobileWeb: "Mobile web",
-        windows: "Windows"
-    }
-    let platformSpan = Object.entries(data)
-        .filter(([_, supportLevel]) => supportLevel == 'full')
-        .map(([platform]) => `<span class="platform-${platform.toLowerCase()}" title="${platformMap[platform]}">${platformMap[platform]}</span>`).join('')      
-        
-    return platformSpan
-}
-
-/* Selected Keyboard List */
-function populateSelectedKeyboard(language = null) {
-    if(selectedKbList.length > 4) {
-        alert("The maximum keyboard selection is 5")
-        return false;
-    }
-    if (language?.id) {
-        if(!selectedKbList.some(e => e.id == language.id)) {
-            selectedKbList.push({
-                id: language.id,
-                keyboard: language.name,
-                language: language.languages,
-            }) 
-        } 
-    }
-    generateKbUI(selectedKbList)
-}
-
-/* A UI for keyboard selection menu */
-function generateKbUI(selectedKbList) {
-    const keyboardSelection = document.getElementById("keyboardSelection")
-    keyboardSelection.innerHTML = ''
-
-    if (!selectedKbList.length) {
-        keyboardSelectionButton.classList.remove('btn-keyman-orange')
-        keyboardSelectionButton.classList.add('btn-secondary')
-        keyboardSelection.textContent = "Open Search to get your keyboard"
-        return
-    }
-    
-    keyboardSelectionButton.classList.remove('btn-secondary')
-    keyboardSelectionButton.classList.add('btn-keyman-orange')
-    selectedKbList.forEach(data => {
-        const kbDiv = document.createElement('div')
-        kbDiv.classList.add("kb-item")
-        kbDiv.setAttribute('id', `${data.id}`)
-        kbDiv.textContent = data.name
-        
-        const item = selectedKbData.find(kb => kb.id == data.id)
-        if (!item) return;
-        
-        const kbDetails = displayKbDetails(item)
-        
-        kbDiv.appendChild(kbDetails)
-        keyboardSelection.appendChild(kbDiv)
-        kbDiv.onclick = () => enableKbToType()
-        kbDiv.onmouseenter = () => displayKbDetails()
-    })
-}
-
-function triggerKbCount(selectedKbList) {
-    const kbSelectedLength = selectedKbList.length
-    const keyboardCount = document.querySelector('#kbCount')
-    if (kbSelectedLength > 0) {
-        keyboardCount.classList.remove('fa-caret-right')
-    }
-    keyboardCount.textContent = `${kbSelectedLength}`
-}
-
-function displayKbDetails(item) {
-    const kbDetails = document.createElement('div')
-    kbDetails.setAttribute('id', 'keyboardDetails')
-    kbDetails.classList.add('hidden')
-    kbDetails.innerHTML = `
-    <ul class="keyboard-content" id="keyboardContent">
-        <li>
-            <i class="fa-solid fa-question" id="helpDocKeyboard"></i>
-            <i class="fa-solid fa-download" id="downloadKeyboard"></i>
-            <i class="fa-solid fa-minus" id="removeKeyboard"></i>
-        </li>
-        <li class="keyboard-version">
-            <div class="row">
-                <div class="col">Version</div>
-                <div class="col">${item.version || "N/A"}</div>
-            </div>
-        </li>
-        <li class="keyboard-helplink">
-            <div class="row">
-                <div class="col">Keyboard document</div>
-                <div class="col"><a href="${item.helpLink}">${item.name} help</a></div>
-            </div>
-        </li>
-        <li class="keyboard-total-download">
-            <div class="row">
-                <div class="col">Total downloads</div>
-                <div class="col">${item.totalDownloads || 0}</div>
-            </div>
-        </li>
-        <li class="keyboard-platforms">
-            <div class="row">
-                <div class="col">Supported Platforms</div>
-                <div class="col platform">
-                    ${platformSupport(item.platformSupport) || 'No platforms supported'}
-                </div>
-            </div>
-        </li>
-    </ul>
-    `
-    return kbDetails
-}
-
 function enableKbToType() {
     // kbDiv.addEventListener('mouseenter', () => {
     //     kbDiv.style.cursor = "pointer"
@@ -629,22 +870,25 @@ function enableKbToType() {
         } else {
             console.warn("Keyboard not found: ", kbName)
         }
-        
     })
 }
 
-/*
-    Behavior of the Selected Keyboard menu
+/*          == Section ==
+    UI interaction and manipulation
 */
+
+/*  UI Behavior of the Selected Keyboard menu */
 const kbSelection = document.querySelector('#keyboardSelection')
+const kbSelectionWrap = document.querySelector('.scroll-wrapper-keyboard-tab')
+const keyboardSelectionButton = document.getElementById('keyboardSelectionButton') 
 keyboardSelectionButton.addEventListener('mouseenter', () => {
-    kbSelection.style.width = "100%"
+    kbSelection.classList.add('open')
 })
 keyboardSelectionButton.addEventListener('click', () => {
-    kbSelection.style.width = "0px"
+    kbSelection.classList.remove('open')
 })
 kbSelection.addEventListener('mouseleave', () => {
-    kbSelection.style.width = "0px"
+    kbSelection.classList.remove('open')
 })
 
 /*

@@ -56,11 +56,11 @@ use Keyman\Site\Common\ImageRandomizer;
         <button type="button" class="btn btn-secondary" id="keyboardSelectionButton">
           <i class="fa-solid fa-caret-right fa-xs" id="kbCount"></i>
         </button>
-        <div class="scroll-wrapper-keyboard-tab">
-          <div class="keyboard-tab" id="keyboardSelection">
-            Open Search to get your keyboard
-            <!-- kmwHeader.js -->
-          </div>
+          <div class="scroll-wrapper-keyboard-tab">
+            <div class="keyboard-tab" id="keyboardSelection">
+              <p>Open Search to get your keyboard</p>
+              <!-- kmwHeader.js -->
+            </div>
         </div>
       </div>
       <div class="middle-header">

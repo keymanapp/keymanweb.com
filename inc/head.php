@@ -59,6 +59,7 @@
 
 <?= WebKeymanComSentry::GetBrowserHTML($kmwbuild) ?>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
