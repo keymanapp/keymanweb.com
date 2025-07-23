@@ -11,15 +11,289 @@ function getKeymanWeb() {
 let selectedKbList = []
 let dataKbForRemoval
 
+document.addEventListener('DOMContentLoaded', () => {
+    /*          == Section ==
+        UI interaction and manipulation
+    */
+
+    /*
+        Toggle between World Map and Search
+    */
+    const elements = {
+        worldMapBtn: document.querySelector('#worldMap'),
+        kmwControls: document.querySelector('#KeymanWebControl'),
+
+        kbSelection: document.querySelector('#keyboardSelection'),
+        keyboardSelectionButton: document.getElementById('keyboardSelectionButton'),
+        langSearchDropdown: document.querySelector('#languageSearchDropdown'),
+        caretRightIcon: keyboardSelectionButton.querySelector('.fa-caret-right'),
+        infoIcon: document.querySelector('#infoIcon'),
+
+        searchBoxForm: document.querySelector('.form'),
+        searchBtn: document.querySelector('#mainSearchBtn')
+    }
+
+    const state = {
+        mapIsOpen: true
+    }
+
+    /*  UI Behavior of the Selected Keyboard menu */
+    if (exists(elements)) {
+        elements.keyboardSelectionButton.addEventListener('mouseenter', () => {
+            elements.kbSelection.classList.add('open')
+        })
+        elements.keyboardSelectionButton.addEventListener('click', () => {
+            elements.kbSelection.classList.remove('open')
+        })
+        elements.kbSelection.addEventListener('mouseleave', () => {
+            elements.kbSelection.classList.remove('open')
+        })
+    }
+    
+    elements.worldMapBtn?.addEventListener('click', (e) => {
+        e.preventDefault()
+        toggleMapAndKb()
+    })
+    
+    function toggleMapAndKb() {
+        if (state.mapIsOpen == false) {
+            // Open Search
+            hideEls(
+                elements.kmwControls,
+            )
+            showEls(
+                elements.langSearchDropdown,
+                elements.infoIcon
+            )
+
+            if (selectedKbList.length > 0) {
+                elements.caretRightIcon.textContent = selectedKbList.length
+            } else {
+                elements.caretRightIcon.textContent = ''
+                elements.caretRightIcon.classList.add('fa-caret-right')
+            }
+            
+            elements.searchBoxForm.replaceChildren(
+                elements.searchBtn,
+                elements.infoIcon,
+                elements.langSearchDropdown
+            )
+
+            state.mapIsOpen = true
+        } else {
+            // Open Map
+            removeClass(
+                elements.kmwControls, 'hidden'
+            )
+            hideEls(
+                elements.langSearchDropdown
+            )
+            removeTextContent(
+                elements.caretRightIcon
+            )
+
+            elements.searchBoxForm.replaceChildren(
+                elements.kmwControls
+            )
+            returnToSearchBtn()
+
+            state.mapIsOpen = false
+        }
+    }
+
+    function returnToSearchBtn() {
+        removeClass(elements.caretRightIcon, 'fa-caret-right')
+        elements.caretRightIcon.classList.add('fa-magnifying-glass')
+        elements.keyboardSelectionButton.style.backgroundColor = "var(--keyman-orange)"
+        elements.keyboardSelectionButton.style.border = '0px'
+        elements.kbSelection.style.display = "none"
+        
+        elements.keyboardSelectionButton.onclick = () => {
+            removeClass(elements.caretRightIcon, 'fa-magnifying-glass')
+
+            if ((selectedKbList?.length || 0) < 1) {
+                elements.caretRightIcon.classList.add('fa-caret-right')
+                elements.caretRightIcon.textContent = ''
+            }
+
+            elements.keyboardSelectionButton.style.backgroundColor = ""
+            elements.kbSelection.style.display = "block"
+            toggleMapAndKb()
+        }
+    }
+
+    if (!typeof defaultKeyboard == 'function') {
+        console.warn('defaultKeyboard() is not defined.')
+    }
+    defaultKeyboard()  
+})
+
+/* Utility functions */
+function hideEls(...elements) {
+    return elements.every(el => el.classList.add('hidden'))
+}
+
+function showEls(...elements) {
+    return elements.every(el => el.classList.remove('hidden'))
+}
+
+function removeClass(element, className) {
+    return element.classList.remove(className)
+}
+
+function removeTextContent(...elements) {
+    return elements.every(el => el.textContent = '')
+}
+
+/* Elements validation */
+function exists(...elements) {
+    return elements.every(el => el != null)
+}
+
+/*
+    === Keyboard Execution ===
+*/
+const downloadBtn = document.getElementById('kbDownloadPage')
+const textArea = document.getElementById('textArea')
+let langExamples = [];
+
+function prepareSearchInputUI(dir = 'ltr', fontFamily = '') {
+    const searchTextBox = document.querySelector('#mainSearchBtn')
+
+    searchTextBox.setAttribute('dir', dir)
+    searchTextBox.style.fontFamily = fontFamily
+    selectKb()
+}
+
+function setTextDirection(targetEls, dir) {
+    const copyBtn = document.querySelector('#copyTool')
+
+    targetEls.dir = dir
+    if (dir == 'rtl') {
+        copyBtn.style.right = '0'
+        copyBtn.style.left = '10px'
+    } else {
+        copyBtn.style.right = ''
+        copyBtn.style.left = ''
+    }
+}
+
+function defaultKeyboard(kbdname = "basic_kbdus", languageCode = "en") {
+    if(!exists(kbdname, languageCode)) {
+        if (textArea) textArea.placeholder = 'A Keyboard name isn\'t specified. Select a keyboard and start typing'
+        return
+    }
+    setKeyboardWithDirection(kbdname, languageCode)
+}
+
+function selectKb(kbdname, languageCode) {
+    if(!exists(kbdname, languageCode)) {
+        if (textArea) textArea.placeholder = 'A Keyboard name isn\'t specified. Select a keyboard and start typing'
+        return
+    }
+    setKeyboardWithDirection(kbdname, languageCode)
+}
+
+// Change and type keyboard
+async function setKeyboardWithDirection(kbdname, languageCode) {
+    const kbSpan = document.querySelector('#kbSpan')
+    const langTag = `#${languageCode}`
+    const kbTag = `Keyboard_${kbdname}`
+
+    location.replace(`${langTag},${kbTag}`);
+
+    await keyman.addKeyboards(kbdname)
+    const kbd = keyman.getKeyboard(kbdname, languageCode)
+    await keyman.setActiveKeyboard(kbdname, languageCode)
+    
+    if(kbd) {
+        textArea.placeholder = `The ${kbdname} keyboard is selected. Start typing...`
+        kbSpan.innerHTML = `${kbdname}`
+
+        setTextDirection(textArea, textArea.dir)
+    }
+    updateExample(kbdname)
+    if(typeof(KeyboardChange_EmbedFonts) != 'undefined') KeyboardChange_EmbedFonts(kbdname)
+}
+
+/* Language Examples AJAX */
+async function updateExample(kbdname) {
+    const keymanExample = document.getElementById("example")
+    const exampleBox = document.getElementById("exampleBox");
+    
+    if (!keymanExample || !exampleBox) return false;
+
+    if(kbdname == '')
+    {
+        keymanExample.textContent = `No example is available due to empty Keyboard name.`
+        return true;
+    }
+
+    exampleBox.style.visibility='visible';
+    keymanExample.style.visibility='visible';
+    var activeLanguage = keyman.getActiveLanguage();
+
+    if(langExamples[activeLanguage + '_' + kbdname])
+    {
+        keymanExample.innerHTML = langExamples[activeLanguage + '_' + kbdname];
+        return true;
+    }
+    
+    langExamples[activeLanguage + '_' + kbdname] = 'Loading...';
+    keymanExample.innerHTML = 'Loading...';
+
+    const link = `../../../prog/languageexample.php?keyboard=${kbdname}&language=${activeLanguage}`;
+    try {
+        const response = await fetch(link);
+        if(response.status == 200) {
+            const content = await response.text();
+            
+            langExamples[activeLanguage + '_' + kbdname] = keymanExample.innerHTML = content;
+        } else {
+            throw new Error(`Unable to retrieve content, status was ${response.status}: ${response.statusText}`);
+        }
+    } catch(e) {
+        langExamples[activeLanguage + '_' + kbdname] = keymanExample.innerHTML = 'Error retrieving example: '+e.message;
+        throw e;
+    }
+}
+
 /* Search Box */
 const searchBoxForm = document.querySelector('.form')
 searchBoxForm.addEventListener('click', function(e) {
     e.stopPropagation()
+    defaultKeyboard()
 })
 
 /* Search */
 const kbSearchCard = document.getElementById('kbSearchCardUI');
 let debounceTimer
+
+const searchBtn = document.querySelector('#mainSearchBtn')
+const dropdown = new bootstrap.Dropdown(searchBtn, {
+    autoClose: 'outside'
+})
+
+searchBtn.addEventListener('focus', () => {
+    dropdown.show()
+})
+
+searchBtn.addEventListener('input', () => {
+    dropdown.show()
+})
+
+const dropdownMenu = document.querySelector('#languageSearchDropdown')
+document.addEventListener('click', (e) => {
+    if (!searchBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdown.hide()
+    }
+})
+
+// Hide Dropdown Search on Mouse leave
+dropdownMenu.addEventListener('mouseleave', (e) => {
+    e.preventDefault()
+    dropdown.hide()
+})
 
 /* Pagination */
 prevBtn = document.getElementById('prevPage')
@@ -56,8 +330,6 @@ function goNextPage() {
         searchKeyboard(currentQuery, currentPage)
     }
 }
-
-searchBtn = document.getElementById('mainSearchBtn')
 
 const clearSearchIcon = document.querySelector('.clear-icon')
 const searchIcon = document.querySelector('.search-icon')
@@ -210,7 +482,7 @@ function displaySearch(data, total = 0, query = '') {
 }
 
 // UI Search card
-function searchKbCardUI(kb, marked = '', data) {
+function searchKbCardUI(kb, marked = '', selectedKbList, data) {
     const kbFoundInList = selectedKbList.some(selected => selected.id == kb.id)
     // Keyboard card container
     let cardWrap = document.createElement('div')
@@ -271,9 +543,14 @@ function searchKbCardUI(kb, marked = '', data) {
     cardWrap.appendChild(kbSpecs)
 
     // Choose keyboard to selection
-    kbIconPTag.onclick = () => {addKbToSelectionMenu(kbIconPTag, cardWrap, kb, data)}
+    kbIconPTag.onclick = (e) => {
+        e.stopPropagation()
+        addKbToSelectionMenu(kbIconPTag, cardWrap, kb, data)
+        textArea.focus()
+        selectKb()
+    }
     // console.log("Recent:", historyKbSelection.getHistory());
-
+    
     return cardWrap
 }
 
@@ -355,6 +632,11 @@ function showMarkedContext(kb, matchField, matchValue) {
     }
     kbNameHeading.appendChild(kbHelpLink)
     kbNameHeading.appendChild(langNameSpan)
+    kbNameHeading.addEventListener('click', () => {
+        const checkedURL = validateURL(`https://help.keyman.com/keyboard/`)
+        const newURL = checkedURL + kb.id
+        window.open(newURL, '_blank')
+    })
 
     return kbNameHeading
 }
@@ -392,7 +674,7 @@ function truncateDesc(kb, matchField, marked) {
         toggleBtn.addEventListener('click', e => {
             e.preventDefault()
             const isExpanded = toggleBtn.textContent == "Show more"
-            kbDescHeading.innerHTML = !isExpanded ? shortText.replace(marked, '<mark>$&</mark>') : fullDesc
+            kbDescHeading.innerHTML = !isExpanded ? shortText.replace(marked, (m) => m ? `<mark>${m}</mark>` : m) : fullDesc
             if (matchField == 'description') {
                 kbDescHeading.innerHTML = isExpanded ? fullDesc.replace(marked, '<mark>$&</mark>') : shortText
             }
@@ -491,7 +773,6 @@ function addKbToSelection(kb) {
         "supportedLanguage": kb.languages,
         "lastUpdated": kb.lastModifiedDate
     }
-    console.log(kb)
     // historyKbSelection.add(kbInfo)
     selectedKbList.push(kbInfo)
 }
@@ -510,6 +791,11 @@ function generateKbUI(selectedKbList) {
     const kbDivHeader = document.createElement('div')
     kbDivHeader.textContent = "Keyboard Selection menu"
     kbDivHeader.classList.add('kb-item-header')
+
+    const kbDivFoot = document.createElement('div')
+    kbDivFoot.textContent = "US Basic Keyboard"
+    kbDivFoot.classList.add('kb-item-footer')
+
     keyboardSelection.appendChild(kbDivHeader)
 
     selectedKbList.forEach(data => {
@@ -550,12 +836,17 @@ function generateKbUI(selectedKbList) {
             `
         
         const kbDetails = displayKbDetails(data)
-        
+
         kbDiv.appendChild(kbName)
         kbDiv.appendChild(kbConfigList)
         kbDiv.appendChild(kbDetails)
         keyboardSelection.appendChild(kbDiv)
+        keyboardSelection.append(kbDivFoot)
 
+        let kbdName = data.id
+        let langCode = Object.keys(data.supportedLanguage)[0] || "en"
+
+        selectKb(kbdName, langCode)
         kbConfigList.addEventListener('click', (e) => {
             const target = e.target
             if (target.tagName == 'I' && target.dataset.action) {
@@ -565,6 +856,17 @@ function generateKbUI(selectedKbList) {
                 kbConfigMenu(action, id, helpLink)
             }
         })
+        
+        kbDiv.addEventListener('click', () => {
+            kbdName = data.id
+            langCode = Object.keys(data.supportedLanguage)[0] || "en"
+            textArea.focus()
+            selectKb(kbdName, langCode)
+        })
+
+        kbDivFoot.onclick = () => {
+            defaultKeyboard()
+        }
     })
     triggerKbCount(selectedKbList)
 }
@@ -591,10 +893,27 @@ function triggerKbCount(selectedKbList) {
 // Keyboard count default for Keyboard selection menu
 function resetKbSelectionMenu() {
     const keyboardSelection = document.querySelector("#keyboardSelection")
-    keyboardSelection.innerHTML = ''
+
+    const kbDivHeader = document.createElement('div')
+    kbDivHeader.textContent = "Keyboard Selection menu"
+    kbDivHeader.classList.add('kb-item-header')
+
+    const kbItem = document.createElement('div')
+    kbItem.classList.add('.kb-item')
+
     const pTag = document.createElement('p')
     pTag.textContent = "Open Search to get your keyboard"
-    keyboardSelection.appendChild(pTag)
+
+    const kbDivFoot = document.createElement('div')
+    kbDivFoot.textContent = "US Basic Keyboard"
+    kbDivFoot.classList.add('kb-item-footer')
+
+    kbItem.appendChild(pTag)
+
+    keyboardSelection.appendChild(kbDivHeader)
+    keyboardSelection.appendChild(kbItem)
+    keyboardSelection.appendChild(kbDivFoot)
+
 }
 
 // Compare and remove keyboard
@@ -606,9 +925,10 @@ function removeKbSelected(kbId) {
 }
 
 // Check 6th keyboard
-function confirmAndAddKb(kbIconPTag, kb, onConfirmAdd) {
+function confirmAndAddKb(onConfirmAdd) {
     const warningDialogUI = limitKbSelectionUI(() => {
         selectedKbList.shift()
+        console.log(selectedKbList)
         onConfirmAdd()
         generateKbUI(selectedKbList)
     })
@@ -810,146 +1130,3 @@ function validateURL(string) {
 /*      
         == End of Keyboard Selection menu Section ==       
 */
-
-// Change and type keyboard
-const downloadBtn = document.getElementById('kbDownloadPage')
-const textArea = document.getElementById('textArea')
-async function changeKeyboard(kbdname, languageCode) {
-    
-    // selectedKbList.forEach(data => {
-    //     let kbName = data.id
-    //     let langCode = data.script
-        
-    //     changeKeyboard(kbName, langCode)
-    // })
-    console.log("kbdname: ", kbdname, " + ", "languageCode: ", languageCode)
-    if(kbdname == '') {
-        if (textArea) textArea.placeholder = 'Select a keyboard and start typing'
-    }
-    location.replace('#' + languageCode + ',Keyboard_' + kbdname);
-
-    var kbd = keyman.getKeyboard(kbdname, languageCode); // Good
-    await keyman.setActiveKeyboard(kbdname, languageCode) // Good
-    console.log("kbd: ", kbd)
-
-    if(kbd) {
-        textArea.placeholder = 'The ' + kbd.InternalName + ' keyboard is selected. Start typing...'
-    }
-    
-    const kbSpan = document.querySelector('#kbSpan')
-    const kbHelpDocATag = document.querySelector('#kbHelpdocLink')
-    textArea.placeholder = `The ${kbdname} keyboard is selected. Please start typing...`
-    kbSpan.innerHTML = `${kbdname}`
-    // kbHelpDocATag.href = `${kbdHelpLink}`
-
-    if(typeof(KeyboardChange_EmbedFonts) != 'undefined') KeyboardChange_EmbedFonts(kbdname);
-}
-
-function enableKbToType() {
-    // kbDiv.addEventListener('mouseenter', () => {
-    //     kbDiv.style.cursor = "pointer"
-    //     openKbDetails()
-    // })
-    
-    kbDiv.addEventListener('click', async (e) => {
-        e.preventDefault()
-
-        if (!data.id || !data || !item.helpLink) {
-            console.error("Missing Data or Item")
-        }
-
-        let kbName = `Keyboard_${data.id}`
-        let keyboards = keyman.getKeyboards();
-        let keyboard = keyboards.find(keyboard => keyboard.InternalName == kbName)
-
-        // console.log("All keyboards: ", keyboards)
-        // console.log("My keyboard: " + keyboard)
-        if(keyboard) {
-            languageCode = keyboard.LanguageCode
-            changeKeyboard(data.id, languageCode, item.helpLink)
-        } else {
-            console.warn("Keyboard not found: ", kbName)
-        }
-    })
-}
-
-/*          == Section ==
-    UI interaction and manipulation
-*/
-
-/*  UI Behavior of the Selected Keyboard menu */
-const kbSelection = document.querySelector('#keyboardSelection')
-const kbSelectionWrap = document.querySelector('.scroll-wrapper-keyboard-tab')
-const keyboardSelectionButton = document.getElementById('keyboardSelectionButton') 
-keyboardSelectionButton.addEventListener('mouseenter', () => {
-    kbSelection.classList.add('open')
-})
-keyboardSelectionButton.addEventListener('click', () => {
-    kbSelection.classList.remove('open')
-})
-kbSelection.addEventListener('mouseleave', () => {
-    kbSelection.classList.remove('open')
-})
-
-/*
-    Toggle between World Map and Search
-*/
-const worldMapBtn = document.querySelector('#worldMap')
-const kmwControls = document.querySelector('#KeymanWebControl')
-const langSearchDropdown = document.querySelector('#languageSearchDropdown')
-const caretRightIcon = keyboardSelectionButton.querySelector('.fa-caret-right')
-const infoIcon = document.querySelector('#infoIcon')
-
-let mapIsOpen
-worldMapBtn.onclick = () => {
-    toggleMapAndKb()
-}
-
-function toggleMapAndKb() {
-    if (mapIsOpen == true) {
-        openSearch()
-    } else {
-        openMap()
-        returnToSearchBtn()
-    }
-}
-
-function openMap() {
-    mapIsOpen = true
-
-    kmwControls.classList.remove('hidden')
-    kmwControls.style.display = "block"
-    langSearchDropdown.classList.add('hidden')
-
-    searchBoxForm.innerHTML = ''
-    searchBoxForm.appendChild(kmwControls)
-}
-
-function openSearch() {
-    mapIsOpen = false
-
-    kmwControls.classList.add('hidden')
-    kmwControls.style.display = "none"
-    langSearchDropdown.classList.remove('hidden')
-    infoIcon.classList.remove('hidden')
-
-    searchBoxForm.innerHTML = ''
-    searchBoxForm.appendChild(searchBtn)
-    searchBoxForm.appendChild(infoIcon)
-    searchBoxForm.appendChild(langSearchDropdown)
-}
-
-function returnToSearchBtn() {
-    caretRightIcon.classList.remove('fa-caret-right')
-    caretRightIcon.classList.add('fa-magnifying-glass')
-    keyboardSelectionButton.style.backgroundColor = "var(--keyman-orange)"
-    keyboardSelectionButton.style.border = '0px'
-    keyboardSelection.style.display = "none"
-    keyboardSelectionButton.onclick = () => {
-        caretRightIcon.classList.remove('fa-magnifying-glass')
-        caretRightIcon.classList.add('fa-caret-right')
-        keyboardSelectionButton.style.backgroundColor = ""
-        keyboardSelection.style.display = "block"
-        openSearch()
-    }
-}

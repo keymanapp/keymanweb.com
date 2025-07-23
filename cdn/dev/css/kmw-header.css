@@ -85,6 +85,7 @@ Language Search box
   border-radius: 15px;
   text-align: left;
   background-color: rgb(233, 228, 228);
+  font-family: inherit !important;
 }
 
 #mainSearchBtn:focus {
@@ -333,7 +334,7 @@ Language Search box
 
 /* Selected Keyboard Menu */
 #keyboardSelectionButton {
-  z-index: 1;
+  z-index: 3;
 }
 
 .scroll-wrapper-keyboard-tab {
@@ -362,6 +363,7 @@ Language Search box
 }
 
 #keyboardSelection.open {
+  position: relative;
   width: 400px;
   height: fit-content;
   padding: 0 0 10px;
@@ -371,16 +373,25 @@ Language Search box
 #keyboardSelection p {
   margin: 0;
   height: 25px;
+  width: 100%;
 }
 
-.kb-item-header {
+.kb-item-header, .kb-item-footer {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 30px;
-  border-bottom: 1px solid gray;
   font-weight: 500;
   margin: 5px 0;
+}
+
+.kb-item-header {
+  border-bottom: 1px solid gray;
+}
+
+.kb-item-footer {
+  border-top: 1px solid gray;
+  cursor: pointer;
 }
 
 .kb-item {
@@ -395,7 +406,6 @@ Language Search box
 
 .kb-item:hover {
   cursor: pointer;
-  height: fit-content;
   background-color: var(--keyman-orange);
   color: white;
 }
@@ -710,6 +720,10 @@ input[type="range"]::-webkit-slider-thumb {
   grid-template-rows: 1fr;
 }
 
+.dropdown-item:active {
+  background-color: transparent !important;
+}
+
 #burgerMenu ul li {
   align-items: center;
   width: 300px;
@@ -798,6 +812,7 @@ input[type="range"]::-webkit-slider-thumb {
   font-family: "social-logos" !important;
   content: attr(data-icon);
   padding-right: 4px;
+  font-size: 16px;
 }
 
 .kmw-version {

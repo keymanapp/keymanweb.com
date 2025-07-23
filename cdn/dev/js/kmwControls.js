@@ -3,8 +3,16 @@
     KeymanWebControls (Map, Examples, Keyboards...etc)
 */
 
-$(document).ready(function() {
-    $("#KeymanWebControls").show( function() {
-        alert("Show")
-    })
-}) 
+function waitForElement(selector, callback) {
+    const interval = setInterval(() => {
+        const el = document.querySelector(selector)
+        if (el) {
+            clearInterval(interval)
+            callback(el)
+        }
+    }, 100)
+}
+
+waitForElement(".kmw-osk-frame", function(oskDiv) {
+    document.querySelector('.keyboard-area').appendChild(oskDiv)
+})

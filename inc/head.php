@@ -61,6 +61,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-desktop.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn('src/bootstrap.min.css') ?>" crossorigin="anonymous">
@@ -179,14 +180,12 @@
     if(localKeyboard && localLanguage) {
       keyman.setActiveKeyboard(localKeyboard, localLanguage);
     }
-    document.getElementById('textArea').focus();
   });
 
   pageLoading = false;
 
   (function() {
     var css = {
-      // "desktop" : "<?php echo cdn("css/kmw-desktop.css"); ?>", blue keyboard styles
       "desktop" : "<?php echo cdn("css/kmw-header.css"); ?>",
       "tablet" : "<?php echo cdn("css/kmw-tablet.css"); ?>",
       "mobile" : "<?php echo cdn("css/kmw-mobile.css"); ?>"

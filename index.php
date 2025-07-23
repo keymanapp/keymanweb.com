@@ -11,7 +11,7 @@ use Keyman\Site\Common\ImageRandomizer;
         <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
         <!-- Language Dropdown Search -->
         <div class="form">
-          <input type="text" class="form-control form-input" data-bs-auto-close="outside" data-bs-toggle="dropdown" placeholder="Search for a keyboard..." id="mainSearchBtn" maxlength="30">
+          <input type="text" class="form-control form-input" dir="ltr" data-bs-auto-close="outside" placeholder="Search for a keyboard..." id="mainSearchBtn" maxlength="30">
           <span class="info-icon-span" id="infoIcon">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
             <span class="clear-icon">&times;</span>
@@ -58,7 +58,11 @@ use Keyman\Site\Common\ImageRandomizer;
         </button>
           <div class="scroll-wrapper-keyboard-tab">
             <div class="keyboard-tab" id="keyboardSelection">
-              <p>Open Search to get your keyboard</p>
+              <div class="kb-item-header">Keyboard Selection menu</div>
+              <div class="kb-item">
+                <p>Open Search to get your keyboard</p>
+              </div>
+              <div class="kb-item-footer">US Basic Keyboard</div>
               <!-- kmwHeader.js -->
             </div>
         </div>
@@ -130,13 +134,13 @@ use Keyman\Site\Common\ImageRandomizer;
                 <div class="kmw-socials">
                   <h5>Keep in touch</h5>
                   <div class="kmw-socials-icons">
-                    <a href="https://facebook.com/KeymanApp" data-icon="">Facebook</a>
-                    <a href="https://twitter.com/keyman" data-icon="">X (formerly Twitter)</a>
-                    <a href="https://community.software.sil.org/c/keyman" data-icon=" ">Keyman Community</a>
-                    <a href="https://typo.social/@keyman" data-icon=" ">mastodon</a>
-                    <a href="https://www.youtube.com/@KeymanApp" data-icon=" ">YouTube</a>
-                    <a href="https://blog.keyman.com/" data-icon="">Keyman Blog</a>
-                    <a href="https://github.com/keymanapp" data-icon="">GitHub</a>
+                    <a href="https://facebook.com/KeymanApp" target="_blank" data-icon="">Facebook</a>
+                    <a href="https://twitter.com/keyman" target="_blank" data-icon="">X (formerly Twitter)</a>
+                    <a href="https://community.software.sil.org/c/keyman" target="_blank" data-icon=" ">Keyman Community</a>
+                    <a href="https://typo.social/@keyman" target="_blank" data-icon="">Mastodon</a>
+                    <a href="https://www.youtube.com/@KeymanApp" target="_blank" data-icon="">YouTube</a>
+                    <a href="https://blog.keyman.com/" target="_blank" data-icon="">Keyman Blog</a>
+                    <a href="https://github.com/keymanapp" target="_blank" data-icon="">GitHub</a>
                   </div>
                 </div>
                 <div class="sil-logo">
@@ -175,8 +179,7 @@ use Keyman\Site\Common\ImageRandomizer;
           <p id="example">No example is available for this keyboard.</p>
         </div>
         <div class="keyboard-area" id="keymanKeyboardCtrl">
-          <img class="desktop-keyboard" src="<?php echo cdn('img/desktop-keyboard.png') ?>" alt="">
-          <img class="phone-keyboard" src="<?php echo cdn('img/phone-keyboard.png') ?>" alt="">
+        </div>
         </div>
       </div>
     </div>
