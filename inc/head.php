@@ -114,34 +114,6 @@
     var iso=mapBCP47_ISO6393[bcp];
     return iso?iso:bcp;
   }
-
-  var localKeyboard, localLanguage;
-
-  function loadKeyboardFromHash() {
-    var locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
-    if(locationHash) {
-      localKeyboard = locationHash[2];
-      localLanguage = locationHash[1];
-
-      // Translate the language ID if necessary from ISO639-3 to BCP 47
-      localLanguage = iso6393ToBCP47(localLanguage);
-
-      document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
-      document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
-    } else if(location.hash == '#') {
-      document.cookie = 'KeymanWeb_Keyboard=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-      document.cookie = 'KeymanWeb_Toolbar=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    } else {
-      var cookie = keyman.util.loadCookie('KeymanWeb_Keyboard');
-      if(cookie['current']) {
-        var cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
-        if(cookieMatch) {
-          localKeyboard = cookieMatch[1];
-          localLanguage = iso6393ToBCP47(cookieMatch[2]);
-        }
-      }
-    }
-  }
 </script>
 
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
@@ -154,8 +126,37 @@
 
 <script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
 
+<script> 
+  let localKeyboard, localLanguage
+  function loadKeyboardFromHash() {
+      let locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
+      if(locationHash) {
+          localKeyboard = locationHash[2];
+          localLanguage = locationHash[1];
+
+          // Translate the language ID if necessary from ISO639-3 to BCP 47
+          localLanguage = iso6393ToBCP47(localLanguage);
+
+          document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
+          document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
+      } else if(location.hash == '#') {
+          document.cookie = 'KeymanWeb_Keyboard=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+          document.cookie = 'KeymanWeb_Toolbar=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+      } else {
+          let cookie = keyman.util.loadCookie('KeymanWeb_Keyboard')
+          if(cookie['current']) {
+              let cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
+              if(cookieMatch) {
+                  localKeyboard = cookieMatch[1];
+                  localLanguage = iso6393ToBCP47(cookieMatch[2]);
+              }
+          }
+      }
+  }
+</script>
+
 <script>
-  loadKeyboardFromHash();
+  loadKeyboardFromHash()
   var pageLoading = true;
 
   // We finally made it properly boolean in 17.0 as part of https://github.com/keymanapp/keyman/pull/8560.
@@ -177,9 +178,6 @@
       await keyman.addKeyboards();
     }';
     } ?>
-    if(localKeyboard && localLanguage) {
-      keyman.setActiveKeyboard(localKeyboard, localLanguage);
-    }
   });
 
   pageLoading = false;
@@ -217,7 +215,7 @@
     window.deviceFormFactor=ff;
 
     // Append the selected stylesheet to the document
-    var lk=document.createElement('LINK'), file=css[ff];
+    var lk = document.createElement('LINK'), file=css[ff];
     lk.rel='stylesheet';
     lk.href=file;
     lk.type='text/css';

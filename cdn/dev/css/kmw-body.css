@@ -7,7 +7,6 @@
 }
 
 body {
-    background-color: #F6F6F6;
     overflow: hidden;
 }
 
@@ -50,6 +49,7 @@ i:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
+    
 }
 
 .text-area {
@@ -58,13 +58,19 @@ i:hover {
     width: 100%;
     box-shadow: var(--textarea-box);
     font-size: 16px;
+    border: none;
+    padding: 10px;
+}
+
+.text-area::highlight {
+    border: red;
 }
 
 #copyTool {
     color: var(--keyman-blue);
     position: absolute;
     right: 10px;
-    top: 110px;
+    top: 97px;
     opacity: 50%;
 }
 
@@ -116,6 +122,14 @@ i:hover {
 
 .example-box p {
     margin: 10px;
+}
+
+#example {
+    visibility: visible !important;
+}
+
+#exampleBox {
+    visibility: visible !important;
 }
 
 .keyboard-container {

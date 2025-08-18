@@ -10,13 +10,13 @@ use Keyman\Site\Common\ImageRandomizer;
         <!-- Logo -->
         <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
         <!-- Language Dropdown Search -->
-        <div class="form">
-          <input type="text" class="form-control form-input" dir="ltr" data-bs-auto-close="outside" placeholder="Search for a keyboard..." id="mainSearchBtn" maxlength="30">
-          <span class="info-icon-span" id="infoIcon">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <span class="clear-icon">&times;</span>
+        <div class="form" id="searchBar">
+          <input type="text" class="form-control form-input" id="searchInput" dir="ltr" data-bs-auto-close="outside" placeholder="Search for a keyboard..." maxlength="30">
+          <span id="searchIcons">
+            <i class="fa-solid fa-magnifying-glass" id="magnifyingGlassIcon"></i>
+            <i id="clearSearchIcon">&times;</i>
           </span>
-          <ul class="dropdown-menu" id="languageSearchDropdown">
+          <ul class="dropdown-menu" id="searchDropdownMenu">
             <div class="top-row top-row-search">
               <div id="worldMap">
                 <span><i class="fa fa-map"></i> World Map</span>
@@ -65,14 +65,6 @@ use Keyman\Site\Common\ImageRandomizer;
               <div class="kb-item-footer">US Basic Keyboard</div>
               <!-- kmwHeader.js -->
             </div>
-        </div>
-      </div>
-      <div class="middle-header">
-        <!-- Font size slider -->
-        <div class="font-size-mobile">
-          <button class="font-large mx-1" id="decreaseFontSize">-</button>
-          <span class="font-large item">A</span>
-          <button class="font-large mx-1" id="increaseFontSize" href="#">+</button>
         </div>
       </div>
       <div class='right-header'>
@@ -163,7 +155,7 @@ use Keyman\Site\Common\ImageRandomizer;
   <section class="container-flex" id="textAndKeyboardSection">
     <!-- Text area section -->
     <div class="textarea-container">
-      <textarea class="text-area" id="textArea" placeholder="Search and select a keyboard to start typing..."></textarea>
+      <textarea class="text-area" id="textArea" dir="auto" style="unicode-bidi:plaintext" placeholder="Search and select a keyboard to start typing..."></textarea>
       <i class="fa-solid fa-copy fa-xl" id="copyTool"></i>
     </div>
     <div class="divider-container" id="Divider">
@@ -189,6 +181,7 @@ use Keyman\Site\Common\ImageRandomizer;
   <script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
   <script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
   <script src="<?php echo cdn('js/kmwControls.js') ?>"></script>
+  <script src="<?php echo cdn('js/kmwMap.js') ?>"></script>
   <script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
   </body>
 </html>
