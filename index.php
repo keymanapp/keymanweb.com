@@ -180,8 +180,6 @@ use Keyman\Site\Common\ImageRandomizer;
   <script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
   <script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
   <script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
-  <script src="<?php echo cdn('js/kmwControls.js') ?>"></script>
-  <script src="<?php echo cdn('js/kmwMap.js') ?>"></script>
   <script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
   </body>
 </html>
