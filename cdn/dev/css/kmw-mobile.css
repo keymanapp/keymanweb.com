@@ -6,6 +6,12 @@
 ======================
 */
 
+:root {
+  --mobile-font-size: 12px;
+  --mobile-search-max-width: 250px;
+  --mobile-search-min-width: 50px;
+}
+
 html {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -36,335 +42,78 @@ p {
   font-size:13px;
   line-height:1.5em;
   }
-/*
-header, #content, footer {
-  margin:0px auto;
-  clear: both;
-  }
-*/
-
-hr {
-  display: none;
-  }
-
-/*
-.box {
-  -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
-*/
-/*
-===================
-==Header Elements==
-===================
-*/
-header img, #headerLeft {
-  display: none;
-}
-header {
-  position: absolute;
-  top: 190px;
-  background: #776666;
-  font-size: 9pt;
-  padding: 6px 0;
-  color: white;
-  width: 100%;
-  text-align: center;
-}
-header a {
-  color: #c0c0ff;
-  text-decoration: underline;
-}
 
 /*
 ====================
 ==Content Elements==
 ====================
 */
-#content {
-  width: 100%;    /* specific for mobile and tablet */
-  margin: 0px auto;
-  background-color: #eeeeee;
-  /* min-height:375px; */
-  }
-
 
 /* KMW Main App */
 #app {
-  width:100%;
+  width: 100%;
   margin: 0px;
-  }
+}
+
 #KeymanWebControl {
   display: none;
-  }
-
-#exampleBox,#example {
-  display:none;
-  }
-
-#messageContainer {
-  width: 80%;
-  float:left;
-  height: 50%;
-  }
-
-#message {
-  height:144px;
-  width: 100%;/*554px;*/
-  float:left;
-  margin: 4px;
-  color:black;
-  font-size:17px;
-  font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
-  }
-
-  #font-size{
-    display: none;
-  }
-
-/* KMW App Buttons */
-
-#buttons {
-  float: right;
-  width: 40px;
-  margin: 8px 15px 8px 0px;
-  border: none;
 }
 
-#buttons div {
-  /*width:50px;*/
-  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
-  background: #eeeeee;
-  border: none;
-  margin: 0px 0px 4px 10px;
-  height:40px;
-  width: 41px;
-  padding: 0px;
-  padding-top: 2px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 34px 34px;
-  }
-
-#font{
-  text-align: center;
-}
-
-#font p{
+#exampleBox, #example {
   display: none;
 }
 
-#buttons div:disabled {
-  cursor: default !important;
-  color: gray !important;
-  /*border-color: gray !important; */
-  }
-
-#search,#search.links{
-  background-image:url('../img/btn_google.png');
-
+.main-header {
+  width: 100%;
+  grid-template-columns: 2fr 1fr;
 }
 
-#search.linksOff{
-  background-image:url('../img/btn_google_white.png');
+.left-header {
+  width: 70vw; 
 }
 
-#copy,#copy.links{
-  background-image:url('../img/btn_copy.png');
-
-}
-
-#copy.linksOff{
-  background-image:url('../img/btn_copy_white.png');
-}
-
-#buttons div * {
-  display:inline;
-  }
-
-#buttons p {  /* buttons have no text label on mobiles */
-  display:none;
-  }
-
-div.links {
-  cursor:pointer;
-  }
-
-div.linksOff {
-  cursor:default !important;
-  border:none;
-  /*border: 1px solid #cccccc !important; */
-  }
-
-div.linksOff * {
-  color: gray;
-  -webkit-user-select:none;
-  }
-
-#mobile-font{
+.left-header img {
   display: none;
-  width: 40px;
-  border-radius: 4px;
-  position: absolute;
-  left: 100%;
-  top: 60px;
-  margin-left: -45px;
-  text-align: center;
-  font-size: 24pt;
-  background: #fff;
 }
 
-#mobile-increase{
-  height: 40px;
-  line-height: 40px;
-  border-bottom: solid 1px #000;
+.right-header {
+  grid-template-columns: 50% 50%;
 }
 
-#mobile-decrease{
-  height: 40px;
-  line-height: 40px;
+.right-header {
+  width: 30vw;
 }
 
-/* Aside Elements */
-aside, aside div {
-  display:none;
-  }
-
-/*
-===================
-==Footer Elements==
-===================
+/* 
+Language Search box
 */
-.footer,footer {
-  display:none;
-  }
 
-#mobile-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+#searchBar {
+  width: 50%;
 }
 
-#mobile-footer #mobile-version {
-  font-size: 7pt;
-  text-align: center;
-  width: 100%;
+#searchInput:focus, #searchDropdownMenu, #keyboardSelection:active {
+  width: var(--mobile-search-max-width) !important;
 }
 
-.messageBox {
-  box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -o-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -khtml-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  background: #c4c4c4;
-  margin-left: 10%;
-  margin-top: 10%;
-  width: 80%;
-  height: 150px;
-  position: fixed;
+#textArea {
+  height: 45vh !important;
 }
 
-.messageBox div {
-  width: 85%;
-  height: 84px;
-  left: 5%;
-  top: 10px;
-  padding: 8px;
-  font-size: 13px;
+.mobile-font-size-container {
+  display: flex;
+  flex-direction: row;
   position: absolute;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 3px;
+  right: 50px;
+  top: 80px;
+  width: 150px;
   background: white;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.messageBox button {
-  width:83px;
-  position: absolute;
-  right: 10px;
-  bottom: 4px;
-  background: #414141;
-  border-top: 1px solid #383838;
-  border-right: 1px solid #1F1F1F;
-  border-bottom: 1px solid #151515;
-  border-left: 1px solid #1F1F1F;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  color: white;
-  font: bold 12px Helvetica, Verdana, Arial, sans-serif;
-  text-shadow: 0px -1px 1px #1E2D4D;
-  text-align:center;
-  margin: 0 auto 6px;
-  padding: 3px;
-  }
-
-.messageBox button:disabled {
-  cursor: default !important;
-  color: gray !important;
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-}
-
-.messageBox button:hover {
-	-webkit-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	-moz-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	-ms-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	-o-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	cursor: pointer;
-}
-
-.messageBox button:active {
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-}
-
-.progressBox {
-  box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -o-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -khtml-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  background: #c4c4c4;
-  top: 10%;
-  margin-left: 10%;
-  width: 80%;
-  height: 70px;
-  position: fixed;
-}
-
-.progressBox div {
-  width: 85%;
-  height: 34px;
-  left: 5%;
-  top: 10px;
-  padding: 8px;
-  background: url('/img/wait.gif') no-repeat 354px 8px white;
-  font-size: 13px;
-  position: absolute;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 3px;
-}
-
- /* Additional rules for portrait orientation */
+/* Additional rules for portrait orientation */
 @media only screen and (orientation: portrait) {
 
   #message {
@@ -378,8 +127,7 @@ aside, aside div {
     }
 }
 
-
- /* Additional rules for landscape orientation */
+/* Additional rules for landscape orientation */
 @media only screen and (orientation: landscape) {
 
   #messageContainer {
@@ -392,11 +140,10 @@ aside, aside div {
     }
   #buttons {
     margin: 4px 15px 4px 0;
-    }
-
-    #font{
-      display: none;
-    }
+  }
+  #font {
+    display: none;
+  }
 }
 
 /*
@@ -412,7 +159,6 @@ aside, aside div {
 #kmw-language-menu .selected {
   background-color: gray !important;
 }
-
 
 .phone .kmw-keyboard-dari_clra .kmw-key-default .kmw-key-text {
   top: -33%;

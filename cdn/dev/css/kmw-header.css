@@ -27,6 +27,7 @@ header > div > img {
 
 .main-header {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   height: 75px;
   padding: 0 10px;
   box-shadow: var(--box-shadow);
@@ -60,6 +61,7 @@ Language Search box
   right: 5px;
   top: 12px;
   border-left: 1px solid gray;
+  background-color: white;
 }
 
 #searchIcons > * {
@@ -829,69 +831,6 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* ================================
-    Computer, Laptop, some Tablet screen sizes
-================================ */ 
-@media screen and (min-width: 1045px) {
-  .main-header {
-    grid-template-columns: 3fr 1fr;
-  }
-}
-
-/* Expanding the search box  */ 
-@media screen and (940px <= width <= 1045px) {
-  .main-header {
-    grid-template-columns: 4fr 1fr;
-  }
-}
-
-/* ================================
-    Most Tablet to Phone sizes
-================================ */ 
-
-@media screen and (max-width: 940px) {
-  .main-header {
-    grid-template-columns: 4fr 1fr;
-  }
-
-  .left-header {
-    align-items: center;
-    justify-content: left;
-    align-items: center;
-  }
-
-  .left-header img {
-    display: none;
-  }
-
-  /* 
-  Language Search box
-  */
-
-  #searchBar {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 565px) {
-  #searchDropdownMenu {
-    width: 300px !important;
-  }
-
-  #keyboardSelection {
-    max-width: 300px !important;
-  }
-
-  #keyboardTab {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  #keyboardTab > * {
-    margin-bottom: 10px;
-  }
 }
 
 /* Animation */

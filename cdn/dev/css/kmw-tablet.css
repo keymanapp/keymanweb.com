@@ -18,6 +18,9 @@ body {
   background-color: #eeeeee;
   margin:0px;
   }
+section {
+  background-color: darkred;
+}
 
 a {
   text-decoration:none;
@@ -72,6 +75,27 @@ header > div > img {
   display: block;
   width: 100%;
   height: 8px;
+}
+
+
+/* Expanding the search box  */ 
+/* @media screen and (940px <= width <= 1045px) {
+  .main-header {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+} */
+
+.main-header {
+    width: 100%;
+    grid-template-columns: 3fr 1fr;
+}
+
+.left-header {
+  width: 70vw;
+}
+
+.right-header {
+  width: 300px;
 }
 
 /*

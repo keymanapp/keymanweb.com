@@ -1,138 +1,80 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define the divider, text area and keyboard
+    const container = document.querySelector('.container-flex')
     const divider = document.getElementById('Divider')
+
     const resizer = divider.querySelector('#resizeGrip')
-    let prevElement = divider.previousElementSibling.querySelector('.text-area');
-    let nextElement = divider.nextElementSibling;
+    const prevElementOfResizer = divider.previousElementSibling.querySelector('.text-area')
+    const nextElementOfResizer = divider.nextElementSibling
+    
     let isResizing = false;
     
-    // Define the heights of text area, keyboard, and the vertical screen
-    let prevElementHeight = 0;
-    let prevElementWidth = 0;
-    let verticalViewport = 0;
+    let startY, startHeightTop, startHeightBottom = 0
 
     const mouseDownHandler = (e) => {
         e.preventDefault();
         resizer.style.cursor = 'grabbing'
         isResizing = true
 
-        // Get the Y coordinate of mouse click & Text Area + Keyboard heights
-        prevElementHeight = prevElement.getBoundingClientRect().height;
-        prevElementWidth = prevElement.getBoundingClientRect().width;
-        verticalViewport = e.clientY;
+        startY = e.clientY
+        startHeightTop = prevElementOfResizer.offsetHeight
+        startHeightBottom = nextElementOfResizer.offsetHeight
 
         document.addEventListener('mousemove', mouseMoveHandler)
         document.addEventListener('mouseup', mouseUpHandler)
     }
+
     const mouseUpHandler = () => {
         resizer.style.removeProperty('cursor')
         isResizing = false
+        document.removeEventListener('mousemove', mouseMoveHandler)
     }
 
     const mouseMoveHandler = function (e) {
         if (!isResizing) return;
-        // Calculate the cursor movement
-        let value = e.clientY - verticalViewport
-        let clientX = e.clientX
-        calcElementSize(value, clientX)
-    }
 
-    function calcElementSize(val, x) {
-        // Get the dynamic heights of both elements
-        let newPrevHeight = prevElementHeight + val;
-        let newNextWidth = (x / prevElementWidth) * 150;
+        let deltaY = e.clientY - startY   // Get up or down direction
 
-        // Define minimum and maximum heights
-        const minPrevHeight = 150; 
-        const maxPrevHeight = window.innerHeight * 0.8;
-        const minNextWidth = 50;
-        const maxNextWidth = 80;
+        let newTopHeight = startHeightTop + deltaY
+        let newBottomHeight = startHeightBottom - deltaY
 
-        // Ensure the heights do need exceed the define heights
-        newPrevHeight = Math.max(minPrevHeight, Math.min(newPrevHeight, maxPrevHeight));
-        newNextWidth = Math.max(minNextWidth, Math.min(newNextWidth, maxNextWidth));
+        newTopHeight = Math.max(100, Math.min(newTopHeight, window.innerHeight * 0.8))
+        newBottomHeight = Math.max(100, Math.min(newBottomHeight, window.innerHeight * 0.7))
 
-        // Update the heights of Prev and Next Elements
-        prevElement.style.height = `${newPrevHeight}px`
+        prevElementOfResizer.style.height = `${newTopHeight}px`
+        nextElementOfResizer.style.height = `${newBottomHeight}px`
 
-        if (newPrevHeight >= maxPrevHeight) {
+        if (newBottomHeight <= 200) {
             fullScreenSize()
-        } else if (newPrevHeight < maxPrevHeight) {
-            divider.style.display = "grid"
-            nextElement.style.display = "flex"
         }
     }
 
     /* Hide-Show Keyboard */
     const hideKeyboardBtn = document.querySelector('#hideKeyboard')
 
-    let isTextAreaFullHeight = true
+    let isTextAreaFullHeight = false
     const fullHeightTextArea = window.innerHeight * 0.9
     const defaultHeightTextArea = window.innerHeight * 0.3
 
     function defaultSize() {
-        prevElement.style.height= `${defaultHeightTextArea}px`
-        isTextAreaFullHeight = true     
+        prevElementOfResizer.style.height = `${defaultHeightTextArea}px`
+        nextElementOfResizer.style.height = `500px`
+        // nextElementOfResizer.style.width = `900px`
+        isTextAreaFullHeight = false 
     }
 
     function fullScreenSize() {
-        prevElement.style.height = `${fullHeightTextArea}px`
-        isTextAreaFullHeight = false
+        prevElementOfResizer.style.height = `${fullHeightTextArea}px`
+        isTextAreaFullHeight = true
     }
 
     hideKeyboardBtn.addEventListener('click', () => {
-        if (!isTextAreaFullHeight) {
+        if (isTextAreaFullHeight) {
             defaultSize()
         } else {
             fullScreenSize()
         }
     })
-    window.onresize = updateSize
-    // Detect desktop browser height and modify css
-    function updateSize() {
-        // Set OSK size/position
-        p = new Object();
-
-        var height = $(window).height();
-        var width = $(window).width();
-        var appPos = $('#textAndKeyboardSection').position();
-        var appLeft = appPos.left;
-
-        // We can't proceed any further if KMW hasn't loaded yet.
-        // No point handling resizes until that's occurred.
-        if(!getKeymanWeb() || !getKeymanWeb().osk) {
-            return;
-        }
-
-        // Adjust the message box height only if a desktop browser
-        if(!getKeymanWeb().util.isTouchDevice())
-        {
-            if (height <= 768) {
-                $('#textArea').css('height', '209px');
-                p['height'] = 264;
-            }
-
-            if(height > 768) {
-                $('#textArea').css('height', '260px');
-                if (height < 820) {
-                    p['height'] = 246;
-                }
-                else if(height < 860) {
-                    p['height'] = 246;
-                }
-                else{
-                    p['height'] = 264;
-                }
-            }
-        }
-
-        p['top'] = $('#textAndKeyboardSection').offset().top + $('#textAndKeyboardSection').outerHeight() + 8;
-        p['left'] = appLeft + 15;
-        p['width'] = 710;
-
-        // Update keyboard position and size
-        getKeymanWeb().osk.setRect(p);
-    }
 
     // Copy tool
     const copyBtn = document.querySelector('#copyTool')
@@ -164,10 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
 
+    // Font slider
     const fontSliderBtn = document.querySelector('#fontSizeRange')
     fontSliderBtn.addEventListener('input', function() {
         textArea.style.fontSize = `${this.value}px`
     })
+
     defaultSize()
+    
     resizer.addEventListener('mousedown', mouseDownHandler)
 })

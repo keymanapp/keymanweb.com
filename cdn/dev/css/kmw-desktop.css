@@ -38,7 +38,6 @@ form {
   float:left;
   width:80%;
 }
-
 /*
 ======================
 ==Keyboard Examples==
@@ -53,7 +52,8 @@ form {
 #example {
   visibility: hidden;
   width: 100%;
-  min-height: 45px;
+  min-height: 10px;
+  max-height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,16 +65,16 @@ form {
 }
 
 .highlightKeys kbd {
-    border: solid 1px #808080;
-    border-radius: 4px;
-    background: #cccccf;
-    color: black;
-    font-family: Verdana;
-    font-weight: normal;
-    min-width: 16px;
-    display: inline-block;
-    box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
-    margin-right: 4px;
+  border: solid 1px #808080;
+  border-radius: 4px;
+  background: #cccccf;
+  color: black;
+  font-family: Verdana;
+  font-weight: normal;
+  min-width: 16px;
+  display: inline-block;
+  box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
+  margin-right: 4px;
 }
 
 .highlightKeys kbd.space {
@@ -90,10 +90,51 @@ form {
   display: block !important;
   position: static !important;
   width: 100% !important;
-  height: 264px !important;
+  height: 100% !important;
   max-width: 100% !important;
-  max-height: 264px !important;
+  max-height: 100% !important;
   border-radius: 0;
+}
+
+.kmw-help-osk-frame {
+  height: 100% !important;
+  scroll-behavior: smooth !important;
+  scrollbar-width: thin;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+  text-align: center !important;
+}
+
+.kmw-osk-static {
+  height: fit-content !important;
+  text-align: center !important;
+  border: solid 1px var(--keyman-blue) !important;
+}
+
+.kmw-osk-static table {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+#kmw-osk-help-page > table > tbody > tr > td > .row {
+  --bs-gutter-x: 0 !important;
+}
+
+.kmw-title-bar { 
+  background-color: #2EADD3 !important; 
+  border-radius: 0 !important;
+  height: fit-content !important;
+}
+
+#keyboard_europeanlatin_help p, .kmw-osk-static p {
+  display: flex !important;
+  justify-content: end !important;
+  position: relative !important;
+  right: 0 !important;
+  top: 0 !important;
 }
 
 .kmw-key-square {
@@ -137,7 +178,7 @@ form {
  .desktop  .kmw-key-label { top: 5%; }
  .desktop  .kmw-key-label { left: 10%; }
  .desktop  .kmw-key-default .kmw-key-text { top: 25%; }
- .desktop  .kmw-footer, .desktop .kmw-title-bar { background: #2EADD3 !important; display: none;}
+ .desktop  .kmw-footer, .desktop .kmw-title-bar { background-color: #2EADD3 !important; display: none;}
  .desktop  .kmw-title-bar div{min-height: 100%;}
  .desktop  .kmw-footer-caption a { color: white !important; }
  .kmw-osk-frame, .kmw-osk-inner-frame { border-color: #2EADD3 !important; }

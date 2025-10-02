@@ -158,13 +158,12 @@ use Keyman\Site\Common\ImageRandomizer;
       <textarea class="text-area" id="textArea" dir="auto" style="unicode-bidi:plaintext" placeholder="Search and select a keyboard to start typing..."></textarea>
       <i class="fa-solid fa-copy fa-xl" id="copyTool"></i>
     </div>
-    <div class="divider-container" id="Divider">
+    <div class="divider-container" id="Divider" draggable="true">
       <!-- Resizer -->
       <div class="middle-divider">
         <i class="fa-solid fa-grip-lines" id="resizeGrip"></i>
       </div>
     </div>
-    <div class="keyboard-and-download">
       <!-- Keyboard section -->
       <div class="keyboard-container item">
         <div class="example-box" id="exampleBox">
@@ -172,15 +171,12 @@ use Keyman\Site\Common\ImageRandomizer;
         </div>
         <div class="keyboard-area" id="keymanKeyboardCtrl">
         </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
-  <script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
   <script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
-  <script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
+  <script src="<?php echo cdn('js/kmwElements.js') ?>"></script>
   </body>
 </html>
 

@@ -61,7 +61,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-desktop.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn('src/bootstrap.min.css') ?>" crossorigin="anonymous">
@@ -145,11 +144,11 @@
       } else {
           let cookie = keyman.util.loadCookie('KeymanWeb_Keyboard')
           if(cookie['current']) {
-              let cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
-              if(cookieMatch) {
-                  localKeyboard = cookieMatch[1];
-                  localLanguage = iso6393ToBCP47(cookieMatch[2]);
-              }
+            let cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
+            if(cookieMatch) {
+                localKeyboard = cookieMatch[1];
+                localLanguage = iso6393ToBCP47(cookieMatch[2]);
+            }
           }
       }
   }
@@ -178,13 +177,16 @@
       await keyman.addKeyboards();
     }';
     } ?>
+    if (localKeyboard && localLanguage) {
+      keyman.setActiveKeyboard(localKeyboard, localLanguage)
+    }
   });
 
   pageLoading = false;
 
   (function() {
     var css = {
-      "desktop" : "<?php echo cdn("css/kmw-header.css"); ?>",
+      "desktop" : "<?php echo cdn("css/kmw-desktop.css"); ?>",
       "tablet" : "<?php echo cdn("css/kmw-tablet.css"); ?>",
       "mobile" : "<?php echo cdn("css/kmw-mobile.css"); ?>"
     };
@@ -223,5 +225,9 @@
   }
   )();
 </script>
+
+<script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
+<script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
+<script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
 
 </head>

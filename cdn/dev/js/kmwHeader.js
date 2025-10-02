@@ -8,7 +8,7 @@ function getKeymanWeb() {
 }
 /* Global Variables */
 let selectedKbList = []         // Main array for the search, kb selection...etc.
-let dataKbForRemoval            // For History search
+let kbSearchData = []       // For History search
 let kmwLang = keyman.getActiveLanguage()
 let kmwKb = keyman.getActiveKeyboard()
 
@@ -56,6 +56,9 @@ elements.worldMapBtn?.addEventListener('click', (e) => {
         keyman.addEventListener('keyboardchange', () => {
             location.replace(`#${keyman.getActiveLanguage()},${keyman.getActiveKeyboard()}`)
             updateExample(keyman.getActiveKeyboard())
+            setTimeout(() => {
+                applyClassToKb(), 0
+            })
         }) 
     } else {
         openSearch()
@@ -201,7 +204,6 @@ function exists(...elements) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    defaultKeyboard()
     /*  UI Behavior of the Selected Keyboard menu */
     if (exists(elements)) {
         elements.keyboardSelectionButton.addEventListener('mouseenter', () => {
@@ -257,11 +259,14 @@ async function setKeyboardWithDirection(kbdname, languageCode) {
     }
 
     location.replace(`${langTag},${kbTag}`)
-
     await keyman.addKeyboards(kbdname)
     const kbd = keyman.getKeyboard(kbdname, languageCode)
     await keyman.setActiveKeyboard(kbdname, languageCode)
     
+    // setTimeout(() => {
+    //     applyClassToKb(), 0
+    // })
+
     if(kbd) {
         textArea.placeholder = `The ${kbdname} keyboard is selected. Start typing...`
         kbSpan.innerHTML = `${kbdname}`
@@ -312,6 +317,33 @@ async function updateExample(kbdname) {
     }
 }
 
+function applyClassToKb() {
+    
+    const kbArea = document.querySelector('.keyboard-area')
+    if (!kbArea) return
+
+    const apply = () => {
+        const child = kbArea.children
+        for (const c of child) {
+            if (!c.classList.contains('kmw-osk-frame')) {
+                c.classList.add('kmw-osk-frame')
+                c.classList.add('kmw-help-osk-frame')
+            }
+        }
+    }
+
+    apply()
+
+    // const observer = new MutationObserver(() => {
+    //     for (const m of mutations) {
+    //         if (m.type === 'childlist' && m.addedNodes.length) {
+    //             apply()
+    //         }
+    //     }
+    // })
+    // observer.observe(kbArea, {childList: true})
+}
+
 /* Search */
 const kbSearchCard = document.getElementById('kbSearchCardUI');
 let debounceTimer
@@ -355,6 +387,8 @@ function goNextPage() {
 /* Click: Open Search and Display search instructions */
 elements.searchInput.addEventListener('click', function(e) {
     const query = e.target.value.trim()
+    
+    defaultKeyboard()
     if (query == "") {
         resetSearch()
     } else {
@@ -445,6 +479,7 @@ async function searchKeyboard(query = null, page) {
         throw new Error(`API request failed with status ${response.status}`)
     }
 
+    searchHistory(query)
     let data = await response.json()
     // Found with Context: Setup pagination
     if (data.context) {
@@ -497,7 +532,6 @@ function displaySearch(data, total = 0, query = '') {
     data.forEach(kb => {
         const card = searchKbCardUI(kb, marked, selectedKbList, data)
         kbSearchCard.appendChild(card)
-        // dataKbForRemoval = selectedKbList
     })
     paginationCtrl.style.display = 'flex';
 }
@@ -1164,3 +1198,159 @@ function validateURL(string) {
 /*      
         == End of Keyboard Selection menu Section ==       
 */
+
+/* 
+        == Store data in localStorage to use for reload ==
+*/
+let appState = { 
+    fontSize: 16,
+    writtenText: "",
+    selectedKbList: [],
+    enabledKb: null,
+    keyboardSizes: null,
+    textAreaSizes: null
+}
+const keyboardContainer = document.querySelector('.keyboard-container')
+const fontSizeRange = document.querySelector('#fontSizeRange')
+
+function getFontSize(element) {
+    let theFontSize
+    theFontSize = parseInt(window.getComputedStyle(element).fontSize) || "16"
+             
+    return theFontSize
+}
+
+function getSelectedKb() {
+    return selectedKbList || []
+}
+
+function getEnabledKb() {
+    let hash = location.hash.match(/^#(.+),(Keyboard_.+)$/i)[0]
+    
+    let kbValues = hash.replace('#', '')
+    kbValues = hash.split(',')
+
+    return [hash, kbValues]
+}
+
+function getElementsSize(element) {
+    const rect = element.getBoundingClientRect()
+    return {
+        height: rect.height,
+        width: rect.width,
+        positionX: rect.x,
+        positionY: rect.y
+    }
+}
+
+function getElementValue(element) {
+    return element.value
+}
+
+function setFontSize(size) {
+    textArea.style.fontSize = size + "px"
+    fontSizeRange.value = size
+}
+
+function setWrittenText(text) {
+    textArea.value = text
+}
+
+function setElementsSize(element, sizes) {
+    element.style.height = sizes.height + "px"
+    element.style.left = sizes.positionX + "px"
+    element.style.top = sizes.positionY + "px"
+}
+
+function setSelectedKb(savedKbList) {
+    selectedKbList = savedKbList
+}
+
+function setEnabledKb(kb) {
+    if (kb) {
+        selectKb(kb)
+    }
+}
+
+function buildAppState() {
+    appState = {
+        fontSize: getFontSize(textArea),
+        selectedKbList: getSelectedKb(),
+        enabledKb: getEnabledKb(),
+        textAreaSizes: getElementsSize(textArea),
+        keyboardSizes: getElementsSize(keyboardContainer),
+        writtenText: getElementValue(textArea)
+    }
+    saveSettings("keymanWebState", appState)
+}
+
+function saveSettings(key, state) {
+    let recentTime = new Date()
+    const time = 5000 // equals to An hour
+    let item
+    
+    // console.log("recentTime: ", recentTime)
+    // console.log("recentTime.getTime(): ", recentTime.getTime())
+
+    if (state) {
+        item = {
+            value: state,
+            expiry: recentTime.getTime() + time
+        }
+    } 
+    localStorage.setItem(key, JSON.stringify(item))
+}
+
+function loadSettings(key) {
+    const raw = localStorage.getItem(key)
+    if (raw) {
+        let appState = JSON.parse(raw)
+        const newTime = new Date()
+        
+        console.log("newTime: ", newTime, "appState.expiry: ", appState.expiry)
+        console.log(newTime.getTime() > appState.expiry)
+        if (newTime.getTime() > appState.expiry) {
+            localStorage.removeItem(key)
+            alert("Session expired!")
+            return null
+        }
+
+        setFontSize(appState.value.fontSize)
+        setWrittenText(appState.value.writtenText)
+        setElementsSize(textArea, appState.value.textAreaSizes)
+        setElementsSize(keyboardContainer, appState.value.keyboardSizes)
+        setSelectedKb(appState.value.selectedKbList)
+        setEnabledKb(appState.value.enabledKb[0])
+
+        generateKbUI(appState.value.selectedKbList)
+        console.log(appState.value.enabledKb[1][1], appState.value.enabledKb[1][0])
+        // selectKb(appState.value.enabledKb[1][1], appState.value.enabledKb[1][0])
+    }
+}
+
+window.addEventListener('load', () => {
+    loadSettings("keymanWebState")
+})
+
+window.addEventListener('beforeunload', () => {
+    buildAppState()
+})
+
+window.addEventListener('storage', (e) => {
+    if (e.key == "keymanWebState") {
+        appState = JSON.parse(e.newValue)
+        buildAppState()
+    }
+})
+
+function searchHistory(value) {
+    if (kbSearchData.length < 0) {
+        kbSearchData.push(value)
+        for (i=0; i<=kbSearchData.length; i++) {
+            if (value != kbSearchData[i] || kbSearchData.length >= 5) {
+                kbSearchData.shift()
+            }
+        }
+    }
+    // console.log(kbSearchData)
+}
