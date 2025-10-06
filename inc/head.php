@@ -144,11 +144,11 @@
       } else {
           let cookie = keyman.util.loadCookie('KeymanWeb_Keyboard')
           if(cookie['current']) {
-            let cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
-            if(cookieMatch) {
-                localKeyboard = cookieMatch[1];
-                localLanguage = iso6393ToBCP47(cookieMatch[2]);
-            }
+              let cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
+              if(cookieMatch) {
+                  localKeyboard = cookieMatch[1];
+                  localLanguage = iso6393ToBCP47(cookieMatch[2]);
+              }
           }
       }
   }
