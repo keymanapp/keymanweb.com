@@ -53,11 +53,11 @@ p {
 #app {
   width: 100%;
   margin: 0px;
-}
+  }
 
 #KeymanWebControl {
   display: none;
-}
+  }
 
 #exampleBox, #example {
   display: none;
@@ -70,7 +70,7 @@ p {
 
 .left-header {
   width: 70vw; 
-}
+  }
 
 .left-header img {
   display: none;
@@ -113,7 +113,7 @@ Language Search box
   border-radius: 10px;
 }
 
-/* Additional rules for portrait orientation */
+ /* Additional rules for portrait orientation */
 @media only screen and (orientation: portrait) {
 
   #message {
@@ -127,7 +127,7 @@ Language Search box
     }
 }
 
-/* Additional rules for landscape orientation */
+ /* Additional rules for landscape orientation */
 @media only screen and (orientation: landscape) {
 
   #messageContainer {
@@ -140,10 +140,10 @@ Language Search box
     }
   #buttons {
     margin: 4px 15px 4px 0;
-  }
+    }
   #font {
-    display: none;
-  }
+      display: none;
+    }
 }
 
 /*

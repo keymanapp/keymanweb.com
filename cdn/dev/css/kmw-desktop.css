@@ -65,16 +65,16 @@ form {
 }
 
 .highlightKeys kbd {
-  border: solid 1px #808080;
-  border-radius: 4px;
-  background: #cccccf;
-  color: black;
-  font-family: Verdana;
-  font-weight: normal;
-  min-width: 16px;
-  display: inline-block;
-  box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
-  margin-right: 4px;
+    border: solid 1px #808080;
+    border-radius: 4px;
+    background: #cccccf;
+    color: black;
+    font-family: Verdana;
+    font-weight: normal;
+    min-width: 16px;
+    display: inline-block;
+    box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
+    margin-right: 4px;
 }
 
 .highlightKeys kbd.space {
