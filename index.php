@@ -1,139 +1,182 @@
-<?php /*
-  Name:             Index.php
-  Copyright:        Copyright (C) 2013 Tavultesoft Pty Ltd.
-  Documentation:
-  Description:      Wrapper for KeymanWeb LIVE demo page
-  Create Date:      11 Apr 2013
-
-  Modified Date:
-  Authors:          jmdurdin,jkirkham
-  Related Files:
-  Dependencies:
-
-  Bugs:
-  Todo:
-  Notes:
-  History:          11 Apr 2013 - jmd - Create
-*/
-
-use Keyman\Site\Common\ImageRandomizer;
+<?php
 
 require_once('inc/head.php');
-
+use Keyman\Site\Common\ImageRandomizer;
 ?>
 <body>
+  <header>
+    <div class='main-header'>
+      <div class="left-header">
+        <!-- Logo -->
+        <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>"/>
+        <!-- Language Dropdown Search -->
+        <div class="form" id="searchBar">
+          <input type="text" class="form-control form-input" id="searchInput" dir="ltr" data-bs-auto-close="outside" placeholder="Search for a keyboard..." maxlength="30">
+          <span id="searchIcons">
+            <i class="fa-solid fa-magnifying-glass" id="magnifyingGlassIcon"></i>
+            <i id="clearSearchIcon">&times;</i>
+          </span>
+          <ul class="dropdown-menu" id="searchDropdownMenu">
+            <div class="top-row top-row-search">
+              <div id="worldMap">
+                <span><i class="fa fa-map"></i> World Map</span>
+              </div>
+              <div class="search-instruction">
+                <hr id="hrForInstruction">
+                <div class="instruction-title">
+                  <p>Instruction</p>
+                </div>
+                <div class="search-instruction-list">
+                  <ol>
+                    <li>Search for any Keyman keyboard</li>
+                    <li>Click on "+" to enable and store it in the keyboard selection menu</li>
+                    <li>Switch between keyboards and start typing.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div class="middle-row middle-row-search" >
+              <hr id="hrForKeyboard">
+              <p class="keyboard-title"></p>
+              <div id="kbSearchCardUI">
+                <!-- kmwHeader.js --> 
+              </div>
+            </div>
+            <div class="bottom-row bottom-row-search" id="paginationControls">
+              <!-- kmwHeader.js --> 
+              <p class="hidden" id="resultCount"></p>
+              <button class="btn" id="prevPage" disabled><</button>
+              <span id="pageInfo">1</span>
+              <button class="btn" id="nextPage" disabled>></button>
+            </div>
+          <div id="KeymanWebControl" class="hidden"></div>
+          </ul>
+        </div>
+        <!-- Keyboard Dropdown selection -->
+        <button type="button" class="btn btn-secondary" id="keyboardSelectionButton">
+          <i class="fa-solid fa-caret-right fa-xs" id="kbCount"></i>
+        </button>
+          <div class="scroll-wrapper-keyboard-tab">
+            <div class="keyboard-tab" id="keyboardSelection">
+              <div class="kb-item-header">Keyboard Selection menu</div>
+              <div class="kb-item">
+                <p>Open Search to get your keyboard</p>
+              </div>
+              <div class="kb-item-footer">US Basic Keyboard</div>
+              <!-- kmwHeader.js -->
+            </div>
+        </div>
+      </div>
+      <div class='right-header'>
+        <!-- Tools: Font side slider + Hide/Show keyboard -->
+        <div class="tool-container">
+          <div class="font-size-container item">
+            <span class="font-small item">A</span>
+            <input id="fontSizeRange" type="range" name="" value="16" min="12" max="132" step="2"></input>
+            <span class="font-large item">A</span>
+          </div>
+          <div class="hide-keyboard">
+            <i class="fa-solid fa-keyboard" id="hideKeyboard"></i>
+          </div>
+        </div>
+        <!-- Dropdown Menu -->
+        <div class="dropdown" id="burgerMenu">
+          <button class="btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+            <ul class="dropdown-menu">
+              <div class="dropdown-grid-container">
+                <li class="dropdown-item">
+                  <a href="" target="_blank" id="kbHelpdocLink">
+                    <i class="fa-solid fa-question"></i>Keyboard Help
+                    <p>Access the keyboard help documentation for key strokes, description, and information of <span id="kbSpan">the selected keyboard</span>.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a href="https://keyman.com/developer/keymanweb/" target="_blank">
+                    <i class="fa-solid fa-code"></i>Website Plugin
+                    <p>KeymanWeb can be added to your website with just a few lines of code.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://keyman.com/" target="_blank">
+                    <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>"></img>Keyman
+                    <p>Visit Keyman . Keyman is completely free to use on all devices!</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://help.keyman.com/" target="_blank">
+                    <img src="<?php echo cdn('img/keymanweb-mini-logo-88.png') ?>"></img>KeymanHelp
+                    <p>Get help on Keyman Products, all keyboard documentation and development area.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://keyman.com/bookmarklet/" target="_blank">
+                    <i class="fa-solid fa-book-bookmark"></i>Bookmarklet
+                    <p>The KeymanWeb bookmarklet allows you to use a KeymanWeb keyboard on nearly any web page just by clicking the KeymanWeb bookmark.</p>
+                  </a>
+                </li>
+                <li class="dropdown-item" >
+                  <a href="https://software.sil.org/language-software-privacy-policy/" target="_blank">
+                  <i class="fa-solid fa-shield-halved"></i>Privacy policy
+                  <p>Summer Institute of Linguistics, Inc. (dba SIL International) produces and publishes apps in many languages of the world.</p>
+                  </a>
+                </li>
+              </div>
+                <div class="kmw-socials">
+                  <h5>Keep in touch</h5>
+                  <div class="kmw-socials-icons">
+                    <a href="https://facebook.com/KeymanApp" target="_blank" data-icon="">Facebook</a>
+                    <a href="https://twitter.com/keyman" target="_blank" data-icon="">X (formerly Twitter)</a>
+                    <a href="https://community.software.sil.org/c/keyman" target="_blank" data-icon=" ">Keyman Community</a>
+                    <a href="https://typo.social/@keyman" target="_blank" data-icon="">Mastodon</a>
+                    <a href="https://www.youtube.com/@KeymanApp" target="_blank" data-icon="">YouTube</a>
+                    <a href="https://blog.keyman.com/" target="_blank" data-icon="">Keyman Blog</a>
+                    <a href="https://github.com/keymanapp" target="_blank" data-icon="">GitHub</a>
+                  </div>
+                </div>
+                <div class="sil-logo">
+                  <img id="sil-logo" src="<?php echo ImageRandomizer::randomizer(); ?>" width="30%" alt='SIL'/>
+                  <p>Created by SIL Global</p>
+                </div>
+                <div class="kmw-version">
+                  <p>KeymanWeb version <?= $VersionWithTag ?></p>
+                </div>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Bar below the header -->
+    <div class="header-bar">
+      <img src="<?php echo cdn('img/headerbar.png') ?>" alt="" />
+    </div>
+  </header>
 
-<header>
-  <div id='headerBackground'>
-    <div id='headerRight'>
-      <?php if($tier != 'stable') { ?>
-      <span id='headerRight-beta'>Pre-release version</span> <a id='headerRight-link' href='?tier=stable'>Return to version <?= $kmw_builds['stable'] ?></a>
-      <?php } else if($hasBeta) { ?>
-        <span id='headerRight-beta'>New release!</span> <a id='headerRight-link' href='?tier=beta'>Try beta version <?= $kmw_builds['beta'] ?></a>
-      <?php } ?>
-    <!--<a href='https://keyman.com/keymanweb/' target='blank'><img src="<?php echo cdn("img/info.png"); ?>" /></a>-->
+  <section class="container-flex" id="textAndKeyboardSection">
+    <!-- Text area section -->
+    <div class="textarea-container">
+      <textarea class="text-area" id="textArea" dir="auto" style="unicode-bidi:plaintext" placeholder="Search and select a keyboard to start typing..."></textarea>
+      <i class="fa-solid fa-copy fa-xl" id="copyTool"></i>
     </div>
-    <div id='headerLeft'><img src="<?php echo cdn("img/keymanweb-logo-88.png"); ?>" alt='KeymanWeb.com' title="KeymanWeb version <?= $VersionWithTag ?>" /></div>
-    <img src="<?php echo cdn("img/headerbar.png"); ?>" alt="" />
-  </div>
-</header>
-
-<section id='content'>
-  <section id='app' class='box'>
-    <div id='KeymanWebControl' style='z-index: 10000'></div>
-    <div id='exampleBox'>
-      <p id='example'>Example: No examples available for this keyboard.</p>
+    <div class="divider-container" id="Divider" draggable="true">
+      <!-- Resizer -->
+      <div class="middle-divider">
+        <i class="fa-solid fa-grip-lines" id="resizeGrip"></i>
+      </div>
     </div>
-    <div id='messageContainer'>
-      <textarea id='message' form='actions' placeholder='Select a keyboard and start typing.'></textarea>
-    </div>
-    <div id='buttons'>
-      <div id='search' class='linksOff'><p>Search</p></div>
-      <div id="font"><span id="mobile-font-size" style="font-size:12pt">A</span><span style="font-size:20pt">A</span><p>Font Size</p></div>
-      <hr/>
-      <div id='copy' class='linksOff' data-clipboard-target="#message"><p>Copy</p></div>
-    </div>
-    <div id="font-size">
-      <span class="font-letter" id="font-small">A</span><div id="slider"></div><span class="font-letter" id="font-large">A</span>
-    </div>
-    <div id="mobile-font">
-      <div id="mobile-increase">+</div>
-      <div id="mobile-decrease">-</div>
-      <input type="hidden" id="mobile-font-size1" value="16">
+      <!-- Keyboard section -->
+      <div class="keyboard-container item">
+        <div class="example-box" id="exampleBox">
+          <p id="example">No example is available for this keyboard.</p>
+        </div>
+        <div class="keyboard-area" id="keymanKeyboardCtrl">
+        </div>
+      </div>
     </div>
   </section>
 
-	<aside id='offer'>
-	  <div class='box' id='keymandesktop'>
-		  <!--<h3>Windows Version</h3>-->
-		  <p><span id='desktop-title'>Use this keyboard in any Windows app!</span>
-              <a id='keyman-desktop-download'>
-              <img src="<?php echo cdn("img/small_download.png"); ?>" alt='Download'
-              title='Download free and open source Keyman Desktop with this keyboard bundled' /></a>
-              <span id='free-open-source'>Free and open source!</span></p>
-	  </div>
-	  <div class='box' id='bookmarklet'>
-	    <h3>Browser Add-in</h3>
-	    <div class='keyman-bookmarklet'><a href='#'></a></div>
-	    <p>Drag this button to your Bookmarks toolbar to install this keyboard to your web browser! <a href='https://keyman.com/bookmarklet' target='_blank'>Learn more</a></p>
-	  </div>
-	  <div class='box' id='learn'>
-      <h3>Website Plugin</h3>
-      <p>Install the Keyman Engine for Web into your blog, CMS or website</p>
-			<div><a href='https://keyman.com/developer/keymanweb/'>Learn more</a> | <a href='https://keyman.com/developer/keymanweb'>Get the source</a></div>
-		</div>
-	</aside>
-
-</section>
-
-<!-- Footer copied from keyman.com -->
-
-<div id="mobile-footer">
-  <div id="mobile-version">KeymanWeb version <?= $VersionWithTag ?></div>
-</div>
-
-<div class="footer">
-    <div class="wrapper">
-        <div class="footer-third" id="footer-mailchimp">
-            <h2 class="footer-third-title">Keep me updated</h2>
-            <!-- Begin MailChimp Signup Form -->
-            <div id="mc_embed_signup">
-            <form action="//keyman.us1.list-manage.com/subscribe/post?u=99fcab2b035a8a51cd2158ca9&amp;id=7ccdac1e32" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div class="mc-field-group">
-                    <input type="email" value="" name="EMAIL" class="required email kmw-disabled" id="mce-EMAIL" placeholder="email" />
-                </div>
-                <div id="mce-responses" class="clear">
-                    <div class="response" id="mce-error-response" style="display:none"></div>
-                    <div class="response" id="mce-success-response" style="display:none"></div>
-                </div>
-                <div class="button subscribe">
-                    <h2>Subscribe</h2>
-                </div>
-            </form>
-            </div>
-            <!--End mc_embed_signup-->
-            <br>
-            <div id="privacy-policy"><a href="https://software.sil.org/language-software-privacy-policy/">Privacy policy</a></div>
-
-            <div id="version">KeymanWeb version <?= $VersionWithTag ?></div>
-        </div>
-        <div class="footer-third" id="footer-social">
-            <h2 class="footer-third-title">Keep in touch</h2>
-            <div>
-              <a href="https://facebook.com/KeymanApp" target="_blank" data-icon='&#xf203;'>Facebook</a>
-              <a href="https://twitter.com/keyman" target="_blank" data-icon='&#xf202;'>Twitter</a>
-              <a href="https://blog.keyman.com/" target="_blank" data-icon='&#xf413;'>Keyman blog</a>
-              <a href="https://github.com/keymanapp" target="_blank" data-icon='&#xf200;'>GitHub</a>
-              <a href="https://community.software.sil.org/c/keyman" target="_blank" id='footer-community'>Keyman Community</a>
-            </div>
-        </div>
-        <div class="footer-third sil-logo">
-            <br>
-            <a href="https://www.sil.org/about/"><img id="sil-logo" src="<?php echo ImageRandomizer::randomizer(); ?>" width="50%" alt='SIL' /></a>
-            <p>Created by <a href="https://www.sil.org/about/">SIL Global</a></p>
-        </div>
-    </div>
-</div>
-
-</body>
+  <script src="<?php echo cdn('js/kmwHeader.js') ?>"></script>
+  <script src="<?php echo cdn('js/kmwElements.js') ?>"></script>
+  </body>
 </html>
+
