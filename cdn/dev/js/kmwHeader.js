@@ -266,7 +266,7 @@ async function setKeyboardWithDirection(kbdname, languageCode) {
     // setTimeout(() => {
     //     applyClassToKb(), 0
     // })
-
+    
     if(kbd) {
         textArea.placeholder = `The ${kbdname} keyboard is selected. Start typing...`
         kbSpan.innerHTML = `${kbdname}`
