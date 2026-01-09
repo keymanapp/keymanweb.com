@@ -6,29 +6,20 @@
 ======================
 */
 
-:root {
-  --mobile-font-size: 12px;
-  --mobile-search-max-width: 250px;
-  --mobile-search-min-width: 50px;
-}
-
-html {
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
 body {
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color:#2D2C2C;
   background-color: #eeeeee;
   margin:0px;
-  }
+  overflow: none;
+}
 
 a {
   text-decoration:none;
   color: #AD4A28;
-  }
+}
 
 a:hover {
   text-decoration:underline;
@@ -42,7 +33,104 @@ p {
   font-size:13px;
   line-height:1.5em;
   }
+/*
+==========
+==Header==
+==========
+*/
+.main-header {
+  width: 100%;
+  grid-template-columns: 2fr 1fr;
+}
 
+.left-header img {
+  display: none;
+}
+
+.right-header {
+  grid-template-columns: 50% 50%;
+  padding: 10px;
+}
+
+.tool-container {
+  margin: 10px;
+}
+
+.hamburger-menu-container {
+  overflow: scroll;
+  scroll-behavior: smooth;
+  height: 70vh;
+}
+
+#burgereMenu ul {
+  width: 80vw;
+  scroll-behavior: smooth;
+  flex-direction: column;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.burger-menu-external-links{
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.kmw-socials-icons {
+  display: flex;
+  flex-direction: column;
+}
+/* 
+=======================
+==Language Search box==
+=======================
+*/
+#searchBar {
+  width: 50%;
+}
+
+#searchInput::placeholder {
+  opacity: 0;
+}
+
+#searchIcons {
+  border: 0;
+  background-color: transparent;
+  z-index: 0;
+  user-select: none;
+}
+
+#searchInput:focus, #keyboardSelection:active {
+  width: var(--mobile-search-max-width) !important;
+}
+
+#searchDropdownMenu {
+  width: 95vw !important;
+}
+
+.textarea-container {
+  height: 100%;
+}
+
+.mobile-font-size-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 50px;
+  top: 80px;
+  width: 150px;
+  background: white;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.large-icon-tools, .small-icon-tools {
+  display: none;
+}
+
+#keyboardSelection.open {
+  width: 70vw !important;
+}
 /*
 ====================
 ==Content Elements==
@@ -59,93 +147,64 @@ p {
   display: none;
   }
 
-#exampleBox, #example {
+.kmw-tools {
   display: none;
 }
 
-.main-header {
+/* Divider */
+.divider-container {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100%;
+  align-items: center;
+  grid-template-areas: "left middle right";
   width: 100%;
-  grid-template-columns: 2fr 1fr;
+  height: 5vh;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
 }
 
-.left-header {
-  width: 70vw; 
-  }
-
-.left-header img {
-  display: none;
-}
-
-.right-header {
-  grid-template-columns: 50% 50%;
-}
-
-.right-header {
-  width: 30vw;
-}
-
-/* 
-Language Search box
-*/
-
-#searchBar {
-  width: 50%;
-}
-
-#searchInput:focus, #searchDropdownMenu, #keyboardSelection:active {
-  width: var(--mobile-search-max-width) !important;
-}
-
-#textArea {
-  height: 45vh !important;
-}
-
-.mobile-font-size-container {
+.left-divider {
   display: flex;
   flex-direction: row;
-  position: absolute;
-  right: 50px;
-  top: 80px;
-  width: 150px;
-  background: white;
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 10px;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
 }
 
- /* Additional rules for portrait orientation */
-@media only screen and (orientation: portrait) {
-
-  #message {
-    height: 170px;
-    }
-
-  #messageContainer {
-    float: left;
-    width: 80%;
-    height: 40%;
-    }
+.left-divider > * {
+  margin: 0 10px;
+}
+/* Keyboard */
+#exampleBox {
+  background-color: gray;
+  height: 10vh;
+  width: 100%;
 }
 
- /* Additional rules for landscape orientation */
-@media only screen and (orientation: landscape) {
-
-  #messageContainer {
-    float: left;
-    width: 85%;
-    height: 50%;
-    }
-  #message {
-    height: 50%;
-    }
-  #buttons {
-    margin: 4px 15px 4px 0;
-    }
-  #font {
-      display: none;
-    }
+.keyboard-container {
+  width: 100%;
+  height: 100% !important;
 }
 
+.desktop-keyboard {
+  display: none;
+}
+
+.phone-keyboard {
+  width: 100%;
+  display: block;
+}
+
+.keyboard-download-box {
+  display: none;
+}
+
+.spacing-purpose {
+  display: none;
+}
 /*
 ======================
 ==Keyboard Styling==
@@ -163,4 +222,65 @@ Language Search box
 .phone .kmw-keyboard-dari_clra .kmw-key-default .kmw-key-text {
   top: -33%;
   font-size: 0.8em !important;
+}
+
+.keyboard-area {
+  border: none;
+}
+
+/*
+============
+==Viewport==
+============
+*/
+/* Additional rules for portrait orientation */
+@media only screen and (orientation: portrait) {
+  .keyboard-container > * {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+ /* Additional rules for landscape orientation */
+@media only screen and (orientation: landscape) {
+  body {
+    overflow: auto;
+  }
+  
+  .main-header {
+    height: 65px;
+  }
+
+  .textarea-container {
+    height: 15vh;
+    margin-bottom: 10px;
+  }
+
+  .divider-container {
+    height: 10vh;
+  }
+
+  .middle-divider {
+    align-content: center;
+    font-size: 20px;
+  }
+
+  #example {
+    font-size: 10px;
+  }
+
+  .phone.android.kmw-osk-frame > * {
+    height: 100% !important;
+  }
+
+  .keyboard-container {
+    width: 100vw;
+    height: 100% !important;
+  }
+
+  .keyboard-area {
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
 }

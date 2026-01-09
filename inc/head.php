@@ -60,8 +60,11 @@
 <?= WebKeymanComSentry::GetBrowserHTML($kmwbuild) ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-global.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-screen.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-interaction.css"); ?>" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo cdn('src/bootstrap.min.css') ?>" crossorigin="anonymous">
 <!-- <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'> -->
@@ -155,31 +158,42 @@
 </script>
 
 <script>
-  loadKeyboardFromHash()
   var pageLoading = true;
+  let setActiveOnRegister = Number.parseFloat(keyman.version) >= 17.0 ? false : 'false';
+  let newOSK;
 
-  // We finally made it properly boolean in 17.0 as part of https://github.com/keymanapp/keyman/pull/8560.
-  var setActiveOnRegister = Number.parseFloat(keyman.version) >= 17.0 ? false : 'false';
+  function setOSK(platform) {
+    let targetDevice = platform
 
-  keyman.init({
+    if(targetDevice == 'windows') {
+      targetDevice = {'browser': 'chrome', 'formFactor': 'desktop', OS: 'windows', touchable: false}
+      if(newOSK) document.getElementById('keymanKeyboardCtrl').removeChild(newOSK.element); 
+      newOSK = new keyman.views.InlinedOSKView(keyman, { device: targetDevice }); 
+      newOSK.setSize('100%', '100%'); 
+      document.getElementById('keymanKeyboardCtrl').appendChild(newOSK.element); 
+      keyman.osk = newOSK;
+    } else if (targetDevice == 'tablet') {
+      targetDevice = {'browser': 'chrome', 'formFactor': 'tablet', OS: 'android', touchable: true};
+    } else {
+      targetDevice = {'browser': 'chrome', 'formFactor': 'phone', OS: 'android', touchable: true};
+    }
+  }
+
+  var kmw = window.keyman;
+  kmw.init({
     attachType:'auto',
     setActiveOnRegister: setActiveOnRegister
   }).then(async function() {
-    if(typeof afterInit == 'function') {
-      afterInit();
+    const calcScreenSize = Math.min(screen.width, screen.height)
+    let platform = 'windows'
+
+    if (calcScreenSize < 1024 && calcScreenSize >= 768) {
+      platform = 'tablet'
+    } else if (calcScreenSize < 768) {
+      platform = 'phone'
     }
-    if(typeof addKeyboards == 'function') {
-      addKeyboards();
-    } <?php if (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT || KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) {
-      echo 'else {
-      console.warn("-- Fallback:  not using the server\'s cached keyboard set! --");
-      // Server caching may not be active in local dev instances of the server.
-      await keyman.addKeyboards();
-    }';
-    } ?>
-    if (localKeyboard && localLanguage) {
-      keyman.setActiveKeyboard(localKeyboard, localLanguage)
-    }
+    
+    setOSK(platform)
   });
 
   pageLoading = false;
@@ -198,7 +212,7 @@
     //if('ontouchstart' in window || navigator.msMaxTouchPoints)
     if(keyman.util.isTouchDevice()) {  // Rely on KeymanWeb's touch detection.
       // General rule to distinguish between phones and tablets
-      ff=(Math.min(screen.width,screen.height) > 720) ? 'tablet' : 'mobile';
+      ff=(Math.min(screen.width,screen.height) >= 720) ? 'tablet' : 'mobile';
 
       // Force correct CSS selection for identified devices
       for(k=0; k<tablets.length; k++) {
@@ -227,7 +241,8 @@
 </script>
 
 <script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
-<script src="<?php echo cdn('js/kmwBody.js') ?>"></script>
 <script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
+<script src="<?php echo cdn('js/operation/toggleInstruction.js') ?>"></script>
+<script type="module" src="<?php echo cdn('js/main.mjs')?>"></script>
 
 </head>

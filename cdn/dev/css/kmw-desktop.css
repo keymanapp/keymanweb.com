@@ -6,75 +6,102 @@
 ======================
 */
 
-  #kmw_controls{
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
+#kmw_controls{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
 
-  #kmw_btn_osk{
-    border-top-right-radius: 10px;
-  }
+#kmw_btn_osk{
+  border-top-right-radius: 10px;
+}
 
-  #kmw_controls_start{
-    border-top-left-radius: 10px;
-  }
+#kmw_controls_start{
+  border-top-left-radius: 10px;
+}
 
-textarea {
-  height:260px;
-  width:554px;
-  float:left;
-  margin: 0px 10px 10px;
-  color:black;
-  font-size:16px;
-  font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
-  }
+/*
+======================
+==Mobile Tool Box==
+======================
+*/
+.tool-menu {
+  display: none;
+}
 
 form {
   padding-right:10px;
   float:left;
-  }
-#messageContainer {
-  float:left;
-  width:80%;
+}
+
+/*
+==================
+==Mobile Divider==
+==================
+*/
+.left-divider {
+  display: none;
+}
+
+.right-divider {
+  display: none;
+}
+
+/*
+==================
+==Tool Container==
+==================
+*/
+.tool-container{
+  background-color: var(--bs-body-bg);
+  border-radius: 15px;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  width: 400px;
+  height: 50px;
+  padding: 10px;
+}
+
+.small-icon-tools, .large-icon-tools {
+  height: 40px;
+  padding: 0 10px;
+}
+
+.large-icon-tools {
+  width: 50%;
+}
+
+.small-icon-tools {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 40px;
+  border-left: 0.5px solid gray;
+}
+
+.small-icon-tools > * {
+  width: max-content;
+  height: max-content;
+  padding: 10px;
+  margin: 0 5px;
 }
 /*
 ======================
 ==Keyboard Examples==
 ======================
 */
-
-#example,#help {
-  margin: 5px 0px;
-  text-align: center;
-}
-
-#example {
-  visibility: hidden;
-  width: 100%;
-  min-height: 10px;
-  max-height: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 5px;
-}
-
-#example a {
-  padding-left: 10px;
-}
-
 .highlightKeys kbd {
-    border: solid 1px #808080;
-    border-radius: 4px;
-    background: #cccccf;
-    color: black;
-    font-family: Verdana;
-    font-weight: normal;
-    min-width: 16px;
-    display: inline-block;
-    box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
-    margin-right: 4px;
+  border: solid 1px #808080;
+  border-radius: 4px;
+  background: #cccccf;
+  color: black;
+  font-family: Verdana;
+  font-weight: normal;
+  min-width: 16px;
+  display: inline-block;
+  box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
+  margin-right: 4px;
 }
 
 .highlightKeys kbd.space {
@@ -86,18 +113,19 @@ form {
 ==Keyboard Styling==
 ======================
 */
-.desktop, .kmw-osk-frame {
+.kmw-osk-frame {
   display: block !important;
   position: static !important;
   width: 100% !important;
   height: 100% !important;
   max-width: 100% !important;
   max-height: 100% !important;
+  font-size: 21px !important;
   border-radius: 0;
 }
 
 .kmw-help-osk-frame {
-  height: 100% !important;
+  height: 40vh !important;
   scroll-behavior: smooth !important;
   scrollbar-width: thin;
   overflow-x: hidden !important;
@@ -108,7 +136,7 @@ form {
 .kmw-osk-static {
   height: fit-content !important;
   text-align: center !important;
-  border: solid 1px var(--keyman-blue) !important;
+  border: none !important;
 }
 
 .kmw-osk-static table {
@@ -117,6 +145,14 @@ form {
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
+}
+
+.kmw-osk-inner-frame {
+  font-size: 21px !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
 }
 
 #kmw-osk-help-page > table > tbody > tr > td > .row {
@@ -199,17 +235,6 @@ form {
   font-size: 11pt;
   font-weight: bold;
   text-align: center;
-}
-
-@media all and (min-width: 1320px) {
-  ins.adsbygoogle {
-      display: inline-block !important;
-      height: 600px;
-      position: absolute;
-      right: 16px;
-      top: 120px;
-      width: 160px;
-  }
 }
 
 .desktop .kmw-keyboard-dari_clra .kmw-key-default .kmw-key-text {

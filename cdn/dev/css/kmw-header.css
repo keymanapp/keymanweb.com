@@ -1,28 +1,20 @@
-:root {
-  --box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  --keyman-orange: #FC7200;
-  --keyman-red: #B92034;
-  --keyman-blue: #2EADD3;
-}
+/*
+  Name:             KeymanWeb's Header Styles
+  Copyright:        Copyright (C) 2025 SIL Global
+  Documentation:
+  Description:      All of the styles for KMW's Header
+  Create Date:      5 November 2024
 
-* {
-  letter-spacing: .05rem;
-  font-weight: 400;
-}
+  Modified Date:    
+  Authors:          Meng-Heng
 
-hr {
-  margin: 0;
-}
+  History:          
+*/
 
 header > div > img {
   width: 100%;
   display: block;
   height: 5px;
-}
-
-#searchDropdownMenu {
-  padding: 10px;
-  margin: 0;
 }
 
 .main-header {
@@ -32,28 +24,50 @@ header > div > img {
   padding: 0 10px;
   box-shadow: var(--box-shadow);
 }
-
-/* Left side of Header:
-        Search
-        Keyboard dropdown
+/*
+=============================================================
+==Left side of Header: Search Box, Keyboard Selection Menu==
+=============================================================
 */
+
+#searchDropdownMenu {
+  padding: 10px;
+  margin: 0;
+}
 
 .left-header {
   display: flex;
   align-items: center;
+  width: 70vw;
 }
 
 .left-header img {
   margin-right: 10px;
 }
 
-/* 
-Language Search box
+/*
+==============
+==Search Box==
+==============
 */
 #searchBar {
   position: relative;
   width: 550px;
   margin-right: 10px;
+}
+
+#searchBar #searchInput {
+  height: 50px;
+  width: 100%;
+  text-indent: 10px;
+  border-radius: 15px;
+  text-align: left;
+  font-family: inherit !important;
+  box-shadow: none;
+}
+
+#searchInput:hover, #searchInput:focus {
+  border: 1px solid var(--keyman-orange);
 }
 
 #searchIcons {
@@ -83,20 +97,6 @@ Language Search box
   display: none;
 }
 
-#searchBar #searchInput {
-  height: 50px;
-  width: 100%;
-  text-indent: 10px;
-  border-radius: 15px;
-  text-align: left;
-  font-family: inherit !important;
-  box-shadow: none;
-}
-
-#searchInput:hover, #searchInput:focus {
-  border: 1px solid var(--keyman-orange);
-}
-
 #searchDropdownMenu {
   width: 100%;
   max-height: 600px;
@@ -107,119 +107,44 @@ Language Search box
 #searchDropdownMenu hr {
   margin: 15px 0;
 }
-
-/* Enable keyboard Animation */
-.kb-icon-plus-animate {
-  animation: plustoTickToMinus 2s forwards;
+/*
+============================
+==Instruction on dropdown==
+============================
+*/
+.instruction-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes plustoTickToMinus {
-  0% {
-    content: "+";
-    transform: scale(1);
-  }
-  30% {
-    color: lime;
-    content: "✓";
-    transform: scale(1.5);
-  }
-  60% {
-    color: lime;
-    content: "✓";
-    transform: scale(1.3);
-  }
-  100% {
-    content: "-";
-    transform: scale(1);
-  }
-}
-
-/* Instruction on dropdown */
 .instruction-title, .keyboard-title {
   width: 100%;
 }
 
 .instruction-title p, .keyboard-title {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
 }
 
-/* Map and Most download */
-.left-header .dropdown-menu .top-row #worldMap {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 10px !important;
-}
-
-#worldMap span {
-  opacity: 50%;
-}
-
-#worldMap span:hover {
-  opacity: 100%;
+#closeInstruction {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+  text-align: center;
+  width: 30px;
   cursor: pointer;
 }
 
-#KeymanWebControl #kmw_controls
-{
-  display: flex !important;
-  flex-direction: row;
-  justify-content: space-evenly;
-  border-radius: 20px;
-  box-shadow: var(--box-shadow);
-  height: 35px;
-  padding: 5px;
-}
-
-#KeymanWebControl .kmw_button,
-#keymanWebControl .kmw_button_disabled, 
-#KeymanWebControl .kmw_button_selected
-{
-  width: fit-content !important;
-  background: none !important;
-  height: 0 !important;
-}
-
-#KeymanWebControl #kmw_controls_start, 
-#KeymanWebControl #kmw_btn_osk, 
-.kmw_bar, #kmw_controls_end {
-  display: none;
-}
-
-#KeymanWebControl .kmw_language {
-  padding: 3px;
-}
-
-#kmw_control_keyboards {
-  width: fit-content;
-}
-
-#kmw_selector_regions {
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.kmw_selector_region {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  height: 600px;
-}
-
-/* Search Dropdown cards */
-#languageSearchList > * {
-  margin-bottom: 5px;
-}
-
-#languageSearchList > div:hover {
-  border: 1px solid var(--keyman-orange);
-  margin: 3px;
-}
-
+/*
+================
+==Search cards==
+================
+*/
 .card-wrap {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;;
   padding: 10px;
@@ -233,6 +158,52 @@ Language Search box
   opacity: 0.5;
   pointer-events: none;
   position: relative;
+}
+.card-wrap .monthly-download {
+  opacity: 75%;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-header > * {
+  margin-right: 0 10px 0 0;
+}
+
+.card-header .card-header-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.card-header h4 {
+  color: var(--keyman-orange);
+  font-weight: 400;
+  font-size: large;
+  margin: 0 5px;
+}
+
+.card-header h4 span {
+  color: black;
+}
+
+.card-header p {
+  position: relative;
+  float: right;
+  font-weight: 200;
+  font-size: medium;
+  margin: 0;
+}
+
+.card-header p, .card-header .help-icon-span {
+  color:  var(--keyman-red);
+  cursor: pointer;
 }
 
 .card-wrap.disabled .kb-icon-plus {
@@ -286,40 +257,11 @@ Language Search box
   height: 20px;
   margin: 0;
 }
-
-.card-wrap .monthly-download {
-  opacity: 75%;
-}
-
-.card-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.card-header h4 {
-  color: #0000EE;
-  font-weight: 400;
-  font-size: large;
-  margin: 0;
-}
-
-.card-header h4 span {
-  color: black;
-}
-
-.card-header p {
-  margin: 0;
-  position: relative;
-  float: right;
-  font-weight: 200;
-  font-size: medium;
-  color:  var(--keyman-red);
-}
-
-/* Pagination */
+/*
+==============
+==Pagination==
+==============
+*/
 #searchDropdownMenu .bottom-row-search {
   background-color: white;
   align-items: center;
@@ -337,12 +279,19 @@ Language Search box
   cursor: pointer;
 }
 
-/* Selected Keyboard Menu */
+#paginationControls {
+  display: none;
+}
+/*
+===========================
+==Selected Keyboard Menu==
+===========================
+*/
 #keyboardSelectionButton {
   z-index: 3;
 }
 
-.scroll-wrapper-keyboard-tab {
+.keyboard-selection-menu {
   width: 350px;
   height: 35px;
   position: relative;
@@ -359,7 +308,6 @@ Language Search box
   box-shadow: var(--box-shadow);
   overflow-y: scroll;
   scrollbar-width: none;
-  transition: all 1s ease-in-out;
   margin-left: -10px;
   border-radius: 10px;
   z-index: 0;
@@ -381,6 +329,14 @@ Language Search box
   width: 100%;
 }
 
+.kb-selection.open {
+  display: block;
+}
+
+.kb-selection {
+  display: none;
+}
+
 .kb-item-header, .kb-item-footer {
   display: flex;
   align-items: center;
@@ -399,35 +355,67 @@ Language Search box
   cursor: pointer;
 }
 
-.kb-item {
-  width: 100%;
-  max-height: fit-content;
-  height: 38px;
+.kb-item-keyboard {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
   padding: 5px;
+  opacity: 50%;
 }
 
-.kb-item:hover {
+.kb-item-keyboard:hover {
   cursor: pointer;
-  background-color: var(--keyman-orange);
-  color: white;
+  color: black;
+  padding: 5px;
+  opacity: 100%;
 }
 
-.kb-item span {
+.kb-item-keyboard span {
   width: 50%;
-  text-wrap: wrap;
-  align-self: center;
+  height: 30px;
+  text-align: center;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  margin: 5px;
+}
+
+.kb-item-keyboard span:hover {
+  text-decoration: underline;
 }
 
 .keyboard-configs {
-  width: 50%;
   height: fit-content;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  border-left: 1px solid black;
+  align-self: center;
+  justify-content: center;
   list-style-type: none;
-  padding: 2px 0 0;
+  padding-left: 15px;
+  margin: 5px;
+}
+
+.keyboard-configs > li {
+  opacity: 50%;
+  margin-right: 5px;
+}
+
+.keyboard-configs > li:hover {
+  opacity: 100%;
+  cursor: pointer !important;
+  font-size: 20px;
+}
+
+.keyboard-configs li > i {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  margin-right: 3px;
 }
 
 ::-webkit-scrollbar:horizontal {
@@ -449,15 +437,16 @@ Language Search box
 }
 
 .keyboard-details {
-  position: absolute;
+  position: fixed;
   width: 400px;
-  height: fit-content;
+  height: max-content;
   background-color: white;
   color: black;
   box-shadow: var(--box-shadow);
   border-radius: 20px;
   padding: 10px;
   z-index: 2;
+  top: 100px;
 }
 
 .keyboard-content-wrapper {
@@ -538,9 +527,269 @@ Language Search box
 .platform .platform-mobileweb {
   background-image: url('/cdn/dev/img/platforms/icon-mobileWeb.png');
 }
+/*
+=========================================
+==Font size slider + Hide/show keyboard==
+=========================================
+*/
+.tool-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
-/* Limits of Keyboard Selection */
+.font-size-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 5px;
+  height: fit-content;
+}
+
+.font-size-slider {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  height: 60px;
+}
+
+#fontSizeRange[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.font-large {
+  font-size: 20px;
+}
+
+input[type="range"] {
+  width: 100px;
+  background-color: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px;
+  background: rgb(107, 107, 107);
+  border-radius: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  bottom: 6px;
+  background-size: 50%;
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+}
+
+#fontSizeRange[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  cursor: pointer;
+  transform: 0.2s;
+  box-shadow: var(--box-shadow);
+  background: gray;
+  border-radius: 25px;
+}
+
+#fontSizeRange[type=range]::-webkit-slider-thumb {
+  height: 10px;
+  width: 20px;
+  border-radius: 7px;
+  background: var(--keyman-blue);
+  cursor: pointer;
+  -webkit-appearance: none;
+  box-shadow: 0px 0px 5px rgb(143, 143, 143);
+  margin-top: 3px;
+}
+
+/*
+===================================================================================
+==Right side of Header: Font Resizer, Hide keyboard + Hamburger menu==
+===================================================================================
+*/
+.right-header {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  width: 100%;
+  justify-items: right;
+  align-items: center;
+  margin-right: 0;
+}
+
+.right-header i {
+  font-size: 24px;
+  opacity: 50%;
+}
+
+.right-header i:hover {
+  opacity: 100%;
+  cursor: pointer;
+  color: var(--keyman-blue);
+}
+
+.burger-menu-top-section > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 0.5px solid gray;
+  padding: 15px;
+}
+
+.burger-menu-top-section .instruction-status .title p {
+  font-size: 16px;
+  margin: 0;
+}
+
+#burgerMenu #burgerDropDownMenu {
+  box-shadow: var(--box-shadow);
+}
+
+#burgerMenu #burgerDropDownMenu:hover {
+  cursor: pointer;
+}
+
+#burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li {
+  align-items: center;
+  width: 300px;
+  border-bottom: 1px solid rgb(196, 196, 196);
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li::after {
+  background-color: orange;
+}
+
+#burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li p:hover {
+  opacity: 100%;
+}
+
+#burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li p {
+  width: 80%;
+  white-space: normal;
+  position: relative;
+  left: 40px;
+  font-size: 14px;
+  opacity: 50%;
+  margin-top: 10px;
+}
+
+#burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li a {
+  text-decoration: none;
+  color: black;
+  font-style: bold;
+  font-size: 16px;
+}
+
+#burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li i,  #burgerMenu #burgerDropDownMenu .burger-menu-middle-section ul li img {
+  margin: 0 10px;
+  font-size: 16px;
+  width: 18px;
+  opacity: 100%;
+  color: var(--keyman-orange)
+}
+
+#burgerMenu button i:hover {
+  cursor: pointer;
+}
+
+.burger-menu-external-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding: 0;
+  list-style-type: none;
+}
+
+.external-links-item:active {
+  background-color: transparent !important;
+}
+
+.kmw-socials, .kmw-version, .sil-logo {
+  font-size: 14px;
+}
+
+.kmw-socials {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 15px;
+  line-height: 30em;
+  margin-bottom: 10px;
+  border-bottom: 0.5px solid gray;
+}
+
+.kmw-socials h5 {
+  line-height: 1.5em;
+  font-size: 25px;
+}
+
+.kmw-socials-icons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+}
+
+.kmw-socials-icons > * {
+  line-height: 1.5em;
+}
+
+.kmw-socials-icons > a {
+  display: flex;
+  text-decoration: none;
+  color: black;
+  opacity: 50%;
+  font-size: 16px;
+  position: relative;
+}
+
+.kmw-socials-icons > a:hover {
+  opacity: 100%;
+}
+
+@font-face {
+  font-family: "social-logos";
+  src: url("../../fonts/social-logos.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+  font-family: "social-logos" !important;
+  content: attr(data-icon);
+  padding-right: 4px;
+  font-size: 16px;
+}
+
+.kmw-version {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sil-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+/*
+================================
+==Limits of Keyboard Selection==
+================================
+*/
 .warning-container {
+  background: rgba(0, 0, 0, 0.25);
   position: fixed;
   height: 100vh;
   width: 100%;
@@ -594,274 +843,78 @@ Language Search box
   color: white;
   box-shadow: var(--box-shadow);
 }
-
-/* Middle of the header */
-.middle-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.middle-header i, .right-header i {
-  font-size: 24px;
-  opacity: 50%;
-}
-
-.middle-header i:hover {
-  opacity: 100%;
-  cursor: pointer;
-  color: var(--keyman-red);
-}
-
-/* Right side of the header:
-      Tools
-      Hamburger menu
+/*
+===============================
+==DELETE: Confirmation Dialog==
+===============================
 */
-
-.right-header {
-  display: grid;
-  grid-template-columns: 80% 20%;
-  width: 100%;
-  justify-items: right;
-  align-items: center;
-  margin-right: 0;
-}
-
-.right-header i:hover {
-  opacity: 100%;
-  cursor: pointer;
-  color: var(--keyman-blue);
-}
-
-/* Font size slider + Hide/show keyboard */
-.tool-container {
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  align-items: center;
+  z-index: 9999;
 }
 
-.tool-container > * {
-  margin: 10px;
-}
-
-.font-size-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.font-size-slider {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-  height: 60px;
-}
-
-#fontSizeRange[type=range] {
-  -webkit-appearance: none;
-  margin: 10px 0;
-  width: 100%;
-}
-
-
-.font-large {
-  font-size: 20px;
-}
-
-input[type="range"] {
-  width: 100px;
-  background-color: transparent;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 3px;
-  background: rgb(107, 107, 107);
-  border-radius: 10px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  border-radius: 50%;
-  height: 20px;
-  width: 20px;
-  position: relative;
-  bottom: 6px;
-  background-size: 50%;
-  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
-  cursor: grab;
-}
-
-#fontSizeRange[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  cursor: pointer;
-  transform: 0.2s;
-  box-shadow: var(--box-shadow);
-  background: gray;
-  border-radius: 25px;
-}
-
-#fontSizeRange[type=range]::-webkit-slider-thumb {
-  height: 10px;
-  width: 20px;
-  border-radius: 7px;
-  background: var(--keyman-blue);
-  cursor: pointer;
-  -webkit-appearance: none;
-  box-shadow: 0px 0px 5px rgb(143, 143, 143);
-  margin-top: 3px;
-}
-
-#burgerMenu ul {
-  box-shadow: var(--box-shadow);
-}
-
-#burgerMenu ul:hover {
-  cursor: pointer;
-}
-
-.dropdown-grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-}
-
-.dropdown-item:active {
-  background-color: transparent !important;
-}
-
-#burgerMenu ul li {
-  align-items: center;
-  width: 300px;
-  border-bottom: 1px solid rgb(196, 196, 196);
-  margin-top: 10px;
-}
-
-#burgerMenu ul li::after {
-  background-color: orange;
-}
-
-#burgerMenu ul li p:hover {
-  opacity: 100%;
-}
-
-#burgerMenu ul li p {
+.dialog-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
   width: 90%;
-  white-space: normal;
-  position: relative;
-  left: 40px;
-  font-size: 14px;
-  opacity: 50%;
-  margin-top: 10px;
+  max-width: 400px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-#burgerMenu ul li a {
-  text-decoration: none;
-  color: black;
-  font-style: bold;
-  font-size: 16px;
+.dialog-icon {
+  font-size: 2rem;
+  color: #e74c3c;
+  margin-bottom: 1rem;
 }
 
-#burgerMenu ul li i,  #burgerMenu ul li img {
-  margin: 0 10px;
-  font-size: 16px;
-  width: 18px;
-  opacity: 100%;
-  color: var(--keyman-orange)
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
 }
 
-#burgerMenu button i:hover {
+.dialog-message {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.btn-cancel, .btn-delete {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
   cursor: pointer;
+  font-size: 1rem;
 }
 
-.kmw-socials, .kmw-version, .sil-logo {
-  font-size: 14px;
+.btn-cancel {
+  background: #f4f4f4;
+  color: #333;
 }
 
-.kmw-socials {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+.btn-delete {
+  background: var(--keyman-red);
+  color: white;
 }
 
-.kmw-socials-icons {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.btn-cancel:hover {
+  background: #eaeaea;
 }
 
-.kmw-socials-icons > a {
-  text-decoration: none;
-  color: black;
-  opacity: 50%;
-  position: relative;
-}
-
-.kmw-socials-icons > a:hover {
-  opacity: 100%;
-}
-
-@font-face {
-  font-family: "social-logos";
-  src: url("../../fonts/social-logos.ttf"),
-        url("social-logos.woff2") format("woff2"),
-        url("social-logos.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-[data-icon]:before {
-  font-family: "social-logos" !important;
-  content: attr(data-icon);
-  padding-right: 4px;
-  font-size: 16px;
-}
-
-.kmw-version {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.sil-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Animation */
-
-.keyboardTab-animation {
-  animation: keyboardTab 1s;
-}
-.keyboardSelection-animation {
-  animation: keyboardSelection 1s ease-in;
-}
-
-@keyframes keyboardSelection {
-  0% {
-    transform: translateY(-5px);
-  }
-  50% {
-      transform: translateY(-3px);
-  }
-  75% {
-    transform: translateY(-1px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes keyboardTab {
-  from {
-    opacity: 50%;
-  }
-  to {
-    opacity: 100%;
-  }
+.btn-delete:hover {
+  background: #d54335;
 }
