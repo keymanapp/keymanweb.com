@@ -1,0 +1,139 @@
+/*
+  Name:             KeymanWeb's Body Styles
+  Copyright:        Copyright (C) 2025 SIL Global
+  Create Date:      5 November 2024
+
+  Modified Date:    
+  Authors:          Meng-Heng
+
+  History:         
+
+  Description:      All of the styles for KMW's Body
+*/
+/*
+=========
+==Icons==
+=========
+*/
+.fa-grip-lines:hover {
+    cursor: grab;
+}
+/*
+================
+==Section Tag==
+================
+*/
+.container-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+/*
+==============
+==Text area==
+==============
+*/
+.textarea-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: var(--textarea-width);
+    height: var(--textarea-height);
+}
+
+.text-area {
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    height: 100% !important;
+    box-shadow: var(--textarea-box);
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    line-height: 1.6em;
+    font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
+}
+/*
+============
+==Divider==
+============
+*/
+.divider-container i {
+    opacity: 50%;
+}
+
+.divider-container i:hover {
+    color: var(--keyman-blue);
+    opacity: 100%;
+}
+/*
+=====================================
+==Items in the middle of the divider==
+=====================================
+*/
+.middle-divider {
+    grid-area: middle;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+/*
+=============
+==Keyboard==
+=============
+*/
+.keyboard-container {
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyboard-area {
+    user-select: none;
+    flex: 1;
+    width: 70vw;
+    height: 100%;
+    border: var(--keyman-blue) 1px solid !important;
+}
+
+.phone.kmw-osk-frame, .tablet.kmw-osk-frame {
+  display: block !important;
+  position: relative !important;
+  height: 100% !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  max-height: 50vh !important;
+  z-index: 0 !important;
+}
+/*
+=============
+==Examples==
+=============
+*/
+.example-box {
+    background-color: var(--keyman-blue);
+    color: white;
+    width: 70vw;
+    text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid rgb(159, 159, 159);
+}
+
+#exampleBox {
+    visibility: visible !important;
+}
+
+.example-box p {
+    margin: 10px;
+}
+
+#example {
+    visibility: visible !important;
+}
+
+/* End of Section Tag */

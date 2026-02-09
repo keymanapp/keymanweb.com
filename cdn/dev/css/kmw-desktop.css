@@ -6,676 +6,180 @@
 ======================
 */
 
-html {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-body {
-  width:100%;
-  font-family: Cabin, Arial, Helvetica, sans-serif;
-  color:#2D2C2C;
-  margin:0px;
-  }
-
-a {
-  text-decoration:none;
-  color: #2EADD3;
-  }
-
-a:hover {
-  text-decoration:underline;
-  }
-
-h3 {
-  font-size:18px;
-  }
-
-p {
-  font-size:13px;
-  line-height:1.5em;
-  }
-
-header, #content, footer {
-  /* width:960px; */
-  margin:0px auto;
-  clear: both;
-  }
-
-.box {
-  -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
+#kmw_controls{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
+}
+
+#kmw_btn_osk{
+  border-top-right-radius: 10px;
+}
+
+#kmw_controls_start{
+  border-top-left-radius: 10px;
+}
 
 /*
-===================
-==Header Elements==
-===================
+======================
+==Mobile Tool Box==
+======================
 */
-header {
-  margin-top:0px;
-  height: 96px;
-  }
-
-header > div > img {
-  width: 100%;
-  display: block;
-  height: 8px;
+.tool-menu {
+  display: none;
 }
-
-#headerLeft img {
-  display: block; /* default (inline) display inserts an unwanted bottom border */
-  margin-top:0px;
-  margin-left:28px;
-  height:88px;
-  /*width: 660px;*/
-  /*-webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px; border-radius: 0px 0px 8px 8px;*/
-  }
-#headerRight {
-  display: block;
-  float: right;
-  text-align: right;
-  }
-
-#headerRight-beta {
-  display: block;
-  font-weight: bold;
-  color: red;
-  font-size: 16pt;
-  padding: 20px 12px 0;
-}
-
-#headerRight-link {
-  padding: 0 12px 0;
-}
-/*
-====================
-==Content Elements==
-====================
-*/
-#content {
-  min-height:375px;
-  }
-
-
-/* KMW Main App */
-#app {
-  float:left;
-  /*height:330px;*/
-  width:710px;
-  margin: 30px 15px 15px;
-  }
-#KeymanWebControl {
-  width:710px;
-  height: 35px;
-  display:block;
-  -webkit-border-radius: 8px 8px 0px 0px; -moz-border-radius: 8px 8px 0px 0px; border-radius: 8px 8px 0px 0px;
-  }
-
-  #kmw_controls{
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
-
-  #kmw_btn_osk{
-    border-top-right-radius: 10px;
-  }
-
-  #kmw_controls_start{
-    border-top-left-radius: 10px;
-  }
-
-#example,#help {
-  margin:8px 10px;
-  background-color:#95C6D6;
-  border:1px solid #2EADD3;
-  padding:2px;
-  text-align:center;
-  }
-
-#example {
-  visibility: hidden;
-  width:685px;
-  min-height: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 5px;
-}
-
-#example a{
-  padding-left: 10px;
-}
-
-textarea {
-  height:260px;
-  width:554px;
-  float:left;
-  margin: 0px 10px 10px;
-  color:black;
-  font-size:16px;
-  font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
-  }
 
 form {
   padding-right:10px;
   float:left;
-  }
-#messageContainer {
-  float:left;
-  width:80%;
-  }
-
-/* KMW App Buttons */
-
-#instructions {
-  margin:-1px 0px 2px;
-  }
-
-#buttons {
-  float:right;
-  padding-right:10px;
-  }
-
-#buttons div {
-  width:120px;
-  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
-	background-color: #eeeeee;
-  border: 1px solid #888888;
-  margin: 0px 10px;
-/*  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  color: white;
-  font: bold 14px Helvetica, Verdana, Arial, sans-serif;
-  text-shadow: 0px -1px 1px #1E2D4D; */
-  text-align:left;
-  margin: 0 auto 6px;
-  padding: 3px;
-  padding-top: 9px;
-  height: 26px;
-  background-repeat: no-repeat;
-  background-position: center left;
-  }
-#buttons div:disabled {
-  cursor: default !important;
-  color: #eeeeee !important;
- /* -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important; */
-}
-
-#buttons p{
-  margin-left: 41px;
-}
-
-#search{
-  background-image:url('../img/btn_google_small.png');
-
-}
-
-#search.linksOff{
-  background-image:url('../img/btn_google_small_white.png');
-}
-
-#copy{
-  background-image:url('../img/btn_copy_small.png');
-
-}
-
-#copy.linksOff{
-  background-image:url('../img/btn_copy_small_white.png');
-}
-
-#font{
-  display: none;
-}
-
-#mobile-font{
-  display: none;
-}
-
-#font-size{
-  float: right;
-  width: 120px;
-  margin-right: 10px;
-  margin-bottom: 8px;
-  padding: 0px 4px;
-  display: table;
-}
-
-#font-small{
-  font-size: 10pt;
-  padding-top: 7px;
-  text-align: left;
-}
-
-#font-large{
-  font-size: 16pt;
-  text-align: right;
-}
-
-.ui-slider-handle{
-  width: 10px !important;
-  height: 10px !important;
-  cursor: pointer !important;
-  outline: none !important;
-}
-
-#slider{
-  height: 4px;
-  width: 68px;
-  float: left;
-  position: relative;
-  top: 14px;
-}
-
-.font-letter{
-  float: left;
-  width: 25px;
-  text-align: center;
-  display: table-cell;
-}
-
-#buttons div * {
-  display:inline;
-  }
-
-div.links {
-  cursor:pointer;
-  }
-
-div.linksOff {
-  cursor:default !important;
-  border: 1px solid #cccccc !important;
-  }
-
-div.linksOff * {
-  color: gray;
-  -moz-user-select:none;
-  }
-
-hr {
-  margin: 6px 4px 6px 4px;
-  }
-
-
-/* Aside Elements */
-aside {
-  float:right;
-  width:200px;
-  margin-right:15px;
-  }
-aside h3 {
-  background-color: rgba(181, 177, 176, 0.2);
-  padding:6px 10px 7px;
-  margin:0px;
-  -webkit-border-radius: 8px 8px 0px 0px; -moz-border-radius: 8px 8px 0px 0px; border-radius: 8px 8px 0px 0px;
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
-aside > div {
-  margin:30px 0px 0px;
-  }
-aside p {
-  padding:10px;
-  margin:0px;
-  }
-aside  #learn {
-  font-size:13px;
-  text-align:center;
-  }
-
-#keymandesktop, #bookmarklet{
-  display: none;
 }
 
 /*
-===================
-==Footer Elements==
-===================
+==================
+==Mobile Divider==
+==================
 */
-
-
-.button {
-    float: left;
-    width: 200px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 6px;
-    text-align: center;
-    margin: 20px;
-    cursor: pointer;
-    box-shadow: 1px 1px 2px #3e3e3e;
-}
-
-.footer{
-    float: left;
-    text-align: center;
-    width: 100%;
-    background: #A4A8AB;
-    line-height: 1;
-}
-
-.footer .wrapper {
-  width: auto;
-  display: inline-block;
-  margin: 0;
-  text-align: left;
-}
-
-.footer-third{
-    float: left;
-    width: 320px;
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
-.footer-third-title{
-    margin-top: 30px;
-    text-align: center;
-    font-size: 18pt;
-    font-weight: normal;
-    color: #fff;
-    margin-bottom: 25px;
-}
-
-.footer-third form{
-    width: 320px;
-}
-
-.footer-third form input{
-	-webkit-appearance: none;
-	padding: 0px;
-    float: left;
-    height: 38px;
-    width: 200px;
-    padding-left: 10px;
-    font-size: 14pt;
-    border-radius: 6px;
-    border-bottom-right-radius: 0px;
-    border-top-right-radius: 0px;
-    box-shadow: none;
-    border: 1px solid #FFFFFF;
-    margin-left: 10px;
-}
-
-.footer-third form input:focus{
-    outline: 0;
-}
-
-#footer-mailchimp br {
-  clear: both;
-}
-
-/*
- social-logos font from https://github.com/Automattic/social-logos, GPLv2
- */
-@font-face {
-  font-family: "social-logos";
-  src: url("../../fonts/social-logos.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
-[data-icon]:before {
-  font-family: "social-logos" !important;
-  content: attr(data-icon);
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  line-height: 1;
-  speak: none;
-  padding-right: 4px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
-
-#footer-social {
-  text-align: center;
-}
-
-#footer-social a {
-  display: block;
-  text-decoration: none;
-  color: #666666;
-  font-size: 14pt;
-  padding: 4px;
-}
-
-#footer-social a:hover {
-  color: #444444;
-}
-
-#privacy-policy {
-  text-align: center;
-  margin-top: 16px;
-}
-
-#privacy-policy a {
-  display: block;
-  text-decoration: none;
-  color: white;
-  font-size: 12pt;
-}
-
-#privacy-policy a:hover {
-    color: #444444;
-}
-
-#version {
-  color: #666666;
-  font-size: 10pt;
-  margin-top: 46px;
-  text-align: center;
-}
-
-#mobile-footer {
+.left-divider {
   display: none;
 }
 
-#footer-social div {
-  display: inline-block;
-  text-align: left;
-  margin-bottom: 24px;
-}
-
-#footer-social a#footer-community {
-  padding-left: 27px;
-}
-
-.subscribe{
-    width: 90px;
-    margin: 0px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    background: #666666;
-    box-shadow: none;
-}
-
-.subscribe:hover{
-    background: #888888;
-}
-
-.subscribe h2{
-	font-size: 16px;
-	margin: 0px;
-}
-
-.sil-logo a, .sil-logo a:visited {
-  color: white;
-  text-decoration: none;
-}
-
-.sil-logo a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-.sil-logo {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.sil-logo p{
-    color: #fff;
-    font-size: 12pt;
-    margin-top: 10px;
+.right-divider {
+  display: none;
 }
 
 /*
-===================
-==Extras==
-===================
+==================
+==Tool Container==
+==================
 */
-
-#fblike{
-position: absolute;
-left: 50%;
-margin-left: 320px;
-  }
-
-nav ul {
-  list-style: none outside none;
-  width:90%;
-  margin:0px auto;
-  padding:15px 0px;
-  }
-
-nav li {
-  display:inline;
-  padding:20px 39px;
-  }
-
-nav a {
-  color:#eee;
-  font-family:Tahoma;
-  font-weight:bold;
-  font-size:10.7px;
-  }
-
-.messageBox {
-  -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
-  -moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
-  background: #c4c4c4;
-  position: fixed;
-  left: 50%;
-  top: 25%;
-  z-index: 10002;
-  margin-left: -250px;
-  margin-top: -50px;
-  width: 500px;
-  height: 200px;
-}
-
-.messageBox div {
-  width: 464px;
-  height: 134px;
-  left: 10px;
-  top: 10px;
-  padding: 8px;
-  font-size: 13px;
-  position: absolute;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 3px;
-  background: white;
-}
-
-.messageBox button {
-  width:83px;
-  position: absolute;
-  right: 10px;
-  bottom: 4px;
-  background: #414141;
-  border-top: 1px solid #383838;
-  border-right: 1px solid #1F1F1F;
-  border-bottom: 1px solid #151515;
-  border-left: 1px solid #1F1F1F;
-  -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  color: white;
-  font: bold 12px Helvetica, Verdana, Arial, sans-serif;
-  text-shadow: 0px -1px 1px #1E2D4D;
-  text-align:center;
-  margin: 0 auto 6px;
-  padding: 3px;
-  }
-
-.messageBox button:disabled {
-  cursor: default !important;
-  color: gray !important;
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-}
-
-.messageBox button:hover {
--webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-	cursor: pointer;
-}
-
-.messageBox button:active {
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-}
-
-.progressBox {
--webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
-  -moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
-  background: #c4c4c4;
-  position: fixed;
-  left: 50%;
-  top: 25%;
-  margin-left: -200px;
+.tool-container{
+  background-color: var(--bs-body-bg);
+  border-radius: 15px;
+  border: var(--bs-border-width) solid var(--bs-border-color);
   width: 400px;
-  height: 54px;
+  height: 50px;
+  padding: 10px;
 }
 
-.progressBox div {
-  width: 364px;
-  height: 18px;
-  left: 10px;
-  top: 10px;
-  padding: 8px;
-  background: url('../img/wait.gif') no-repeat 354px 8px white;
-  font-size: 13px;
-  position: absolute;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 3px;
+.small-icon-tools, .large-icon-tools {
+  height: 40px;
+  padding: 0 10px;
 }
 
-#footer-logo{
-  margin-top: 10px;
+.large-icon-tools {
+  width: 50%;
 }
 
-#content {width: 960px;}
+.small-icon-tools {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 40px;
+  border-left: 0.5px solid gray;
+}
+
+.small-icon-tools > * {
+  width: max-content;
+  height: max-content;
+  padding: 10px;
+  margin: 0 5px;
+}
+/*
+======================
+==Keyboard Examples==
+======================
+*/
+.highlightKeys kbd {
+  border: solid 1px #808080;
+  border-radius: 4px;
+  background: #cccccf;
+  color: black;
+  font-family: Verdana;
+  font-weight: normal;
+  min-width: 16px;
+  display: inline-block;
+  box-shadow: 2px 2px 1px rgba(128, 128, 128, 0.3);
+  margin-right: 4px;
+}
+
+.highlightKeys kbd.space {
+    min-width: 64px;
+}
 
 /*
 ======================
 ==Keyboard Styling==
 ======================
 */
+.kmw-osk-frame {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  font-size: 21px !important;
+  border-radius: 0;
+}
+
+.kmw-help-osk-frame {
+  height: 40vh !important;
+  scroll-behavior: smooth !important;
+  scrollbar-width: thin;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+  text-align: center !important;
+}
+
+.kmw-osk-static {
+  height: fit-content !important;
+  text-align: center !important;
+  border: none !important;
+}
+
+.kmw-osk-static table {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.kmw-osk-inner-frame {
+  font-size: 21px !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+#kmw-osk-help-page > table > tbody > tr > td > .row {
+  --bs-gutter-x: 0 !important;
+}
+
+.kmw-title-bar { 
+  background-color: #2EADD3 !important; 
+  border-radius: 0 !important;
+  height: fit-content !important;
+}
+
+#keyboard_europeanlatin_help p, .kmw-osk-static p {
+  display: flex !important;
+  justify-content: end !important;
+  position: relative !important;
+  right: 0 !important;
+  top: 0 !important;
+}
+
+.kmw-key-square {
+  z-index: 0 !important;
+}
+
+.kmw-spacebar-caption {
+  color: gray !important;
+}
 
 .desktop .kmw-osk-frame, .desktop .kmw-osk-inner-frame, .desktop .kmw-key-layer-group {
     background-color: #95C6D6 !important;
@@ -710,7 +214,7 @@ nav a {
  .desktop  .kmw-key-label { top: 5%; }
  .desktop  .kmw-key-label { left: 10%; }
  .desktop  .kmw-key-default .kmw-key-text { top: 25%; }
- .desktop  .kmw-footer, .desktop .kmw-title-bar { background: #2EADD3 !important; }
+ .desktop  .kmw-footer, .desktop .kmw-title-bar { background-color: #2EADD3 !important; display: none;}
  .desktop  .kmw-title-bar div{min-height: 100%;}
  .desktop  .kmw-footer-caption a { color: white !important; }
  .kmw-osk-frame, .kmw-osk-inner-frame { border-color: #2EADD3 !important; }
@@ -731,58 +235,6 @@ nav a {
   font-size: 11pt;
   font-weight: bold;
   text-align: center;
-}
-
-#keyman-desktop-download {
-  display: block;
-  text-align: center;
-  margin-top: 8px;
-}
-
-#free-open-source {
-  color: #606060;
-  font-size: 8pt;
-  font-weight: normal;
-  display: block;
-  text-align: center;
-
-}
-
-#close {
-  float: right;
-  cursor: pointer;
-  position: relative;
-  top: -10px;
-}
-
-#bookmarklet.hidden {
-  display: none;
-}
-
-#bookmarklet div {
-	text-align: center;
-	margin: 16px 0 2px;
-}
-
-#bookmarklet p {
-  font-size: 9px;
-  text-align: justify;
-}
-
-#learn div {
-  margin: 0;
-  padding-bottom: 12px;
-}
-
-@media all and (min-width: 1320px) {
-  ins.adsbygoogle {
-      display: inline-block !important;
-      height: 600px;
-      position: absolute;
-      right: 16px;
-      top: 120px;
-      width: 160px;
-  }
 }
 
 .desktop .kmw-keyboard-dari_clra .kmw-key-default .kmw-key-text {

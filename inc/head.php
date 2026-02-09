@@ -59,12 +59,15 @@
 
 <?= WebKeymanComSentry::GetBrowserHTML($kmwbuild) ?>
 
-<link rel='shortcut icon' href="<?php echo cdn("img/keymanweb-icon-16.png"); ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw.css"); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo "$url_keymanweb_res/code/bookmarklet_ui.css"; ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo cdn("keys/keys.css"); ?>" />
-<link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-global.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-header.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-body.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-screen.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn("css/kmw-interaction.css"); ?>" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo cdn('src/bootstrap.min.css') ?>" crossorigin="anonymous">
+<!-- <link href='https://fonts.googleapis.com/css?family=Cabin:400,400italic,500,600,700,700italic|Source+Sans+Pro:400,700,900,600,300|Noto+Serif:400' rel='stylesheet' type='text/css'> -->
 <script type="text/javascript">
   var resourceDomain="<?php echo $url_keymanweb_res; ?>";
   var site_keyman_com="<?php echo KeymanHosts::Instance()->keyman_com ?>";
@@ -113,37 +116,8 @@
     var iso=mapBCP47_ISO6393[bcp];
     return iso?iso:bcp;
   }
-
-  var localKeyboard, localLanguage;
-
-  function loadKeyboardFromHash() {
-    var locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
-    if(locationHash) {
-      localKeyboard = locationHash[2];
-      localLanguage = locationHash[1];
-
-      // Translate the language ID if necessary from ISO639-3 to BCP 47
-      localLanguage = iso6393ToBCP47(localLanguage);
-
-      document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
-      document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
-    } else if(location.hash == '#') {
-      document.cookie = 'KeymanWeb_Keyboard=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-      document.cookie = 'KeymanWeb_Toolbar=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    } else {
-      var cookie = keyman.util.loadCookie('KeymanWeb_Keyboard');
-      if(cookie['current']) {
-        var cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
-        if(cookieMatch) {
-          localKeyboard = cookieMatch[1];
-          localLanguage = iso6393ToBCP47(cookieMatch[2]);
-        }
-      }
-    }
-  }
 </script>
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="<?php echo cdn("js/jquery1-11-1.min.js"); ?>"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.js"></script>
@@ -152,36 +126,74 @@
 <script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/keymanweb.js"></script>
 <script crossorigin="anonymous" src="<?= $staticDomainRoot ?>/kmw/engine/<?php echo $kmwbuild; ?>/kmwuitoolbar.js"></script>
 
-<script src="<?= cdn("js/kmwlive.js"); ?>"></script>
 <script src="/prog/keyboards.php?tier=<?=$tier?>&amp;version=<?=$version?>"></script>
 
+<script> 
+  let localKeyboard, localLanguage
+  function loadKeyboardFromHash() {
+      let locationHash = location.hash.match(/^#(.+),(Keyboard_.+)$/i);
+      if(locationHash) {
+          localKeyboard = locationHash[2];
+          localLanguage = locationHash[1];
+
+          // Translate the language ID if necessary from ISO639-3 to BCP 47
+          localLanguage = iso6393ToBCP47(localLanguage);
+
+          document.cookie = 'KeymanWeb_Keyboard=current%3D'+localKeyboard+'%3A'+localLanguage+'%3B; path=/';
+          document.cookie = 'KeymanWeb_Toolbar=recent0='+localLanguage+'%2C'+localKeyboard+'%3B; path=/';
+      } else if(location.hash == '#') {
+          document.cookie = 'KeymanWeb_Keyboard=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+          document.cookie = 'KeymanWeb_Toolbar=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+      } else {
+          let cookie = keyman.util.loadCookie('KeymanWeb_Keyboard')
+          if(cookie['current']) {
+              let cookieMatch = cookie['current'].match(/^(Keyboard_.+):(.+)$/);
+              if(cookieMatch) {
+                  localKeyboard = cookieMatch[1];
+                  localLanguage = iso6393ToBCP47(cookieMatch[2]);
+              }
+          }
+      }
+  }
+</script>
+
 <script>
-  loadKeyboardFromHash();
   var pageLoading = true;
+  let setActiveOnRegister = Number.parseFloat(keyman.version) >= 17.0 ? false : 'false';
+  let newOSK;
 
-  // We finally made it properly boolean in 17.0 as part of https://github.com/keymanapp/keyman/pull/8560.
-  var setActiveOnRegister = Number.parseFloat(keyman.version) >= 17.0 ? false : 'false';
+  function setOSK(platform) {
+    let targetDevice = platform
 
-  keyman.init({
+    if(targetDevice == 'windows') {
+      targetDevice = {'browser': 'chrome', 'formFactor': 'desktop', OS: 'windows', touchable: false}
+      if(newOSK) document.getElementById('keymanKeyboardCtrl').removeChild(newOSK.element); 
+      newOSK = new keyman.views.InlinedOSKView(keyman, { device: targetDevice }); 
+      newOSK.setSize('100%', '100%'); 
+      document.getElementById('keymanKeyboardCtrl').appendChild(newOSK.element); 
+      keyman.osk = newOSK;
+    } else if (targetDevice == 'tablet') {
+      targetDevice = {'browser': 'chrome', 'formFactor': 'tablet', OS: 'android', touchable: true};
+    } else {
+      targetDevice = {'browser': 'chrome', 'formFactor': 'phone', OS: 'android', touchable: true};
+    }
+  }
+
+  var kmw = window.keyman;
+  kmw.init({
     attachType:'auto',
     setActiveOnRegister: setActiveOnRegister
   }).then(async function() {
-    if(typeof afterInit == 'function') {
-      afterInit();
+    const calcScreenSize = Math.min(screen.width, screen.height)
+    let platform = 'windows'
+
+    if (calcScreenSize < 1024 && calcScreenSize >= 768) {
+      platform = 'tablet'
+    } else if (calcScreenSize < 768) {
+      platform = 'phone'
     }
-    if(typeof addKeyboards == 'function') {
-      addKeyboards();
-    } <?php if (KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_DEVELOPMENT || KeymanHosts::Instance()->Tier() == KeymanHosts::TIER_TEST) {
-      echo 'else {
-      console.warn("-- Fallback:  not using the server\'s cached keyboard set! --");
-      // Server caching may not be active in local dev instances of the server.
-      await keyman.addKeyboards();
-    }';
-    } ?>
-    if(localKeyboard && localLanguage) {
-      keyman.setActiveKeyboard(localKeyboard, localLanguage);
-    }
-    document.getElementById('message').focus();
+    
+    setOSK(platform)
   });
 
   pageLoading = false;
@@ -200,7 +212,7 @@
     //if('ontouchstart' in window || navigator.msMaxTouchPoints)
     if(keyman.util.isTouchDevice()) {  // Rely on KeymanWeb's touch detection.
       // General rule to distinguish between phones and tablets
-      ff=(Math.min(screen.width,screen.height) > 720) ? 'tablet' : 'mobile';
+      ff=(Math.min(screen.width,screen.height) >= 720) ? 'tablet' : 'mobile';
 
       // Force correct CSS selection for identified devices
       for(k=0; k<tablets.length; k++) {
@@ -219,12 +231,18 @@
     window.deviceFormFactor=ff;
 
     // Append the selected stylesheet to the document
-    var lk=document.createElement('LINK'), file=css[ff];
+    var lk = document.createElement('LINK'), file=css[ff];
     lk.rel='stylesheet';
     lk.href=file;
     lk.type='text/css';
     document.getElementsByTagName('head')[0].appendChild(lk);
-  })();
+  }
+  )();
 </script>
+
+<script src="<?php echo cdn('src/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
+<script src="<?php echo cdn('keys/keyrenderer.js') ?>"></script>
+<script src="<?php echo cdn('js/operation/toggleInstruction.js') ?>"></script>
+<script type="module" src="<?php echo cdn('js/main.mjs')?>"></script>
 
 </head>

@@ -26,7 +26,7 @@
   use \Keyman\Site\Common\KeymanHosts;
 
   if(isset($_REQUEST['keyboard'])) $keyboard = $_REQUEST['keyboard']; else $keyboard = '';
-  if(isset($_REQUEST['language'])) $language = $_REQUEST['language']; else $language = '';
+  if(isset($_REQUEST['language'])) $language = $_REQUEST['language']; else $language = ''; 
 
   if(empty($keyboard) || empty($language)) {
     $data = FALSE;
@@ -50,8 +50,8 @@
   if($data !== FALSE) {
     echo $data;
   } else {
-    echo "No example is available, please refer to keyboard help";
+    echo "No example is available";
   }
 
-  echo renderHelpIcon($keyboard, $language);
+  // echo renderHelpIcon($keyboard, $language);
 ?>
