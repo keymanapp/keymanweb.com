@@ -201,8 +201,3 @@ use Keyman\Site\Common\ImageRandomizer;
       </div>
     </div>
   </section>
-
-<?php
-
-require_once('inc/foot.php');
-?>
