@@ -7,8 +7,6 @@
         "phpunit/phpunit": "^9.2"
     },
     "config": {
-        "allow-plugins": {
-            "php-http/discovery": false
-        }
+        "allow-plugins": false
     }
 }
