@@ -71,6 +71,7 @@ jobs:
 
     - name: Report on broken links
       if: ${{ !cancelled() }}
+      shell: bash
       run: |
         source ./_common/tests.inc.sh
         set -e
