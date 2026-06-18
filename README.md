@@ -1,3 +1,5 @@
+TESTING status.keyman.com
+
 # keymanweb.com
 
 This is the source for the website https://keymanweb.com/, which hosts the
