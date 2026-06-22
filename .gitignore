@@ -4,6 +4,10 @@ cdn/deploy
 /vendor
 .data/
 
+# unit test artifacts
+linkinator-results.json
+.phpunit.result.cache
+
 # Shared files are bootstrapped:
 resources/bootstrap.inc.sh
 resources/.bootstrap-version
