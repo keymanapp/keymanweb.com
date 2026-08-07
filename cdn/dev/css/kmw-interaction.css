@@ -1,0 +1,62 @@
+/*
+  Name:             KeymanWeb Interaction Styles
+  Copyright:        Copyright (C) 2025 SIL Global
+  Documentation:
+  Description:      Animation & Styles of every interactable components.
+  Create Date:      19 Nov 2025
+
+  Modified Date:    
+  Authors:          Meng-Heng
+
+  History:          
+*/
+
+/* Warning before delete */
+.warning-content {
+  animation: fadeIn 0.2s ease;
+}
+
+.dialog-box {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Enable keyboard for Keyboard Selection Animation */
+.kb-icon-plus-animate {
+  animation: plustoTickToMinus 2s forwards;
+}
+
+@keyframes plustoTickToMinus {
+  0% {
+    content: "+";
+    transform: scale(1);
+  }
+  30% {
+    color: lime;
+    content: "✓";
+    transform: scale(1.5);
+  }
+  60% {
+    color: lime;
+    content: "✓";
+    transform: scale(1.3);
+  }
+  100% {
+    content: "-";
+    transform: scale(1);
+  }
+}
+
+/* Textarea */
+.textarea-animation {
+    animation: highlight 3s ease;
+}
+
+@keyframes highlight {
+    from {box-shadow:#2EADD3 0px 0px 0px 3px;}
+    to {box-shadow: var(--textarea-box);}
+}

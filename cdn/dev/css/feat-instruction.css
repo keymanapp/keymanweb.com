@@ -1,0 +1,239 @@
+/* =========================
+   Instruction Modal Overlay
+========================= */
+
+.instruction-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+}
+
+/* =========================
+   Modal Container
+========================= */
+
+.instruction-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 36px;
+  padding: 30px 72px;
+}
+
+/* =========================
+   Header
+========================= */
+
+.instruction-modal-header {
+  text-align: center;
+}
+
+.instruction-modal-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  color: black;
+  padding: 20px;
+}
+
+/* =========================
+   Body
+========================= */
+
+.instruction-modal-body {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+/* =========================
+   Instruction Card
+========================= */
+
+.instruction-card {
+  width: 300px;
+  min-height: 264px;
+  background: #ffffff;
+  border-radius: 34px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================
+   Card Border Variants
+========================= */
+
+.instruction-card-search {
+  border: 2px solid #ff7a00;
+}
+
+.instruction-card-pick {
+  border: 2px solid #d72b55;
+}
+
+.instruction-card-type {
+  border: 2px solid #6ec6ea;
+}
+
+/* =========================
+   Card Heading
+========================= */
+
+.instruction-card-heading h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: black;
+  text-align: center;
+}
+
+/* =========================
+   Card Graphic
+========================= */
+
+.instruction-card-graphic {
+  margin-top: 28px;
+}
+
+.instruction-card-graphic img {
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* =========================
+   Divider
+========================= */
+
+.instruction-card-divider {
+  width: 100%;
+  height: 2px;
+  opacity: 50%;
+  background: #262626;
+  margin: 26px 0;
+}
+
+/* =========================
+   Description
+========================= */
+
+.instruction-card-description {
+  text-align: center;
+}
+
+.instruction-card-description p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #474747;
+}
+
+/* =========================
+   Footer
+========================= */
+
+.instruction-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.instruction-modal-btn {
+  border: transparent;
+  min-width: 200px;
+  padding: 14px 34px !important;
+  border-radius: 999px;
+  background: var(--keyman-blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.instruction-modal-btn:hover {
+  border: 1px solid var(--keyman-blue);
+  background: transparent;
+  color: rgb(0, 0, 0);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1024px) {
+
+  .instruction-modal {
+    padding: 48px 32px;
+  }
+
+  .instruction-modal-body {
+    gap: 32px;
+  }
+
+  .instruction-card {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .instruction-modal {
+    min-height: auto;
+    border-radius: 24px;
+
+    padding: 32px 20px;
+  }
+
+  .instruction-modal-title {
+    font-size: 2rem;
+  }
+
+  .instruction-card {
+    min-height: auto;
+  }
+
+  .instruction-card-heading h3 {
+    font-size: 1.6rem;
+  }
+
+  .instruction-modal-footer {
+    gap: 20px;
+  }
+
+  .instruction-modal-btn {
+    width: 100%;
+  }
+}

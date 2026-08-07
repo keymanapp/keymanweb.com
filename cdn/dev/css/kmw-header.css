@@ -1,0 +1,1166 @@
+/*
+  Name:             KeymanWeb's Header Styles
+  Copyright:        Copyright (C) 2025 SIL Global
+  Documentation:
+  Description:      All of the styles for KMW's Header
+  Create Date:      5 November 2024
+
+  Modified Date:    
+  Authors:          Meng-Heng
+
+  History:          
+*/
+
+header > div > img {
+  width: 100%;
+  display: block;
+  height: 5px;
+}
+
+.main-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 75px;
+  padding: 0 10px;
+  box-shadow: var(--box-shadow);
+}
+/*
+=============================================================
+==Left side of Header: Search Box, Keyboard Selection Menu==
+=============================================================
+*/
+
+#searchDropdownMenu {
+  padding: 10px;
+  margin: 0;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+  width: 70vw;
+}
+
+.left-header img {
+  margin-right: 10px;
+}
+
+/*
+==============
+==Search Box==
+==============
+*/
+#searchBar {
+  position: relative;
+  width: 550px;
+}
+
+#searchBar #searchInput {
+  height: 50px;
+  width: 100%;
+  text-indent: 10px;
+  border-radius: 16px;
+  text-align: left;
+  font-family: inherit !important;
+  box-shadow: none;
+}
+
+#searchInput:hover, #searchInput:focus {
+  border: 1px solid var(--keyman-orange);
+}
+
+#searchIcons {
+  position: absolute;
+  right: 5px;
+  top: 12px;
+  border-left: 1px solid gray;
+  background-color: white;
+}
+
+#searchIcons > * {
+  margin-right: 10px;
+  padding-left: 15px;
+  opacity: 50%;
+}
+
+#searchIcons > *:hover {
+  padding-left: 15px;
+  opacity: 100%;
+}
+
+#magnifyingGlassIcon {
+  display: inline;
+}
+
+#clearSearchIcon {
+  display: none;
+}
+
+/*
+==========================
+== SEARCH DROPDOWN BASE ==
+==========================
+*/
+
+#searchDropdownMenu {
+  max-height: 88vh;
+  width: 550px;
+  overflow-y: auto;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/*
+====================
+== SEARCH HEADING ==
+====================
+*/
+
+.search-result-heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.search-result-heading hr {
+  flex: 1;
+  border: none;
+  border-top: 2px solid black;
+  opacity: 50%;
+}
+
+.keyboard-title {
+  margin: 0;
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--keyman-orange);
+  text-align: center;
+}
+
+/*
+================
+== SEARCH LIST ==
+================
+*/
+
+#kbSearchCardUI {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/*
+================
+== SEARCH CARD ==
+================
+*/
+
+.card-wrap {
+  position: relative;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #8d8d8d;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  overflow: hidden;
+  width: 100%;
+}
+
+.card-wrap:hover {
+  transform: translateY(-2px);
+  border: 1px solid var(--keyman-orange);
+  cursor: pointer;
+}
+
+/*
+=====================
+== ACTIVE SELECTION ==
+=====================
+*/
+
+.card-wrap.selected {
+  border-color: var(--keyman-orange);
+}
+
+.selection-indicator.selected {
+  background: var(--keyman-orange);
+  color: white;
+  opacity: 100%;
+  border: none;
+}
+
+/*
+================
+== CARD HEADER ==
+================
+*/
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.card-header-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.card-header-title.selected {
+  color: var(--keyman-orange);
+}
+
+/*
+===================
+== KEYBOARD TITLE ==
+===================
+*/
+
+.card-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: black;
+  line-height: 1.1;
+}
+
+.card-wrap.selected .card-header h4 {
+  color: var(--keyman-orange);
+}
+
+.card-header h4 span {
+  color: black;
+  font-size: 14px;
+}
+
+/*
+=====================
+== HEADER META ROW ==
+=====================
+*/
+
+.card-sub-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.card-sub-header > * {
+  opacity: 75%;
+  font-size: 10px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.dot-spacing {
+  width: 3px;
+  height: 3px;
+  border-radius: 3px;
+  background-color: black;
+  opacity: 75%;
+}
+
+.keyboard-id {
+  color: black;
+}
+
+.monthly-download {
+  color: #078510;
+}
+
+/*
+=================
+== ACTION ICONS ==
+=================
+*/
+
+.card-header-icon {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.card-header-icon i {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  align-content: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#kbHelpIcon:hover, #kbDownloadIcon:hover {
+  color: var(--keyman-orange);
+  border: 1px solid var(--keyman-orange);
+}
+
+/*
+=================
+== DESCRIPTION ==
+=================
+*/
+
+.keyboard-description {
+  font-size: 12px;
+  line-height: 1.45;
+  color: gray;
+  opacity: 75%;
+}
+
+.keyboard-description mark {
+  background: #ffe08a;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.selection-indicator {
+  width: 24px;
+  height: 24px;
+  border: 1px solid black;
+  opacity: 50%;
+  border-radius: 20px 0 10px 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
+
+.keyboard-description:hover {
+  opacity: 100%;
+}
+
+/*
+=================
+== SHOW MORE ==
+=================
+*/
+
+.keyboard-description a {
+  color: var(--keyman-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.keyboard-description a:hover {
+  text-decoration: underline;
+}
+
+/*
+================
+== PAGINATION ==
+================
+*/
+
+#paginationControls {
+  margin-top: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#paginationControls button {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: 2px solid #999;
+  background: white;
+
+  cursor: pointer;
+}
+
+#paginationControls button:hover:not(:disabled) {
+  border-color: var(--keyman-orange);
+}
+
+#paginationControls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/*
+==================
+== INSTRUCTION ==
+==================
+*/
+
+.search-instruction {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid #e5e5e5;
+}
+
+.instruction-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+.instruction-title p {
+  margin: 0;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+#closeInstruction {
+  cursor: pointer;
+  font-style: normal;
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid #999;
+}
+
+/*
+==================
+== RESPONSIVE ==
+==================
+*/
+
+@media (max-width: 768px) {
+
+  #searchDropdownMenu {
+    padding: 1rem;
+  }
+
+  .card-wrap {
+    padding: 1.5rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card-actions {
+    align-self: flex-end;
+  }
+
+  .card-header h4 {
+    font-size: 1.5rem;
+  }
+
+  .keyboard-title {
+    font-size: 1.5rem;
+  }
+}
+/*
+==============
+==Pagination==
+==============
+*/
+#searchDropdownMenu .bottom-row-search {
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 10px;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+.bottom-row-search > * {
+  margin: 10px;
+  cursor: pointer;
+}
+
+#paginationControls {
+  display: none;
+}
+/*
+===========================
+==Selected Keyboard Menu==
+===========================
+*/
+
+.keyboard-container-dropdown-menu {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  gap: 20px;
+  margin: 10px;
+}
+
+.keyboard-container-visible {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+}
+
+.kb-item-keyboard {
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 10px 20px;
+  margin-right: 10px;
+  width: max-content;
+  overflow: hidden;
+}
+
+.kb-item-keyboard:hover {
+  cursor: pointer;
+}
+
+.kb-item-keyboard-selected {
+  border: var(--keyman-orange) solid 1px;
+}
+
+.kb-item-keyboard.selected {
+  border-color: var(--keyman-orange);
+}
+
+.kb-chip-remove {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.kb-chip-selected {
+    display: none;
+}
+
+.kb-item-keyboard.selected .kb-chip-selected {
+    display: flex;
+}
+
+.keyboard-overflow-selection > * {
+  border: none;
+}
+
+.btn-keyman-orange {
+  background-color: var(--keyman-orange) !important;
+  color: white !important;
+}
+
+.platform span {
+  background-repeat: no-repeat;
+  padding-left: 24px;
+  background-size: 18px;
+  display: block;
+  margin: 4px 0;
+}
+
+.platform span:hover, .keyboard-configs li:hover{
+  cursor: help;
+}
+
+.platform .platform-windows {
+  background-image: url('/cdn/dev/img/platforms/icon-windows.png');
+}
+
+.platform .platform-macos {
+  background-image: url('/cdn/dev/img/platforms/icon-macos.png');
+}
+
+.platform .platform-linux {
+  background-image: url('/cdn/dev/img/platforms/icon-linux.png');
+}
+
+.platform .platform-android {
+  background-image: url('/cdn/dev/img/platforms/icon-android.png');
+}
+
+.platform .platform-ios {
+  background-image: url('/cdn/dev/img/platforms/icon-ios.png');
+}
+
+.platform .platform-desktopweb {
+  background-image: url('/cdn/dev/img/platforms/icon-desktopWeb.png');
+}
+
+.platform .platform-mobileweb {
+  background-image: url('/cdn/dev/img/platforms/icon-mobileWeb.png');
+}
+/*
+=========================================
+==Font size slider + Hide/show keyboard==
+=========================================
+*/
+.tool-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.font-size-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 5px;
+  height: fit-content;
+}
+
+.font-size-slider {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  height: 60px;
+}
+
+#fontSizeRange[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.font-large {
+  font-size: 20px;
+}
+
+input[type="range"] {
+  width: 100px;
+  background-color: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px;
+  background: rgb(107, 107, 107);
+  border-radius: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  bottom: 6px;
+  background-size: 50%;
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+}
+
+#fontSizeRange[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  cursor: pointer;
+  transform: 0.2s;
+  box-shadow: var(--box-shadow);
+  background: gray;
+  border-radius: 25px;
+}
+
+#fontSizeRange[type=range]::-webkit-slider-thumb {
+  height: 10px;
+  width: 20px;
+  border-radius: 7px;
+  background: var(--keyman-blue);
+  cursor: pointer;
+  -webkit-appearance: none;
+  box-shadow: 0px 0px 5px rgb(143, 143, 143);
+  margin-top: 3px;
+}
+
+/*
+===================================================================================
+==Right side of Header: Font Resizer, Hide keyboard + Hamburger menu==
+===================================================================================
+*/
+.right-header {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  width: 100%;
+  justify-items: right;
+  align-items: center;
+  margin-right: 0;
+}
+
+.right-header i {
+  font-size: 24px;
+  opacity: 50%;
+}
+
+.right-header i:hover {
+  opacity: 100%;
+  cursor: pointer;
+  color: var(--keyman-blue);
+}
+
+/* =========================
+   Dropdown Container
+========================= */
+#burgerDropDownMenu {
+  width: 500px;
+  height: 90vh;
+  padding-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   Wrapper
+========================= */
+
+.menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 18px;
+}
+
+/* =========================
+   Section
+========================= */
+
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 10px;
+}
+
+.menu-section-title {
+  font-size: 12px;
+  color: #000000;
+  opacity: 50%;
+  margin: 0;
+}
+
+.menu-card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================
+   Cards
+========================= */
+
+.menu-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  padding: 15px !important;
+  border-radius: 10px;
+
+  background: #ffffff;
+  border: 1px solid #dddddd;
+
+  text-decoration: none;
+  color: inherit;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.menu-card:hover {
+  background: #ffffff;
+  border-color: var(--keyman-orange);
+  transform: translateY(-1px);
+  opacity: 100% !important;
+}
+
+.primary-card {
+  align-items: center;
+}
+
+/* =========================
+   Card Icon
+========================= */
+
+.menu-card-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: #ff6b00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1px;
+}
+
+.menu-card-icon i {
+  font-size: 18px !important;
+  opacity: 100%;
+}
+
+.menu-card-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* =========================
+   Card Content
+========================= */
+
+.menu-card-content {
+  flex: 1;
+}
+
+.menu-card-content h4 {
+  margin: 0;
+  height: 24px;
+  font-size: 14px;
+  color: #000000;
+  align-content: center;
+}
+
+.menu-card-content p {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #000000;
+  opacity: 50%;
+}
+
+/* =========================
+   Card Arrow
+========================= */
+
+.menu-card-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+}
+
+.menu-card-arrow i {
+  font-size: 16px !important;
+  opacity: 100% !important;
+}
+
+.menu-card-icon-keyman {
+  background-color: white;
+  border: 1px solid var(--keyman-orange)
+}
+
+/* =========================
+   Footer
+========================= */
+
+.menu-footer {
+  border-top: 1px solid #dddddd;
+  border-radius: 10px;
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* =========================
+   Socials
+========================= */
+
+.menu-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.menu-socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--keyman-blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.menu-socials a:hover {
+  transform: translateY(-2px);
+  background-color: transparent;
+  border: 1px solid var(--keyman-blue);
+  color: var(--keyman-blue);
+}
+
+.menu-socials a i {
+  opacity: 100% !important;
+  font-size: 16px !important;
+}
+/* =========================
+   SIL Logo
+========================= */
+
+.menu-sil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.menu-sil img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+
+.menu-sil p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.menu-sil a {
+  color: black;
+}
+
+/* =========================
+   Version
+========================= */
+
+.menu-version {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #000000;
+  opacity: 50%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.menu-version a {
+  color: inherit;
+  text-decoration: underline !important;
+}
+
+.menu-version a:hover {
+  text-decoration: none !important;
+}
+
+/* =========================
+   Burger Button
+========================= */
+
+.burger-trigger {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.burger-trigger i {
+  font-size: 20px;
+  color: #2b2b2b;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 480px) {
+  #burgerDropDownMenu {
+    width: min(92vw, 340px);
+  }
+
+  .menu-wrapper {
+    padding: 14px;
+  }
+
+  .menu-card {
+    padding: 12px;
+  }
+}
+
+@font-face {
+  font-family: "social-logos";
+  src: url("../../fonts/social-logos.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+  font-family: "social-logos" !important;
+  content: attr(data-icon);
+  padding-right: 4px;
+  font-size: 16px;
+}
+
+.kmw-version {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sil-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+/*
+================================
+==Limits of Keyboard Selection==
+================================
+*/
+.warning-container {
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning-content {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  color: black;
+  text-align: center;
+  padding: 30px 30px 70px;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+}
+
+.warning-cancel-btn {
+  width: 30px;
+  font-size: 20px;
+  opacity: 50%;
+  align-self: flex-end;
+  background-color: transparent;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.warning-keyman-image {
+  width: 82px;
+  margin-bottom: 15px;
+}
+
+.warning-text {
+  margin-bottom: 40px;
+  font-size: 18px;
+}
+
+.warning-accept-btn {
+  background-color: var(--keyman-orange);
+  border: none;
+  border-radius: 5px;
+  width: 200px;
+  padding: 14px;
+  color: white;
+  box-shadow: var(--box-shadow);
+}
+/*
+===============================
+==DELETE: Confirmation Dialog==
+===============================
+*/
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.dialog-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.dialog-icon {
+  font-size: 2rem;
+  color: #e74c3c;
+  margin-bottom: 1rem;
+}
+
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.dialog-message {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.btn-cancel, .btn-delete {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-cancel {
+  background: #f4f4f4;
+  color: #333;
+}
+
+.btn-delete {
+  background: var(--keyman-red);
+  color: white;
+}
+
+.btn-cancel:hover {
+  background: #eaeaea;
+}
+
+.btn-delete:hover {
+  background: #d54335;
+}

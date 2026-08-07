@@ -6,23 +6,20 @@
 ======================
 */
 
-html {
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
 body {
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color:#2D2C2C;
   background-color: #eeeeee;
   margin:0px;
-  }
+  overflow: none;
+}
 
 a {
   text-decoration:none;
   color: #AD4A28;
-  }
+}
 
 a:hover {
   text-decoration:underline;
@@ -37,368 +34,177 @@ p {
   line-height:1.5em;
   }
 /*
-header, #content, footer {
-  margin:0px auto;
-  clear: both;
-  }
+==========
+==Header==
+==========
 */
-
-hr {
-  display: none;
-  }
-
-/*
-.box {
-  -webkit-border-radius: 8px;-moz-border-radius: 8px;	border-radius: 8px;
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5); box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  }
-*/
-/*
-===================
-==Header Elements==
-===================
-*/
-header img, #headerLeft {
-  display: none;
-}
-header {
-  position: absolute;
-  top: 190px;
-  background: #776666;
-  font-size: 9pt;
-  padding: 6px 0;
-  color: white;
+.main-header {
   width: 100%;
-  text-align: center;
-}
-header a {
-  color: #c0c0ff;
-  text-decoration: underline;
+  grid-template-columns: 2fr 1fr;
 }
 
+.left-header img {
+  display: none;
+}
+
+.right-header {
+  grid-template-columns: 50% 50%;
+  padding: 10px;
+}
+
+.tool-container {
+  margin: 10px;
+}
+
+.hamburger-menu-container {
+  overflow: scroll;
+  scroll-behavior: smooth;
+  height: 70vh;
+}
+
+#burgereMenu ul {
+  width: 80vw;
+  scroll-behavior: smooth;
+  flex-direction: column;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.burger-menu-external-links{
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.kmw-socials-icons {
+  display: flex;
+  flex-direction: column;
+}
+/* 
+=======================
+==Language Search box==
+=======================
+*/
+#searchBar {
+  width: 50%;
+}
+
+#searchInput::placeholder {
+  opacity: 0;
+}
+
+#searchIcons {
+  border: 0;
+  background-color: transparent;
+  z-index: 0;
+  user-select: none;
+}
+
+#searchInput:focus, #keyboardSelection:active {
+  width: var(--mobile-search-max-width) !important;
+}
+
+#searchDropdownMenu {
+  width: 95vw !important;
+}
+
+.textarea-container {
+  height: 100%;
+}
+
+.mobile-font-size-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 50px;
+  top: 80px;
+  width: 150px;
+  background: white;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.large-icon-tools, .small-icon-tools {
+  display: none;
+}
+
+#keyboardSelection.open {
+  width: 70vw !important;
+}
 /*
 ====================
 ==Content Elements==
 ====================
 */
-#content {
-  width: 100%;    /* specific for mobile and tablet */
-  margin: 0px auto;
-  background-color: #eeeeee;
-  /* min-height:375px; */
-  }
-
 
 /* KMW Main App */
 #app {
-  width:100%;
+  width: 100%;
   margin: 0px;
   }
+
 #KeymanWebControl {
   display: none;
   }
 
-#exampleBox,#example {
-  display:none;
-  }
-
-#messageContainer {
-  width: 80%;
-  float:left;
-  height: 50%;
-  }
-
-#message {
-  height:144px;
-  width: 100%;/*554px;*/
-  float:left;
-  margin: 4px;
-  color:black;
-  font-size:17px;
-  font-family:SindhiWeb,Verdana,GeezWeb,LaoWeb,TibetanWeb,MyanmarWeb,SinhalaWeb,TamilWeb,KhmerWeb,LatinWeb,OriyaWeb,EgyptianWeb !important;
-  }
-
-  #font-size{
-    display: none;
-  }
-
-/* KMW App Buttons */
-
-#buttons {
-  float: right;
-  width: 40px;
-  margin: 8px 15px 8px 0px;
-  border: none;
-}
-
-#buttons div {
-  /*width:50px;*/
-  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
-  background: #eeeeee;
-  border: none;
-  margin: 0px 0px 4px 10px;
-  height:40px;
-  width: 41px;
-  padding: 0px;
-  padding-top: 2px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 34px 34px;
-  }
-
-#font{
-  text-align: center;
-}
-
-#font p{
+.kmw-tools {
   display: none;
 }
 
-#buttons div:disabled {
-  cursor: default !important;
-  color: gray !important;
-  /*border-color: gray !important; */
-  }
-
-#search,#search.links{
-  background-image:url('../img/btn_google.png');
-
+/* Divider */
+.divider-container {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100%;
+  align-items: center;
+  grid-template-areas: "left middle right";
+  width: 100%;
+  height: 5vh;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
 }
 
-#search.linksOff{
-  background-image:url('../img/btn_google_white.png');
+.left-divider {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
 }
 
-#copy,#copy.links{
-  background-image:url('../img/btn_copy.png');
-
+.left-divider > * {
+  margin: 0 10px;
+}
+/* Keyboard */
+#exampleBox {
+  background-color: gray;
+  height: 10vh;
+  width: 100%;
 }
 
-#copy.linksOff{
-  background-image:url('../img/btn_copy_white.png');
+.keyboard-container {
+  width: 100%;
+  height: 100% !important;
 }
 
-#buttons div * {
-  display:inline;
-  }
-
-#buttons p {  /* buttons have no text label on mobiles */
-  display:none;
-  }
-
-div.links {
-  cursor:pointer;
-  }
-
-div.linksOff {
-  cursor:default !important;
-  border:none;
-  /*border: 1px solid #cccccc !important; */
-  }
-
-div.linksOff * {
-  color: gray;
-  -webkit-user-select:none;
-  }
-
-#mobile-font{
+.desktop-keyboard {
   display: none;
-  width: 40px;
-  border-radius: 4px;
-  position: absolute;
-  left: 100%;
-  top: 60px;
-  margin-left: -45px;
-  text-align: center;
-  font-size: 24pt;
-  background: #fff;
 }
 
-#mobile-increase{
-  height: 40px;
-  line-height: 40px;
-  border-bottom: solid 1px #000;
-}
-
-#mobile-decrease{
-  height: 40px;
-  line-height: 40px;
-}
-
-/* Aside Elements */
-aside, aside div {
-  display:none;
-  }
-
-/*
-===================
-==Footer Elements==
-===================
-*/
-.footer,footer {
-  display:none;
-  }
-
-#mobile-footer {
-  position: fixed;
-  bottom: 0;
+.phone-keyboard {
   width: 100%;
+  display: block;
 }
 
-#mobile-footer #mobile-version {
-  font-size: 7pt;
-  text-align: center;
-  width: 100%;
+.keyboard-download-box {
+  display: none;
 }
 
-.messageBox {
-  box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -o-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -khtml-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  background: #c4c4c4;
-  margin-left: 10%;
-  margin-top: 10%;
-  width: 80%;
-  height: 150px;
-  position: fixed;
+.spacing-purpose {
+  display: none;
 }
-
-.messageBox div {
-  width: 85%;
-  height: 84px;
-  left: 5%;
-  top: 10px;
-  padding: 8px;
-  font-size: 13px;
-  position: absolute;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 3px;
-  background: white;
-}
-
-.messageBox button {
-  width:83px;
-  position: absolute;
-  right: 10px;
-  bottom: 4px;
-  background: #414141;
-  border-top: 1px solid #383838;
-  border-right: 1px solid #1F1F1F;
-  border-bottom: 1px solid #151515;
-  border-left: 1px solid #1F1F1F;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-  color: white;
-  font: bold 12px Helvetica, Verdana, Arial, sans-serif;
-  text-shadow: 0px -1px 1px #1E2D4D;
-  text-align:center;
-  margin: 0 auto 6px;
-  padding: 3px;
-  }
-
-.messageBox button:disabled {
-  cursor: default !important;
-  color: gray !important;
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111 !important;
-}
-
-.messageBox button:hover {
-	-webkit-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	-moz-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	-ms-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	-o-box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	box-shadow: inset 0 0px 20px 1px #878787, 0px 1px 0 #1D1D1D, 0 2px 0px #1F1F1F, 0 2px 4px 1px #111;
-	cursor: pointer;
-}
-
-.messageBox button:active {
-  -webkit-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -moz-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -ms-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  -o-box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-  box-shadow: 0px 1px 0 #1D1D1D, 0 0px 0px #1F1F1F, 0 1px 4px 1px #111;
-}
-
-.progressBox {
-  box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -o-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  -khtml-box-shadow: 0 0 12px 12px rgba(0, 0, 0, 0.5);
-  background: #c4c4c4;
-  top: 10%;
-  margin-left: 10%;
-  width: 80%;
-  height: 70px;
-  position: fixed;
-}
-
-.progressBox div {
-  width: 85%;
-  height: 34px;
-  left: 5%;
-  top: 10px;
-  padding: 8px;
-  background: url('/img/wait.gif') no-repeat 354px 8px white;
-  font-size: 13px;
-  position: absolute;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 3px;
-}
-
- /* Additional rules for portrait orientation */
-@media only screen and (orientation: portrait) {
-
-  #message {
-    height: 170px;
-    }
-
-  #messageContainer {
-    float: left;
-    width: 80%;
-    height: 40%;
-    }
-}
-
-
- /* Additional rules for landscape orientation */
-@media only screen and (orientation: landscape) {
-
-  #messageContainer {
-    float: left;
-    width: 85%;
-    height: 50%;
-    }
-  #message {
-    height: 50%;
-    }
-  #buttons {
-    margin: 4px 15px 4px 0;
-    }
-
-    #font{
-      display: none;
-    }
-}
-
 /*
 ======================
 ==Keyboard Styling==
@@ -413,8 +219,68 @@ aside, aside div {
   background-color: gray !important;
 }
 
-
 .phone .kmw-keyboard-dari_clra .kmw-key-default .kmw-key-text {
   top: -33%;
   font-size: 0.8em !important;
+}
+
+.keyboard-area {
+  border: none;
+}
+
+/*
+============
+==Viewport==
+============
+*/
+/* Additional rules for portrait orientation */
+@media only screen and (orientation: portrait) {
+  .keyboard-container > * {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+ /* Additional rules for landscape orientation */
+@media only screen and (orientation: landscape) {
+  body {
+    overflow: auto;
+  }
+  
+  .main-header {
+    height: 65px;
+  }
+
+  .textarea-container {
+    height: 15vh;
+    margin-bottom: 10px;
+  }
+
+  .divider-container {
+    height: 10vh;
+  }
+
+  .middle-divider {
+    align-content: center;
+    font-size: 20px;
+  }
+
+  #example {
+    font-size: 10px;
+  }
+
+  .phone.android.kmw-osk-frame > * {
+    height: 100% !important;
+  }
+
+  .keyboard-container {
+    width: 100vw;
+    height: 100% !important;
+  }
+
+  .keyboard-area {
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
 }

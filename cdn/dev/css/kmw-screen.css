@@ -1,0 +1,71 @@
+/*
+  Name:             KeymanWeb Media Screen Styles
+  Copyright:        Copyright (C) 2025 SIL Global
+  Documentation:
+  Description:      Different media screens to allow components to display uniquely from the index.php.
+  Create Date:      19 Nov 2025
+
+  Modified Date:    
+  Authors:          Meng-Heng
+
+  History:          
+*/
+@media only screen and (max-width: 632px) {
+  /* Smaller Search Box */
+  #searchBar #searchInput {
+    min-width: 50px;
+  }
+}
+
+@media only screen and (max-width: 456px) {
+  /* Smaller Keyboard list in Selection Menu */
+  .kb-item-keyboard {
+    min-height: fit-content;
+  }
+
+  .kb-item-keyboard span {
+    min-width: 112px;
+  }
+
+  .kb-item-keyboard {
+    overflow-x: scroll;
+  }
+}
+
+@media screen and (width < 565px) {
+  /* Show Mobile's font resizer */
+  .font-size-mobile {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-radius: 24px;
+      opacity: 50%;
+  }
+
+  .font-size-mobile button {
+      border: 0;
+      background-color: #fff;
+      border-style: none;
+  }
+
+  .font-size-mobile > *{
+      margin: 0 5px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .example-box p {
+      font-size: 10px;
+  }
+}
+
+@media all and (min-width: 1320px) {
+  ins.adsbygoogle {
+      display: inline-block !important;
+      height: 600px;
+      position: absolute;
+      right: 16px;
+      top: 120px;
+      width: 160px;
+  }
+}
