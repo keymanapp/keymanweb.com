@@ -30,6 +30,8 @@ builder_describe \
   start \
   stop \
   test \
+  "composer-start  Start a temporary container to maintain composer" \
+  "composer-stop   Stop and cleanup temporary container for maintaining composer" \
   "--no-unit-test" \
   "--no-lint" \
   "--no-link-check"
@@ -43,3 +45,6 @@ builder_run_action build      build_docker_container $KEYMANWEB_IMAGE_NAME $KEYM
 builder_run_action start      start_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME $KEYMANWEB_CONTAINER_DESC $HOST_KEYMANWEB_COM $PORT_KEYMANWEB_COM $BUILDER_CONFIGURATION
 
 builder_run_action test       test_docker_container  $KEYMANWEB_CONTAINER_DESC $PORT_KEYMANWEB_COM /
+
+builder_run_action composer-start   docker_build_and_start_composer_container
+builder_run_action composer-stop    docker_stop_and_cleanup_composer_container
