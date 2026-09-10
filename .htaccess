@@ -26,10 +26,10 @@ php_value display_startup_errors off
 # Keymanweb.com 2.0 rewrite rules for Keymanweb.com 1.0 /go/lang/kbd urls
 
 # Rewrite /go/lang/kbd/app[?...] to /?kmwlang=lang,kmwkbd=kbd
-RewriteRule "^go/([^/]+)/([^/]+)/([^?]+)(\?)?(.+)?$" "/index.php?kmwlang=$1&kmwkbd=Keyboard_$2&$5"
+RewriteRule "^go/([^/]+)/([^/]+)/([^?]+)(\?)?(.+)?$" "/index.php?kmwlang=$1&kmwkbd=Keyboard_$2&$5" [BCTLS]
 
 # Rewrite /go/lang/kbd[?...] to /?kmwlang=lang,kmwkbd=kbd
-RewriteRule "^go/([^/]+)/([^?]+)(\?)?(.+)?$" "/index.php?kmwlang=$1&kmwkbd=Keyboard_$2&$4"
+RewriteRule "^go/([^/]+)/([^?]+)(\?)?(.+)?$" "/index.php?kmwlang=$1&kmwkbd=Keyboard_$2&$4" [BCTLS]
 
 # Keymanweb.com 2.0 rewrite rules for Keymanweb.com 1.0 /lang/app.php urls
 
