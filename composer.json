@@ -1,12 +1,12 @@
 {
     "name": "keyman/keymanweb.com",
-    "require": {
-        "sentry/sdk": "^3.1"
-    },
     "config": {
         "allow-plugins": false
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6"
+    },
+    "require": {
+        "sentry/sentry": "^4.31"
     }
 }
