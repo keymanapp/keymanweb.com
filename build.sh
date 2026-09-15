@@ -41,7 +41,7 @@ builder_parse "$@"
 builder_run_action configure  bootstrap_configure
 builder_run_action clean      clean_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME
 builder_run_action stop       stop_docker_container  $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME
-builder_run_action build      build_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME
+builder_run_action build      build_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME $BUILDER_CONFIGURATION
 builder_run_action start      start_docker_container $KEYMANWEB_IMAGE_NAME $KEYMANWEB_CONTAINER_NAME $KEYMANWEB_CONTAINER_DESC $HOST_KEYMANWEB_COM $PORT_KEYMANWEB_COM $BUILDER_CONFIGURATION
 
 builder_run_action test       test_docker_container  $KEYMANWEB_CONTAINER_DESC $PORT_KEYMANWEB_COM /
