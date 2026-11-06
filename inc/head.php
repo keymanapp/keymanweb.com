@@ -179,7 +179,13 @@
     }';
     } ?>
     if(localKeyboard && localLanguage) {
-      keyman.setActiveKeyboard(localKeyboard, localLanguage);
+      var kbd = getKeymanWeb().getKeyboard(localKeyboard, localLanguage);
+      if(kbd) {
+        keyman.setActiveKeyboard(localKeyboard, localLanguage);
+      } else {
+        showBox('Keyboard not available', `The keyboard "${localKeyboard}" for language "${localLanguage}" is not available. Please choose a different keyboard.`);
+        console.warn(`Keyboard for "${localKeyboard}" for language "${localLanguage}" is not available in the list of loaded keyboards. It could be mistyped or be a deprecated keyboard.`);
+      }
     }
     document.getElementById('message').focus();
   });
